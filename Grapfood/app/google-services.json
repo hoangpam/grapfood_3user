@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "114114883492",
+    "firebase_url": "https://grapfood-7b658-default-rtdb.firebaseio.com",
+    "project_id": "grapfood-7b658",
+    "storage_bucket": "grapfood-7b658.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:114114883492:android:994e7b88848d61a0629b31",
+        "android_client_info": {
+          "package_name": "com.example.grapfood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "114114883492-r0nb92vogg71b2v2v7mvqn6foft8f545.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.grapfood",
+            "certificate_hash": "5adb132d161628e66644e505509dd2864f46afed"
+          }
+        },
+        {
+          "client_id": "114114883492-tq1rovfpibj5mgufdt4u7kfg1chdtr7o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBauAEFD9_PC4-5x9YnZK3I6BAb2aopTrU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "114114883492-tq1rovfpibj5mgufdt4u7kfg1chdtr7o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

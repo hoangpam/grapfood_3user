@@ -1,0 +1,86 @@
+<resources>
+    <string name="app_name">Grapfood</string>
+    <string name="title_home">Trang chủ</string>
+    <string name="title_dashboard">Bảng điều khiển</string>
+    <string name="title_notifications">Thông báo</string>
+
+    <string-array name="State">
+        <item>Tân Phú</item>
+        <item>Bình Thạnh</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="Citys">
+        <item>Hồ Chí Minh</item>
+        <item>Hà Nội</item>
+        <item>Tây Ninh</item>
+    </string-array>
+    <string-array name="shipper">
+        <item>Shipper 1</item>
+        <item>Shipper 2</item>
+        <item>Shipper 3</item>
+        <item>Shipper 4</item>
+        <item>Shipper 5</item>
+        <item>Shipper 6</item>
+        <item>Shipper 7</item>
+        <item>Shipper 8</item>
+        <item>Shipper 9</item>
+        <item>Shipper 10</item>
+    </string-array>
+
+    <string-array name="DishName">
+        <item>Trà sữa</item>
+        <item>Gà rán</item>
+        <item>Bún bò huế</item>
+        <item>Nước rau má</item>
+        <item>Cơm tấm</item>
+        <item>Sữa chua</item>
+        <item>Bún đậu mắm tôm</item>
+        <item>Bánh mì</item>
+        <item>Cháo sườn</item>
+        <item>Lẩu ếch</item>
+        <item>Tàu hủ</item>
+        <item>Chè</item>
+        <item>Bánh trán trộn</item>
+        <item>Cafe</item>
+        <item>Mì quảng</item>
+        <item>Bún thịt nướng</item>
+        <item>Cơm gà xối mỡ</item>
+        <item>Phở</item>
+        <item>Kem bơ</item>
+        <item>Sầu riêng</item>
+        <item>Bánh ướt</item>
+        <item>Gà hầm thuốc bắc</item>
+        <item>Bánh bông lan</item>
+        <item>Hamburger</item>
+        <item>Bánh cuốn</item>
+        <item>Hana Maru Ramen</item>
+        <item>The Sashimi Box</item>
+        <item>Hot dog</item>
+        <item>Bò bít tết</item>
+        <item>Sushi</item>
+        <item>Kim bắp</item>
+        <item>Chichiko</item>
+        <item>Ốc ăn vặt</item>
+        <item>Meiwei</item>
+        <item>Lẩu hải sản</item>
+        <item>Tôm hùm</item>
+        <item>Tôm hoàng đế</item>
+        <item>Lẩu dê</item>
+        <item>Trứng bách thảo</item>
+        <item>Xúc xích bóng đêm</item>
+    </string-array>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+</resources>
