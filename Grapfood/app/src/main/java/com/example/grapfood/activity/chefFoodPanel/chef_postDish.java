@@ -74,15 +74,15 @@ public class chef_postDish extends AppCompatActivity {
         storageReference = storage.getReference();
         Dishes = (Spinner)findViewById(R.id.dishes);
         desc = (TextInputLayout) findViewById(R.id.description);
-//        qty = (TextInputLayout) findViewById(R.id.Quantity);
+        qty = (TextInputLayout) findViewById(R.id.Quantity);
         pri = (TextInputLayout) findViewById(R.id.price);
         post_dish = (Button) findViewById(R.id.post);
-        btnTang = findViewById(R.id.btn_tangsoluong);
-        btnGiam = findViewById(R.id.btn_giamsoluong);
-        tvSL = findViewById(R.id.idsl);
+//        btnTang = findViewById(R.id.btn_tangsoluong);
+//        btnGiam = findViewById(R.id.btn_giamsoluong);
+//        tvSL = findViewById(R.id.idsl);
         Fauth = FirebaseAuth.getInstance();
         databaseReference = firebaseDatabase.getInstance().getReference("FoodDetails");
-        tanggiam();
+//        tanggiam();
 
         try {
             String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -108,8 +108,9 @@ public class chef_postDish extends AppCompatActivity {
                         public void onClick(View v) {
                             dishes = Dishes.getSelectedItem().toString().trim();
                             descrption = desc.getEditText().getText().toString().trim();
-//                            quantity = qty.getEditText().getText().toString().trim();
-                            quantity= tvSL.getText().toString().trim();
+                            quantity = qty.getEditText().getText().toString().trim();
+//                            int sl = Integer.parseInt(tvSL.getText().toString());
+//                            quantity= String.valueOf(sl);
                             price = pri.getEditText().getText().toString().trim();
 
                             if(isValid()){
@@ -129,33 +130,33 @@ public class chef_postDish extends AppCompatActivity {
         }
 
     }
-    public void tanggiam()
-    {
-
-        btnTang.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int sl = Integer.parseInt(tvSL.getText().toString());
-                sl = sl + 1;
-                Log.e("tang",String.valueOf(sl));
-                tvSL.setText(String.valueOf(sl));
-            }
-        });
-        btnGiam.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int sl1 = Integer.parseInt(tvSL.getText().toString());
-                if(sl1 >0){
-                    sl1 = sl1 - 1;
-                    Log.e("giam",String.valueOf(sl1));
-                    tvSL.setText(String.valueOf(sl1));
-                }
-            }
-        });
-    }
+//    public void tanggiam()
+//    {
+//
+//        btnTang.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int sl = Integer.parseInt(tvSL.getText().toString());
+//                sl = sl + 1;
+//                Log.e("tang",String.valueOf(sl));
+//                tvSL.setText(String.valueOf(sl));
+//            }
+//        });
+//        btnGiam.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int sl1 = Integer.parseInt(tvSL.getText().toString());
+//                if(sl1 >0){
+//                    sl1 = sl1 - 1;
+//                    Log.e("giam",String.valueOf(sl1));
+//                    tvSL.setText(String.valueOf(sl1));
+//                }
+//            }
+//        });
+//    }
     private void uploadImage() {
 
-        if(imageuri != null){
+        if(imageuri != null) {
             final ProgressDialog progressDialog = new ProgressDialog(chef_postDish.this);
             progressDialog.setTitle("Đang cập nhật.....");
             progressDialog.show();
@@ -168,14 +169,14 @@ public class chef_postDish extends AppCompatActivity {
                     ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            FoodDetails info = new FoodDetails(dishes,quantity,price,descrption,String.valueOf(uri),RandomUID,ChefId);
+                            FoodDetails info = new FoodDetails(dishes, quantity, price, descrption, String.valueOf(uri), RandomUID, ChefId);
                             firebaseDatabase.getInstance().getReference("FoodDetails").child(State).child(City).child(Area).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID)
                                     .setValue(info).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
 
                                     progressDialog.dismiss();
-                                    Toast.makeText(chef_postDish.this,"Món ăn đã được đăng thành công!",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(chef_postDish.this, "Món ăn đã được đăng thành công!", Toast.LENGTH_SHORT).show();
                                 }
                             });
 
@@ -186,17 +187,21 @@ public class chef_postDish extends AppCompatActivity {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     progressDialog.dismiss();
-                    Toast.makeText(chef_postDish.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(chef_postDish.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                    double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
-                    progressDialog.setMessage("Cập nhật "+(int) progress+"%");
+                    double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                    progressDialog.setMessage("Cập nhật " + (int) progress + "%");
                     progressDialog.setCanceledOnTouchOutside(false);
                 }
             });
         }
+//        }else
+//        {
+//            Toast.makeText(chef_postDish.this,"Đang lỗi đại ca",Toast.LENGTH_SHORT).show();
+//        }
 
     }
 
@@ -204,8 +209,8 @@ public class chef_postDish extends AppCompatActivity {
 
         desc.setErrorEnabled(false);
         desc.setError("");
-//        qty.setErrorEnabled(false);
-//        qty.setError("");
+        qty.setErrorEnabled(false);
+        qty.setError("");
         pri.setErrorEnabled(false);
         pri.setError("");
 
@@ -217,12 +222,12 @@ public class chef_postDish extends AppCompatActivity {
             desc.setError(null);
             isValidDescription=true;
         }
-//        if(TextUtils.isEmpty(quantity)){
-//            qty.setErrorEnabled(true);
-//            qty.setError("Nhập số lượng mặt hàng");
-//        }else{
-//            isValidQuantity=true;
-//        }
+        if(TextUtils.isEmpty(quantity)){
+            qty.setErrorEnabled(true);
+            qty.setError("Nhập số lượng mặt hàng");
+        }else{
+            isValidQuantity=true;
+        }
         if(TextUtils.isEmpty(price)){
             pri.setErrorEnabled(true);
             pri.setError("Vui lòng đề cập đến giá");

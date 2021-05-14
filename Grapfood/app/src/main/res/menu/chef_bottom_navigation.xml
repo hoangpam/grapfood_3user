@@ -7,19 +7,19 @@
 
 
     <item
-        android:id="@+id/PendingOrders"
+        android:id="@+id/chefPendingOrders"
         android:icon="@drawable/ic_pending_orders_24"
         android:title="Cấp phát đơn đặt hàng" />
 
 
     <item
-        android:id="@+id/Orders"
+        android:id="@+id/chef_Orders"
         android:icon="@drawable/ic_orders_24"
         android:title="Đơn hàng" />
 
 
     <item
-        android:id="@+id/chefProfile"
+        android:id="@+id/chef_Profile"
         android:icon="@drawable/ic_post_dish_menu_24"
         android:title="Đăng món ăn" />
 

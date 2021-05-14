@@ -31,13 +31,13 @@ public class ChefFoodPanel_BottomNavigation extends AppCompatActivity implements
             case R.id.chefHome:
                 fragment=new ChefHomeFragment();
                 break;
-            case R.id.PendingOrders:
+            case R.id.chefPendingOrders:
                 fragment=new ChefPendingOrderFragment();
                 break;
-            case R.id.Orders:
+            case R.id.chef_Orders:
                 fragment=new ChefOrderFragment();
                 break;
-            case R.id.chefProfile:
+            case R.id.chef_Profile:
                 fragment=new ChefProfileFragment();
                 break;
         }

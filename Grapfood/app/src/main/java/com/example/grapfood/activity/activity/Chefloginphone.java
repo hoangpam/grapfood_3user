@@ -30,7 +30,7 @@ public class Chefloginphone extends AppCompatActivity {
         num = (EditText)findViewById(R.id.number);
         sendotp = (Button)findViewById(R.id.otp);
         cpp=(CountryCodePicker)findViewById(R.id.CountryCode);
-        signinemail=(Button)findViewById(R.id.Email);
+        signinemail=(Button)findViewById(R.id.btnEmail);
         signup = (TextView)findViewById(R.id.acsignup);
 
         Fauth = FirebaseAuth.getInstance();

@@ -5,9 +5,42 @@
     <string name="title_notifications">Thông báo</string>
 
     <string-array name="State">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>Tân Bình</item>
+        <item>Bình Tân</item>
+        <item>Phú Nhuận</item>
+        <item>Gò Vấp</item>
+        <item>Thủ Đức</item>
         <item>Tân Phú</item>
         <item>Bình Thạnh</item>
-        <item>1</item>
+        <item>Hoàn Kiếm</item>
+        <item>Đống Đa</item>
+        <item>Ba Đình</item>
+        <item>Hoàng Mai</item>
+        <item>Thanh Xuân</item>
+        <item>Long Biên</item>
+        <item>Nam Từ Liêm</item>
+        <item>Bắc Từ Liêm</item>
+        <item>Tây Hồ</item>
+        <item>Cầu Giấy</item>
+        <item>Hà Đông</item>
+        <item>Châu Thành</item>
+        <item>Hoà Thành</item>
+        <item>Bến Cầu</item>
+        <item>Trảng Bàn</item>
+        <item>Tân Châu</item>
+        <item>Dương Minh Châu</item>
     </string-array>
     <string-array name="Citys">
         <item>Hồ Chí Minh</item>
@@ -83,4 +116,6 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <integer name="animation_duration_medium">3000</integer>
+
 </resources>

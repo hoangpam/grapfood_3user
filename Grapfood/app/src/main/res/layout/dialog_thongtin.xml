@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_edittext_user"
+    android:padding="16dp">
+    <RelativeLayout
+        android:id="@+id/rl_tool_bar_top"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:background="#1082D1"
+        android:outlineProvider="bounds">
+
+
+        <TextView
+            android:id="@+id/tendv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Thông tin cá nhân"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+    <ScrollView
+        android:id="@+id/scollview"
+        android:layout_below="@+id/rl_tool_bar_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="120dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <RelativeLayout
+            android:id="@+id/hotenkhach"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="20sp"
+            android:background="@drawable/bg_background"
+            android:layout_height="wrap_content"
+            android:clickable="true">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true">
+
+                    <RelativeLayout
+
+                        android:layout_centerVertical="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:id="@+id/ln_tenHienThi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:text="Tên người dùng: "
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:text="Ngô Hoàng Thiên"
+                                android:id="@+id/tv_tenHienThi"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp"
+                                android:textColor="#1499FF"/>
+
+                        </LinearLayout>
+                </RelativeLayout>
+            </RelativeLayout>
+
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/diachikhach"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="20sp"
+                android:background="@drawable/bg_background"
+                android:layout_height="wrap_content"
+                android:clickable="true">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true">
+
+                    <RelativeLayout
+
+                        android:layout_centerVertical="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:id="@+id/ln_diachi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:text="Địa chỉ: "
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:text="140"
+                                android:id="@+id/tv_sonha"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp"
+                                android:textColor="#1499FF"/>
+                            <TextView
+                                android:text=" Lê Trọng Tấn"
+                                android:id="@+id/tv_tenduong"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp"
+                                android:textColor="#1499FF"/>
+                            <TextView
+                                android:text=" ,Tân Phú"
+                                android:id="@+id/tv_quan"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp"
+                                android:textColor="#1499FF"/>
+                            <TextView
+                                android:text=" ,TP HCM"
+                                android:id="@+id/tv_tp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp"
+                                android:textColor="#1499FF"/>
+                        </LinearLayout>
+                    </RelativeLayout>
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/sdtkhach"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="20sp"
+                android:background="@drawable/bg_background"
+                android:layout_height="wrap_content"
+                android:clickable="true">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true">
+
+                    <RelativeLayout
+
+                        android:layout_centerVertical="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:id="@+id/ln_sdt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:text="Số điện thoại: "
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/tv_sdt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="0389346227"
+                                android:textColor="#1499FF"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+                    </RelativeLayout>
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/gmail"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="20sp"
+                android:background="@drawable/bg_background"
+                android:layout_height="wrap_content"
+                android:clickable="true">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true">
+
+                    <RelativeLayout
+                        android:layout_centerVertical="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:id="@+id/ln_gmail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:text="Email: "
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/tv_gmail"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="lopo@gmail.com"
+                                android:textColor="#1499FF"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+                    </RelativeLayout>
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250sp"
+        android:layout_marginLeft="20sp"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/bt_thaydoithongtin"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_start_command"
+                android:text="Thay đổi"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+            <Button
+
+                android:id="@+id/bt_thoat"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_init_command"
+                android:layout_marginLeft="90sp"
+                android:text="Hủy"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

@@ -40,7 +40,7 @@ public class Chefsendotp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chefsendotp);
 
-        phoneno = getIntent().getStringExtra("Số điện thoại").trim();
+        phoneno = getIntent().getStringExtra("phonenumber").trim();
 
         entercode = (EditText) findViewById(R.id.code);
         txt = (TextView) findViewById(R.id.text);

@@ -1,7 +1,7 @@
 package com.example.grapfood.activity.object;
 
 public class FoodDetails {
-    public String Dishes,Quantity,Price,Description,ImageURL,RandomUID,Chefid;
+    String Dishes,Quantity,Price,Description,ImageURL,RandomUID,Chefid;
     // Alt+insert
 
     public FoodDetails(String dishes, String quantity, String price, String description, String imageURL, String randomUID, String chefid) {

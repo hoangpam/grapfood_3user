@@ -59,6 +59,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/forgotpass"
             android:text="Bạn đã quên mật khẩu?"
+            android:layout_weight="1"
             android:gravity="end"
             android:textSize="16sp"
             android:textColor="#090909"/>

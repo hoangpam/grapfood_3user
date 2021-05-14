@@ -30,9 +30,9 @@ import java.util.HashMap;
 
 public class Delivery_Registration extends AppCompatActivity {
 
-    String[] M1 = {"Quận 1","Quận 3","Quận 4","Quận 5","Quận 6","Quận 8","Quận 10","Quận 11","Quận Tân Phú","Quận Tân Bình","Quận Bình Tân","Quận Phú Nhuận","Quận Gò Vấp","Quận 9","Quận 2","Quận Thủ Đức"};
-    String[] M2 = {"Quận Hoàn Kiếm","Quận Đống Đa","Quận Ba Đình","Quận Hoàng Mai","Quận Thanh Xuân","Quận Long Biên","Quận Nam Từ Liêm","Quận Bắc Từ Liêm","Quận Tây Hồ","Quận Cầu Giấy","Quận Hà Đông"};
-    String[] M3 = {"Huyện Châu Thành","Huyện Hoà Thành","Huyện Bến Cầu","Huyện Trảng Bàn","Huyện Tân Châu","Huyện Dương Minh Châu"};
+    String[] TPHCM = {"Quận 1","Quận 3","Quận 4","Quận 5","Quận 6","Quận 8","Quận 10","Quận 11","Quận Tân Phú","Quận Tân Bình","Quận Bình Tân","Quận Phú Nhuận","Quận Gò Vấp","Quận 9","Quận 2","Quận Thủ Đức"};
+    String[] TPHN = {"Quận Hoàn Kiếm","Quận Đống Đa","Quận Ba Đình","Quận Hoàng Mai","Quận Thanh Xuân","Quận Long Biên","Quận Nam Từ Liêm","Quận Bắc Từ Liêm","Quận Tây Hồ","Quận Cầu Giấy","Quận Hà Đông"};
+    String[] TPTN = {"Huyện Châu Thành","Huyện Hoà Thành","Huyện Bến Cầu","Huyện Trảng Bàn","Huyện Tân Châu","Huyện Dương Minh Châu"};
 
     TextInputLayout Fname,Lname,Email,Pass,cpass,mobileno,houseno,area,pincode;
     Spinner Statespin,Cityspin;
@@ -73,25 +73,25 @@ public class Delivery_Registration extends AppCompatActivity {
 
                 Object value = parent.getItemAtPosition(position);
                 statee = value.toString().trim();
-                if(statee.equals("M1")){
+                if(statee.equals("Hồ Chí Minh")){
                     ArrayList<String> list = new ArrayList<>();
-                    for (String cities : M1){
+                    for (String cities : TPHCM){
                         list.add(cities);
                     }
                     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Delivery_Registration.this,android.R.layout.simple_spinner_item,list);
                     Cityspin.setAdapter(arrayAdapter);
                 }
-                if(statee.equals("M2")){
+                if(statee.equals("Hà Nội")){
                     ArrayList<String> list = new ArrayList<>();
-                    for (String cities : M2){
+                    for (String cities : TPHN){
                         list.add(cities);
                     }
                     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Delivery_Registration.this,android.R.layout.simple_spinner_item,list);
                     Cityspin.setAdapter(arrayAdapter);
                 }
-                if(statee.equals("M3")){
+                if(statee.equals("Tây Ninh")){
                     ArrayList<String> list = new ArrayList<>();
-                    for (String cities : M3){
+                    for (String cities : TPTN){
                         list.add(cities);
                     }
                     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Delivery_Registration.this,android.R.layout.simple_spinner_item,list);

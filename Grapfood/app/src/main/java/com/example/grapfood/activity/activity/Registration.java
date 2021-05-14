@@ -30,9 +30,9 @@ import java.util.HashMap;
 
 public class Registration extends AppCompatActivity {
 
-    String[] M1 = {"Quận 1","Quận 3","Quận 4","Quận 5","Quận 6","Quận 8","Quận 10","Quận 11","Quận Tân Phú","Quận Tân Bình","Quận Bình Tân","Quận Phú Nhuận","Quận Gò Vấp","Quận 9","Quận 2","Quận Thủ Đức"};
-    String[] M2 = {"Quận Hoàn Kiếm","Quận Đống Đa","Quận Ba Đình","Quận Hoàng Mai","Quận Thanh Xuân","Quận Long Biên","Quận Nam Từ Liêm","Quận Bắc Từ Liêm","Quận Tây Hồ","Quận Cầu Giấy","Quận Hà Đông"};
-    String[] M3 = {"Huyện Châu Thành","Huyện Hoà Thành","Huyện Bến Cầu","Huyện Trảng Bàn","Huyện Tân Châu","Huyện Dương Minh Châu"};
+    String[] TPHCM = {"Quận 1","Quận 3","Quận 4","Quận 5","Quận 6","Quận 8","Quận 10","Quận 11","Quận Tân Phú","Quận Tân Bình","Quận Bình Tân","Quận Phú Nhuận","Quận Gò Vấp","Quận 9","Quận 2","Quận Thủ Đức"};
+    String[] TPHN = {"Quận Hoàn Kiếm","Quận Đống Đa","Quận Ba Đình","Quận Hoàng Mai","Quận Thanh Xuân","Quận Long Biên","Quận Nam Từ Liêm","Quận Bắc Từ Liêm","Quận Tây Hồ","Quận Cầu Giấy","Quận Hà Đông"};
+    String[] TPTN = {"Huyện Châu Thành","Huyện Hoà Thành","Huyện Bến Cầu","Huyện Trảng Bàn","Huyện Tân Châu","Huyện Dương Minh Châu"};
 
     TextInputLayout Fname,Lname,Email,Pass,cpass,mobileno,localaddress,area,pincode;
     Spinner Statespin,Cityspin;
@@ -56,7 +56,7 @@ public class Registration extends AppCompatActivity {
         cpass = (TextInputLayout)findViewById(R.id.confirmpass);
         mobileno = (TextInputLayout)findViewById(R.id.Mobilenumber);
         localaddress = (TextInputLayout)findViewById(R.id.Localaddress);
-        pincode = (TextInputLayout)findViewById(R.id.Pincodee);
+        pincode = (TextInputLayout)findViewById(R.id.Pincode);
         Statespin = (Spinner) findViewById(R.id.Statee);
         Cityspin = (Spinner) findViewById(R.id.Citys);
         area = (TextInputLayout)findViewById(R.id.Area);
@@ -73,25 +73,25 @@ public class Registration extends AppCompatActivity {
 
                 Object value = parent.getItemAtPosition(position);
                 statee = value.toString().trim();
-                if(statee.equals("M1")){
+                if(statee.equals("Hồ Chí Minh")){
                     ArrayList<String> list = new ArrayList<>();
-                    for (String cities : M1){
+                    for (String cities : TPHCM){
                         list.add(cities);
                     }
                     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Registration.this,android.R.layout.simple_spinner_item,list);
                     Cityspin.setAdapter(arrayAdapter);
                 }
-                if(statee.equals("M2")){
+                if(statee.equals("Hà Nội")){
                     ArrayList<String> list = new ArrayList<>();
-                    for (String cities : M2){
+                    for (String cities : TPHN){
                         list.add(cities);
                     }
                     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Registration.this,android.R.layout.simple_spinner_item,list);
                     Cityspin.setAdapter(arrayAdapter);
                 }
-                if(statee.equals("M3")){
+                if(statee.equals("Tây Ninh")){
                     ArrayList<String> list = new ArrayList<>();
-                    for (String cities : M3){
+                    for (String cities : TPTN){
                         list.add(cities);
                     }
                     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Registration.this,android.R.layout.simple_spinner_item,list);
@@ -157,17 +157,17 @@ public class Registration extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<Void> task) {
 
                                         HashMap<String , String> hashMap1 = new HashMap<>();
-                                        hashMap1.put("Số điện thoại",mobile);
-                                        hashMap1.put("Họ",fname);
-                                        hashMap1.put("Tên",lname);
+                                        hashMap1.put("Mobile No",mobile);
+                                        hashMap1.put("First Name",fname);
+                                        hashMap1.put("Last Name",lname);
                                         hashMap1.put("EmailId",emailid);
-                                        hashMap1.put("Thành phố",cityy);
-                                        hashMap1.put("Khu vực",Area);
-                                        hashMap1.put("Mật khẩu",password);
-                                        hashMap1.put("Mã code",Pincode);
-                                        hashMap1.put("Quận huyện",statee);
-                                        hashMap1.put("Nhập lại mật khẩu",confpassword);
-                                        hashMap1.put("Địa chỉ",Localaddress);
+                                        hashMap1.put("City",cityy);
+                                        hashMap1.put("Area",Area);
+                                        hashMap1.put("Password",password);
+                                        hashMap1.put("Pincode",Pincode);
+                                        hashMap1.put("State",statee);
+                                        hashMap1.put("Confirm Password",confpassword);
+                                        hashMap1.put("Local Address",Localaddress);
 
                                         firebaseDatabase.getInstance().getReference("Customer")
                                                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())

@@ -77,8 +77,6 @@ public class CustomerHomeFragment extends Fragment implements SwipeRefreshLayout
                 });
             }
         });
-
-
         return v;
     }
 
@@ -101,9 +99,9 @@ public class CustomerHomeFragment extends Fragment implements SwipeRefreshLayout
                         updateDishModelList.add(updateDishModel);
                     }
                 }
-//                adapter = new CustomerHomeAdapter(getContext(),updateDishModelList);
-//                recyclerView.setAdapter(adapter);
-//                swipeRefreshLayout.setRefreshing(false);
+                adapter = new CustomerHomeAdapter(getContext(),updateDishModelList);
+                recyclerView.setAdapter(adapter);
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override

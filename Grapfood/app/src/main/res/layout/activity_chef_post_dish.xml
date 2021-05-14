@@ -83,59 +83,61 @@
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:id="@+id/Quantity"
-        android:textColorHint="@color/white"
+        android:textColorHint="@color/black"
+        android:hint="Số lượng"
+        android:background="@drawable/edt_tendn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/description"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintVertical_bias="0.053"
         app:layout_constraintHorizontal_bias="0.53">
-        <LinearLayout
-            android:id="@+id/ll_chonsize"
+<!--        <LinearLayout-->
+<!--            android:id="@+id/ll_chonsize"-->
 
-            android:layout_marginLeft="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Số lượng"
-                android:textColor="@color/white"
-                android:textSize="20sp"></TextView>
-            <Button
-                android:id="@+id/btn_giamsoluong"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:text="-"
-                android:background="@drawable/bg_dieuchinh"></Button>
-
-            <TextView
-                android:id="@+id/idsl"
-                android:layout_width="wrap_content"
-                android:layout_margin="5dp"
-                android:paddingTop="5dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:text="1"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
-
-            <Button
-                android:id="@+id/btn_tangsoluong"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:text="+"
-                android:background="@drawable/bg_dieuchinh"></Button>
-        </LinearLayout>
-<!--        <com.google.android.material.textfield.TextInputEditText-->
-<!--            android:layout_width="match_parent"-->
+<!--            android:layout_marginLeft="5dp"-->
+<!--            android:layout_width="wrap_content"-->
 <!--            android:layout_height="wrap_content"-->
-<!--            android:hint="Số lượng"-->
-<!--            android:inputType="number"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="18sp"/>-->
+<!--            android:orientation="horizontal">-->
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:text="Số lượng"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="20sp"></TextView>-->
+<!--            <Button-->
+<!--                android:id="@+id/btn_giamsoluong"-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:text="-"-->
+<!--                android:background="@drawable/bg_dieuchinh"></Button>-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/idsl"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_margin="5dp"-->
+<!--                android:paddingTop="5dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="left"-->
+<!--                android:text="1"-->
+<!--                android:textAlignment="center"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="15sp" />-->
+
+<!--            <Button-->
+<!--                android:id="@+id/btn_tangsoluong"-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:text="+"-->
+<!--                android:background="@drawable/bg_dieuchinh"></Button>-->
+<!--        </LinearLayout>-->
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Số lượng"
+            android:inputType="number"
+            android:textColor="@color/black"
+            android:textSize="18sp"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -144,14 +146,15 @@
         android:layout_height="wrap_content"
         android:id="@+id/price"
         android:textColorHint="@color/black"
+        android:hint="Giá"
+        android:background="@drawable/edt_tendn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Quantity"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintVertical_bias="0.053"
         app:layout_constraintHorizontal_bias="0.53"
-        android:hint="Giá"
-        android:background="@drawable/edt_tendn">
+        >
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"

@@ -1,12 +1,16 @@
 package com.example.grapfood.activity.object;
 
 public class Customer {
-    private String city,FirstName,LastName,Password,ConfirmPassword,EmailId,MobileNo,State,Area,LocalAddress;
-
+    String city,FirstName,LastName,Password,ConfirmPassword,EmailId,MobileNo,State,Area,LocalAddress;
+    private  String secureCode;
     public Customer(){
     }
     // Press Alt+insert
 
+
+    public void setSecureCode(String secureCode) {
+        this.secureCode = secureCode;
+    }
 
     public Customer(String city, String firstName, String lastName, String password, String confirmPassword, String emailId, String mobileNo, String state, String area, String localAddress) {
         this.city = city;
@@ -20,7 +24,9 @@ public class Customer {
         Area = area;
         LocalAddress = localAddress;
     }
-
+    public String getSecureCode() {
+        return secureCode;
+    }
     public String getCity() {
         return city;
     }

@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
                                 if(role.equals("Chef")){
                                     startActivity(new Intent(MainActivity.this, ChefFoodPanel_BottomNavigation.class));
                                     finish();
-
                                 }
                                 if(role.equals("Customer")){
                                     startActivity(new Intent(MainActivity.this, CustomerFoofPanel_BottomNavigation.class));

@@ -11,6 +11,6 @@ public class DeliveryForgotPassword extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_delivery_forgot_password);
+        setContentView(R.layout.forgot_password_layout);
     }
 }

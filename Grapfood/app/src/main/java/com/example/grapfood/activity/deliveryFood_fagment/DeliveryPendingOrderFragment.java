@@ -17,7 +17,7 @@ public class DeliveryPendingOrderFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_deliveryprndingorder, null);
-        getActivity().setTitle("Pending Orders");
+        getActivity().setTitle("Cấp phát đơn đặt hàng");
         return v;
     }
 }
