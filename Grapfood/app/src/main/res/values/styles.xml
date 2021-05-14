@@ -6,7 +6,7 @@
         <item name="colorPrimary">@color/green</item>
         <item name="colorPrimaryDark">@color/Black</item>
         <item name="colorAccent">@color/darkgray</item>
-
+        <item name="pinViewStyle">@style/PinWidget.PinView</item>
     </style>
 
     <style name="AppThemeNoActionbar" parent="AppTheme">

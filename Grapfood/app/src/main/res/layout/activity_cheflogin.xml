@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/img4"
-    tools:context="activity.Cheflogin">
+    tools:context=".activity.activity.Cheflogin">
 
     <LinearLayout
         android:layout_width="280dp"

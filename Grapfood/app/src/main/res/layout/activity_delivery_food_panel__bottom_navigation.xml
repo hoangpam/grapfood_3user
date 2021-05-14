@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.DeliveryFoodPanel_BottomNavigation">
+    tools:context=".activity.bottomnavigation.DeliveryFoodPanel_BottomNavigation">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.grapfood.R;
@@ -47,6 +48,8 @@ import java.util.UUID;
 public class chef_postDish extends AppCompatActivity {
 
     ImageButton imageButton;
+    Button btnTang;
+    Button btnGiam;
     Button post_dish;
     Spinner Dishes;
     TextInputLayout desc,qty,pri;
@@ -60,7 +63,8 @@ public class chef_postDish extends AppCompatActivity {
     FirebaseAuth Fauth;
     StorageReference ref;
     String ChefId , RandomUID , State, City , Area;
-
+    int dem = 0;
+    TextView tvSL;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,11 +74,15 @@ public class chef_postDish extends AppCompatActivity {
         storageReference = storage.getReference();
         Dishes = (Spinner)findViewById(R.id.dishes);
         desc = (TextInputLayout) findViewById(R.id.description);
-        qty = (TextInputLayout) findViewById(R.id.Quantity);
+//        qty = (TextInputLayout) findViewById(R.id.Quantity);
         pri = (TextInputLayout) findViewById(R.id.price);
         post_dish = (Button) findViewById(R.id.post);
+        btnTang = findViewById(R.id.btn_tangsoluong);
+        btnGiam = findViewById(R.id.btn_giamsoluong);
+        tvSL = findViewById(R.id.idsl);
         Fauth = FirebaseAuth.getInstance();
         databaseReference = firebaseDatabase.getInstance().getReference("FoodDetails");
+        tanggiam();
 
         try {
             String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -100,7 +108,8 @@ public class chef_postDish extends AppCompatActivity {
                         public void onClick(View v) {
                             dishes = Dishes.getSelectedItem().toString().trim();
                             descrption = desc.getEditText().getText().toString().trim();
-                            quantity = qty.getEditText().getText().toString().trim();
+//                            quantity = qty.getEditText().getText().toString().trim();
+                            quantity= tvSL.getText().toString().trim();
                             price = pri.getEditText().getText().toString().trim();
 
                             if(isValid()){
@@ -120,7 +129,30 @@ public class chef_postDish extends AppCompatActivity {
         }
 
     }
+    public void tanggiam()
+    {
 
+        btnTang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int sl = Integer.parseInt(tvSL.getText().toString());
+                sl = sl + 1;
+                Log.e("tang",String.valueOf(sl));
+                tvSL.setText(String.valueOf(sl));
+            }
+        });
+        btnGiam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int sl1 = Integer.parseInt(tvSL.getText().toString());
+                if(sl1 >0){
+                    sl1 = sl1 - 1;
+                    Log.e("giam",String.valueOf(sl1));
+                    tvSL.setText(String.valueOf(sl1));
+                }
+            }
+        });
+    }
     private void uploadImage() {
 
         if(imageuri != null){
@@ -172,8 +204,8 @@ public class chef_postDish extends AppCompatActivity {
 
         desc.setErrorEnabled(false);
         desc.setError("");
-        qty.setErrorEnabled(false);
-        qty.setError("");
+//        qty.setErrorEnabled(false);
+//        qty.setError("");
         pri.setErrorEnabled(false);
         pri.setError("");
 
@@ -185,12 +217,12 @@ public class chef_postDish extends AppCompatActivity {
             desc.setError(null);
             isValidDescription=true;
         }
-        if(TextUtils.isEmpty(quantity)){
-            qty.setErrorEnabled(true);
-            qty.setError("Nhập số lượng mặt hàng");
-        }else{
-            isValidQuantity=true;
-        }
+//        if(TextUtils.isEmpty(quantity)){
+//            qty.setErrorEnabled(true);
+//            qty.setError("Nhập số lượng mặt hàng");
+//        }else{
+//            isValidQuantity=true;
+//        }
         if(TextUtils.isEmpty(price)){
             pri.setErrorEnabled(true);
             pri.setError("Vui lòng đề cập đến giá");

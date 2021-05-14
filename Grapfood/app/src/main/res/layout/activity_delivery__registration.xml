@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/img3"
-    tools:context="activity.Delivery_Registration">
+    tools:context=".activity.activity.Delivery_Registration">
 
     <ScrollView
         android:layout_width="280dp"
@@ -131,7 +131,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="140 Lê trọng tấn"
+                    android:hint="Số nhà 140"
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -144,7 +144,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Khu vực"
+                    android:hint="Tên đường: Lê Trọng Tấn"
                     android:inputType="textMultiLine" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -183,10 +183,11 @@
                 android:text="Thành phố" />
 
             <Spinner
-                android:id="@+id/City"
+                android:id="@+id/Citys"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp" />
+                android:layout_marginTop="5dp"
+                android:entries="@array/Citys"/>
 
             <Button
                 android:id="@+id/Signupp"

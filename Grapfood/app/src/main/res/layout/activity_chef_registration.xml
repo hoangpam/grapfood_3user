@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/img3"
-    tools:context="activity.ChefRegistration">
+    tools:context=".activity.activity.ChefRegistration">
 
     <ScrollView
         android:layout_width="269dp"
@@ -131,7 +131,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="140 A1"
+                    android:hint="Số nhà: 140 A1"
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -144,7 +144,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Lê Trọng Tấn"
+                    android:hint="Tên đường: Lê Trọng Tấn"
                     android:inputType="textMultiLine" />
             </com.google.android.material.textfield.TextInputLayout>
 
