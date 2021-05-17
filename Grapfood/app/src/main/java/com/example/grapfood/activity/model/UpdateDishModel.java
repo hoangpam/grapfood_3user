@@ -1,38 +1,30 @@
 package com.example.grapfood.activity.model;
 
 public class UpdateDishModel {
-    String Dishes,RandomUID,Description,Quantity,Price,ImageURL,ChefId;
+    String ChefId,Description,Dishes,ImageURL,Price,Quantity,RandomUID;
 
     // Press Alt+insert
 
-    public UpdateDishModel(String dishes, String randomUID, String description, String quantity, String price, String imageURL, String chefId) {
-        Dishes = dishes;
-        RandomUID = randomUID;
-        Description = description;
-        Quantity = quantity;
-        Price = price;
-        ImageURL = imageURL;
+
+    public UpdateDishModel(String chefId, String description, String dishes, String imageURL, String price, String quantity, String randomUID) {
         ChefId = chefId;
-    }
-
-    public UpdateDishModel(){
-
-    }
-
-    public String getDishes() {
-        return Dishes;
-    }
-
-    public void setDishes(String dishes) {
+        Description = description;
         Dishes = dishes;
-    }
-
-    public String getRandomUID() {
-        return RandomUID;
-    }
-
-    public void setRandomUID(String randomUID) {
+        ImageURL = imageURL;
+        Price = price;
+        Quantity = quantity;
         RandomUID = randomUID;
+    }
+
+    public UpdateDishModel() {
+    }
+
+    public String getChefId() {
+        return ChefId;
+    }
+
+    public void setChefId(String chefId) {
+        ChefId = chefId;
     }
 
     public String getDescription() {
@@ -43,20 +35,12 @@ public class UpdateDishModel {
         Description = description;
     }
 
-    public String getQuantity() {
-        return Quantity;
+    public String getDishes() {
+        return Dishes;
     }
 
-    public void setQuantity(String quantity) {
-        Quantity = quantity;
-    }
-
-    public String getPrice() {
-        return Price;
-    }
-
-    public void setPrice(String price) {
-        Price = price;
+    public void setDishes(String dishes) {
+        Dishes = dishes;
     }
 
     public String getImageURL() {
@@ -67,11 +51,27 @@ public class UpdateDishModel {
         ImageURL = imageURL;
     }
 
-    public String getChefId() {
-        return ChefId;
+    public String getPrice() {
+        return Price;
     }
 
-    public void setChefId(String chefId) {
-        ChefId = chefId;
+    public void setPrice(String price) {
+        Price = price;
+    }
+
+    public String getQuantity() {
+        return Quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        Quantity = quantity;
+    }
+
+    public String getRandomUID() {
+        return RandomUID;
+    }
+
+    public void setRandomUID(String randomUID) {
+        RandomUID = randomUID;
     }
 }

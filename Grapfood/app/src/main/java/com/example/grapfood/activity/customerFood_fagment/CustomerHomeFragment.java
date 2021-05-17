@@ -1,6 +1,7 @@
 package com.example.grapfood.activity.customerFood_fagment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,8 @@ import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -32,27 +35,32 @@ import javax.annotation.Nullable;
 public class CustomerHomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     RecyclerView recyclerView;
-    private List<UpdateDishModel> updateDishModelList;
-    private CustomerHomeAdapter adapter;
+    List<UpdateDishModel> updateDishModelList;
+    CustomerHomeAdapter adapter;
     String State,City,Area;
     DatabaseReference dataa,databaseReference;
     SwipeRefreshLayout swipeRefreshLayout;
+    public CustomerHomeFragment()
+    {
 
+    }
+//    String ID;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_customerhome, null);
-        getActivity().setTitle("Home");
+        getActivity().setTitle("Trang chủ");
         recyclerView = v.findViewById(R.id.recycle_menu);
         recyclerView.setHasFixedSize(true);
         Animation animation = AnimationUtils.loadAnimation(getContext(),R.anim.move);
         recyclerView.startAnimation(animation);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        updateDishModelList = new ArrayList<>();
+        updateDishModelList = new ArrayList<UpdateDishModel>();
         swipeRefreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.swipelayout);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimaryDark,R.color.Red);
 
+//        ID = getActivity().getIntent().getStringExtra("Dish");
         swipeRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
@@ -97,9 +105,14 @@ public class CustomerHomeFragment extends Fragment implements SwipeRefreshLayout
                     for(DataSnapshot snapshot2 : snapshot1.getChildren()){
                         UpdateDishModel updateDishModel = snapshot2.getValue(UpdateDishModel.class);
                         updateDishModelList.add(updateDishModel);
+                        String idtam = updateDishModel.getChefId();
+                        Log.e("idtam", idtam);
                     }
                 }
                 adapter = new CustomerHomeAdapter(getContext(),updateDishModelList);
+                RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 1);
+                recyclerView.setLayoutManager(mLayoutManager);
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
                 recyclerView.setAdapter(adapter);
                 swipeRefreshLayout.setRefreshing(false);
             }

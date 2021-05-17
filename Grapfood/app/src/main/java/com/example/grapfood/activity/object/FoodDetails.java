@@ -1,44 +1,29 @@
 package com.example.grapfood.activity.object;
 
 public class FoodDetails {
-    String Dishes,Quantity,Price,Description,ImageURL,RandomUID,Chefid;
+    String ChefId,Description,Dishes,ImageURL,Price,Quantity,RandomUID;
     // Alt+insert
 
-    public FoodDetails(String dishes, String quantity, String price, String description, String imageURL, String randomUID, String chefid) {
-        Dishes = dishes;
-        Quantity = quantity;
-        Price = price;
-        Description = description;
-        ImageURL = imageURL;
-        RandomUID = randomUID;
-        Chefid = chefid;
-    }
 
     public FoodDetails() {
     }
 
-    public String getDishes() {
-        return Dishes;
-    }
-
-    public void setDishes(String dishes) {
+    public FoodDetails(String chefId, String description, String dishes, String imageURL, String price, String quantity, String randomUID) {
+        ChefId = chefId;
+        Description = description;
         Dishes = dishes;
-    }
-
-    public String getQuantity() {
-        return Quantity;
-    }
-
-    public void setQuantity(String quantity) {
-        Quantity = quantity;
-    }
-
-    public String getPrice() {
-        return Price;
-    }
-
-    public void setPrice(String price) {
+        ImageURL = imageURL;
         Price = price;
+        Quantity = quantity;
+        RandomUID = randomUID;
+    }
+
+    public String getChefId() {
+        return ChefId;
+    }
+
+    public void setChefId(String chefId) {
+        ChefId = chefId;
     }
 
     public String getDescription() {
@@ -49,6 +34,14 @@ public class FoodDetails {
         Description = description;
     }
 
+    public String getDishes() {
+        return Dishes;
+    }
+
+    public void setDishes(String dishes) {
+        Dishes = dishes;
+    }
+
     public String getImageURL() {
         return ImageURL;
     }
@@ -57,19 +50,27 @@ public class FoodDetails {
         ImageURL = imageURL;
     }
 
+    public String getPrice() {
+        return Price;
+    }
+
+    public void setPrice(String price) {
+        Price = price;
+    }
+
+    public String getQuantity() {
+        return Quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        Quantity = quantity;
+    }
+
     public String getRandomUID() {
         return RandomUID;
     }
 
     public void setRandomUID(String randomUID) {
         RandomUID = randomUID;
-    }
-
-    public String getChefid() {
-        return Chefid;
-    }
-
-    public void setChefid(String chefid) {
-        Chefid = chefid;
     }
 }

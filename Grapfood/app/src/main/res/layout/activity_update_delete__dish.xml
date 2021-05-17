@@ -83,7 +83,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:hint="Số lượng"
             android:textColorHint="@color/black"
             android:inputType="text"/>

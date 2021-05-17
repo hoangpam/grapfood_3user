@@ -2,6 +2,8 @@ package com.example.grapfood.activity.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -23,6 +25,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.grapfood.R;
 import com.example.grapfood.activity.bottomnavigation.ChefFoodPanel_BottomNavigation;
+import com.example.grapfood.activity.chefFood_fragment.ChefHomeFragment;
 import com.example.grapfood.activity.model.UpdateDishModel;
 import com.example.grapfood.activity.object.Chef;
 import com.example.grapfood.activity.object.FoodDetails;
@@ -68,7 +71,7 @@ public class UpdateDelete_Dish extends AppCompatActivity {
     private ProgressDialog progressDialog;
     DatabaseReference dataa;
     String State,City,Area;
-
+    Fragment fragmenthientai;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,14 +118,14 @@ public class UpdateDelete_Dish extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(UpdateDelete_Dish.this);
-                        builder.setMessage("Are you sure you want to Delete Dish");
-                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        builder.setMessage("Bạn có chắc chắn muốn Xóa món ăn không");
+                        builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 firebaseDatabase.getInstance().getReference("FoodDetails").child(State).child(City).child(Area)
                                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(ID).removeValue();
                                 AlertDialog.Builder food = new AlertDialog.Builder(UpdateDelete_Dish.this);
-                                food.setMessage("Your Dish Has Been Deleted!");
+                                food.setMessage("Món ăn của bạn đã bị xóa!");
                                 food.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -133,7 +136,7 @@ public class UpdateDelete_Dish extends AppCompatActivity {
                                 alert.show();
                             }
                         });
-                        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.cancel();
@@ -154,7 +157,7 @@ public class UpdateDelete_Dish extends AppCompatActivity {
                         UpdateDishModel updateDishModel = snapshot.getValue(UpdateDishModel.class);
                         desc.getEditText().setText(updateDishModel.getDescription());
                         qty.getEditText().setText(updateDishModel.getQuantity());
-                        Dishname.setText("Dish name:"+updateDishModel.getDishes());
+                        Dishname.setText("Tên món ăn:"+updateDishModel.getDishes());
                         dishes=updateDishModel.getDishes();
                         pri.getEditText().setText(updateDishModel.getPrice());
                         Glide.with(UpdateDelete_Dish.this).load(updateDishModel.getImageURL()).into(imageButton);
@@ -190,18 +193,25 @@ public class UpdateDelete_Dish extends AppCompatActivity {
     private void updatedesc(String buri) {
 
         ChefId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        FoodDetails info = new FoodDetails(dishes,quantity,price,description,buri,ID,ChefId);
+        FoodDetails info = new FoodDetails(ChefId,description,dishes,buri,price,quantity,ID);
         firebaseDatabase.getInstance().getReference("FoodDetails").child(State).child(City).child(Area)
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(ID)
                 .setValue(info).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 progressDialog.dismiss();
-                Toast.makeText(UpdateDelete_Dish.this,"Dish Updates Successfully!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(UpdateDelete_Dish.this,"Cập nhật món ăn thành công!",Toast.LENGTH_SHORT).show();
             }
         });
+//        fragmenthientai = new ChefHomeFragment();
+//        loadFragment(fragmenthientai);
     }
-
+    //load fragment
+    public void loadFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_container, fragment);
+        transaction.commit();
+    }
     private void uploadImage() {
 
         if(imageuri != null){

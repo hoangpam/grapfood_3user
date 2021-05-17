@@ -12,13 +12,12 @@ import com.example.grapfood.R;
 
 import javax.annotation.Nullable;
 
-public class CustomerCartFragmnet extends Fragment {
+public class CutomerTrackFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_customercart, null);
-        getActivity().setTitle("Giỏ hàng");
+        View v = inflater.inflate(R.layout.fragment_customertrack, null);
+        getActivity().setTitle("Theo dõi");
         return v;
     }
-
 }

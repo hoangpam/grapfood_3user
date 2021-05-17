@@ -3,11 +3,14 @@ package com.example.grapfood.activity.bottomnavigation;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 
 import com.example.grapfood.R;
+import com.example.grapfood.activity.chefFood_fragment.ChefHomeFragment;
 import com.example.grapfood.activity.customerFood_fagment.CustomerCartFragmnet;
 import com.example.grapfood.activity.customerFood_fagment.CustomerHomeFragment;
 import com.example.grapfood.activity.customerFood_fagment.CustomerOrdersFragment;
@@ -19,12 +22,17 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class DeliveryFoodPanel_BottomNavigation extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
+    Fragment fragmenthientai;
+    FrameLayout layoutHost;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delivery_food_panel__bottom_navigation);
         BottomNavigationView navigationView = findViewById(R.id.bottom_navigation_devivery);
         navigationView.setOnNavigationItemSelectedListener(this);
+        layoutHost = findViewById(R.id.fragment_container);
+        fragmenthientai = new DeliveryProfile();
+        loadFragment(fragmenthientai);
     }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -56,5 +64,10 @@ public class DeliveryFoodPanel_BottomNavigation extends AppCompatActivity implem
             return true;
         }
         return false;
+    }
+    public void loadFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.commit();
     }
 }

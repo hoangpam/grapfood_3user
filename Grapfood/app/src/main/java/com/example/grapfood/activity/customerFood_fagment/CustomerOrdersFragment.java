@@ -17,7 +17,7 @@ public class CustomerOrdersFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_customerorders,null);
-        getActivity().setTitle("Orders");
+        getActivity().setTitle("Đơn hàng");
         return v;
     }
 }

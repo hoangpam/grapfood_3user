@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                         });
                     }else{
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                        builder.setMessage("Kiểm tra xem bạn đã xác minh chi tiết của mình chưa, nếu không, vui lòng xác minh");
+                        builder.setMessage("Kiểm tra xem bạn đã xác minh Gmail và OTP của mình chưa, nếu không, vui lòng xác minh");
                         builder.setCancelable(false);
                         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override

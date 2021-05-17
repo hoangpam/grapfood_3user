@@ -5,10 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,10 +62,11 @@ public class Cheflogin extends AppCompatActivity {
 
             Fauth = FirebaseAuth.getInstance();
 
+
             Signin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+//                    letTheUserLoggedIn(v);
                     emailid = email.getEditText().getText().toString().trim();
                     pwd = pass.getEditText().getText().toString().trim();
 
@@ -93,7 +98,7 @@ public class Cheflogin extends AppCompatActivity {
                                     }
                                 }else{
                                     mDialog.dismiss();
-                                    ReusableCodeForAll.ShowAlert(Cheflogin.this,"Error",task.getException().getMessage());
+                                    ReusableCodeForAll.ShowAlert(Cheflogin.this,"Kết nối của bạn đang bị lỗi",task.getException().getMessage());
                                 }
                             }
                         });
@@ -103,6 +108,7 @@ public class Cheflogin extends AppCompatActivity {
             signup.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+//                    letTheUserLoggedIn(v);
                     startActivity(new Intent(Cheflogin.this,ChefRegistration.class));
                     finish();
                 }
@@ -110,12 +116,14 @@ public class Cheflogin extends AppCompatActivity {
             Forgotpassword.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    letTheUserLoggedIn(v);
                     showForgotPassDialog();
                 }
             });
             Signinphone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+//                    letTheUserLoggedIn(v);
                     startActivity(new Intent(Cheflogin.this,Chefloginphone.class));
                     finish();
                 }
@@ -204,5 +212,50 @@ public class Cheflogin extends AppCompatActivity {
         }
         isvalid=(isvalidemail && isvalidpassword)?true:false;
         return isvalid;
+    }
+    //kiểm tra kết nối internet hay chưa
+//    Check
+//    Internet
+//    Connecttion
+    public void letTheUserLoggedIn(View v)
+    {
+        if(!isConnected(this))
+        {
+            showCustomDialog();
+        }
+    }
+    private boolean isConnected(Cheflogin login )
+    {
+        ConnectivityManager connectivityManager = (ConnectivityManager) login.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo wifiConn = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo mobileConn = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+        if((wifiConn != null && wifiConn.isConnected() )|| (mobileConn != null && mobileConn.isConnected()))
+        {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    //hiển thị dòng lệnh khi không có internet
+    private  void showCustomDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Vui lòng kiểm tar lại kết nôi mạng của bạn <!>")
+                .setCancelable(false)
+                .setPositiveButton("Kết nối", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity( new Intent(Settings.ACTION_SETTINGS));
+                    }
+                })
+                .setNegativeButton("Huỷ", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent(getApplicationContext(), Cheflogin.class));
+                        finish();
+                    }
+                });
     }
 }

@@ -3,9 +3,11 @@ package com.example.grapfood.activity.bottomnavigation;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 
 import com.example.grapfood.R;
 import com.example.grapfood.activity.chefFood_fragment.ChefHomeFragment;
@@ -16,12 +18,18 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class ChefFoodPanel_BottomNavigation extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
+    Fragment fragmenthientai;
+    FrameLayout layoutHost;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chef_food_panel__bottom_navigation);
         BottomNavigationView navigationView = findViewById(R.id.chef_bottom_navigation);
         navigationView.setOnNavigationItemSelectedListener(this);
+        layoutHost = findViewById(R.id.frame_container);
+        fragmenthientai = new ChefHomeFragment();
+        loadFragment(fragmenthientai);
     }
 
     @Override
@@ -51,5 +59,11 @@ public class ChefFoodPanel_BottomNavigation extends AppCompatActivity implements
             return true;
         }
         return false;
+    }
+
+    public void loadFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_container, fragment);
+        transaction.commit();
     }
 }

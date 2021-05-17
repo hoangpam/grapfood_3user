@@ -50,7 +50,7 @@ public class CustomerHomeAdapter extends RecyclerView.Adapter<CustomerHomeAdapte
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, Food_details.class);
-//                intent.putExtra("key",drinks.getIdDrink());
+                intent.putExtra("key",updateDishModel.getChefId());
                 mContext.startActivity(intent);
             }
         });

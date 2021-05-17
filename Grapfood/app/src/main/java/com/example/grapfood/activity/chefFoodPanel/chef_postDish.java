@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -23,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.grapfood.R;
+import com.example.grapfood.activity.chefFood_fragment.ChefHomeFragment;
 import com.example.grapfood.activity.object.Chef;
 import com.example.grapfood.activity.object.FoodDetails;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -65,6 +68,7 @@ public class chef_postDish extends AppCompatActivity {
     String ChefId , RandomUID , State, City , Area;
     int dem = 0;
     TextView tvSL;
+    Fragment fragmenthientai;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -169,7 +173,7 @@ public class chef_postDish extends AppCompatActivity {
                     ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            FoodDetails info = new FoodDetails(dishes, quantity, price, descrption, String.valueOf(uri), RandomUID, ChefId);
+                            FoodDetails info = new FoodDetails(ChefId, descrption,dishes, String.valueOf(uri), price, quantity, RandomUID );
                             firebaseDatabase.getInstance().getReference("FoodDetails").child(State).child(City).child(Area).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(RandomUID)
                                     .setValue(info).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
@@ -179,7 +183,8 @@ public class chef_postDish extends AppCompatActivity {
                                     Toast.makeText(chef_postDish.this, "Món ăn đã được đăng thành công!", Toast.LENGTH_SHORT).show();
                                 }
                             });
-
+                            fragmenthientai = new ChefHomeFragment();
+                            loadFragment(fragmenthientai);
                         }
                     });
                 }
@@ -204,7 +209,12 @@ public class chef_postDish extends AppCompatActivity {
 //        }
 
     }
-
+    //load fragment
+    public void loadFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_container, fragment);
+        transaction.commit();
+    }
     private boolean isValid() {
 
         desc.setErrorEnabled(false);
