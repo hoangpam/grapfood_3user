@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.example.grapfood.R;
 import com.example.grapfood.activity.activity.Food_details;
 import com.example.grapfood.activity.model.UpdateDishModel;
+import com.example.grapfood.activity.object.FoodDetails;
 import com.google.firebase.database.DatabaseReference;
 import android.content.Context;
 
@@ -24,12 +25,12 @@ import java.util.List;
 public class CustomerHomeAdapter extends RecyclerView.Adapter<CustomerHomeAdapter.ViewHolder> {
 
     private Context mContext;
-    private List<UpdateDishModel>updateDishModellist;
-    DatabaseReference databaseReference;
+    private List<FoodDetails> foodDetailsList;
 
-    public CustomerHomeAdapter(Context mContext , List<UpdateDishModel>updateDishModelslist){
 
-        this.updateDishModellist = updateDishModelslist;
+    public CustomerHomeAdapter(Context mContext , List<FoodDetails>foodDetails){
+
+        this.foodDetailsList = foodDetails;
         this.mContext = mContext;
     }
 
@@ -37,33 +38,33 @@ public class CustomerHomeAdapter extends RecyclerView.Adapter<CustomerHomeAdapte
     @NonNull
     @Override
     public CustomerHomeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.customer_menudish,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.itemgoimon,parent,false);
         return new CustomerHomeAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CustomerHomeAdapter.ViewHolder holder, int position) {
 
-        final UpdateDishModel updateDishModel = updateDishModellist.get(position);
-        Glide.with(mContext).load(updateDishModel.getImageURL()).into(holder.imageView);
+        final FoodDetails foodDetails = foodDetailsList.get(position);
+        Glide.with(mContext).load(foodDetails.getImageURL()).into(holder.imageView);
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, Food_details.class);
-                intent.putExtra("key",updateDishModel.getChefId());
+                intent.putExtra("key",foodDetails.getChefId());
                 mContext.startActivity(intent);
             }
         });
-        holder.Dishname.setText(updateDishModel.getPrice());
-        updateDishModel.getRandomUID();
-        updateDishModel.getChefId();
-        holder.Price.setText("Giá: "+updateDishModel.getPrice()+"VND");
+        holder.Dishname.setText(foodDetails.getDishes());
+        foodDetails.getRandomUID();
+        foodDetails.getChefId();
+        holder.Price.setText("Giá: "+foodDetails.getPrice()+" VND");
 
     }
 
     @Override
     public int getItemCount() {
-        return updateDishModellist.size();
+        return foodDetailsList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -73,10 +74,10 @@ public class CustomerHomeAdapter extends RecyclerView.Adapter<CustomerHomeAdapte
         RelativeLayout relativeLayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            imageView = itemView.findViewById(R.id.menu_image);
-            Dishname = itemView.findViewById(R.id.dishname);
-            Price = itemView.findViewById(R.id.dishprice);
+            relativeLayout = itemView.findViewById(R.id.relative_doan);
+            imageView = itemView.findViewById(R.id.imgDoAn);
+            Dishname = itemView.findViewById(R.id.tvTen);
+            Price = itemView.findViewById(R.id.txtgia1);
         }
     }
 }

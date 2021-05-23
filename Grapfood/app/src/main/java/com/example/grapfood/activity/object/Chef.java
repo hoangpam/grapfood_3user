@@ -1,23 +1,28 @@
 package com.example.grapfood.activity.object;
 
+import android.location.Address;
+
 public class Chef {
-    String Emailid, Lname, Postcode, Password, ConfirmPassword ,Area, State,  Mobile, House,City, Fname;
+    String Area,City,CompleteAddress,ConnfirmPassword,EmailId,FirstName,House,LastName,MobileNo,NameShop,Password,State,ImageURL;
     String getSecureCode;
     // Press Alt+Insert
 
 
-    public Chef(String emailid, String lname, String postcode, String password, String confirmPassword, String area, String state, String mobile, String house, String city, String fname) {
-        Emailid = emailid;
-        Lname = lname;
-        Postcode = postcode;
-        Password = password;
-        ConfirmPassword = confirmPassword;
+    public Chef(String area, String city, String completeAddress, String connfirmPassword, String emailId, String firstName, String house, String imageURL, String lastName, String mobileNo, String nameShop, String password, String state) {
         Area = area;
-        State = state;
-        Mobile = mobile;
-        House = house;
         City = city;
-        Fname = fname;
+        CompleteAddress = completeAddress;
+        ConnfirmPassword = connfirmPassword;
+        EmailId = emailId;
+        FirstName = firstName;
+        House = house;
+        LastName = lastName;
+        MobileNo = mobileNo;
+        NameShop = nameShop;
+        Password = password;
+        State = state;
+        this.ImageURL = imageURL;
+
     }
 
     public Chef() {
@@ -31,76 +36,12 @@ public class Chef {
         this.getSecureCode = getSecureCode;
     }
 
-    public String getEmailid() {
-        return Emailid;
-    }
-
-    public void setEmailid(String emailid) {
-        Emailid = emailid;
-    }
-
-    public String getLname() {
-        return Lname;
-    }
-
-    public void setLname(String lname) {
-        Lname = lname;
-    }
-
-    public String getPostcode() {
-        return Postcode;
-    }
-
-    public void setPostcode(String postcode) {
-        Postcode = postcode;
-    }
-
-    public String getPassword() {
-        return Password;
-    }
-
-    public void setPassword(String password) {
-        Password = password;
-    }
-
-    public String getConfirmPassword() {
-        return ConfirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        ConfirmPassword = confirmPassword;
-    }
-
     public String getArea() {
         return Area;
     }
 
     public void setArea(String area) {
         Area = area;
-    }
-
-    public String getState() {
-        return State;
-    }
-
-    public void setState(String state) {
-        State = state;
-    }
-
-    public String getMobile() {
-        return Mobile;
-    }
-
-    public void setMobile(String mobile) {
-        Mobile = mobile;
-    }
-
-    public String getHouse() {
-        return House;
-    }
-
-    public void setHouse(String house) {
-        House = house;
     }
 
     public String getCity() {
@@ -111,11 +52,95 @@ public class Chef {
         City = city;
     }
 
-    public String getFname() {
-        return Fname;
+    public String getCompleteAddress() {
+        return CompleteAddress;
     }
 
-    public void setFname(String fname) {
-        Fname = fname;
+    public void setCompleteAddress(String completeAddress) {
+        CompleteAddress = completeAddress;
+    }
+
+    public String getConnfirmPassword() {
+        return ConnfirmPassword;
+    }
+
+    public void setConnfirmPassword(String connfirmPassword) {
+        ConnfirmPassword = connfirmPassword;
+    }
+
+    public String getEmailId() {
+        return EmailId;
+    }
+
+    public void setEmailId(String emailId) {
+        EmailId = emailId;
+    }
+
+    public String getFirstName() {
+        return FirstName;
+    }
+
+    public void setFirstName(String firstName) {
+        FirstName = firstName;
+    }
+
+    public String getHouse() {
+        return House;
+    }
+
+    public void setHouse(String house) {
+        House = house;
+    }
+
+    public String getLastName() {
+        return LastName;
+    }
+
+    public void setLastName(String lastName) {
+        LastName = lastName;
+    }
+
+    public String getMobileNo() {
+        return MobileNo;
+    }
+
+    public void setMobileNo(String mobileNo) {
+        MobileNo = mobileNo;
+    }
+
+    public String getNameShop() {
+        return NameShop;
+    }
+
+    public void setNameShop(String nameShop) {
+        NameShop = nameShop;
+    }
+
+    public String getPassword() {
+        return Password;
+    }
+
+    public void setPassword(String password) {
+        Password = password;
+    }
+
+    public String getState() {
+        return State;
+    }
+
+    public void setState(String state) {
+        State = state;
+    }
+
+    public String getImageURL() {
+        return ImageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.ImageURL = imageURL;
+    }
+
+    public String getGetSecureCode() {
+        return getSecureCode;
     }
 }

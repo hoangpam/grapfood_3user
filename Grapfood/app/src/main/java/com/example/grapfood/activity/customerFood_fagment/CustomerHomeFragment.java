@@ -17,9 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.grapfood.R;
+import com.example.grapfood.activity.activity.ReusableCodeForAll;
 import com.example.grapfood.activity.adapter_defFood.CustomerHomeAdapter;
 import com.example.grapfood.activity.model.UpdateDishModel;
 import com.example.grapfood.activity.object.Customer;
+import com.example.grapfood.activity.object.FoodDetails;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,7 +37,7 @@ import javax.annotation.Nullable;
 public class CustomerHomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     RecyclerView recyclerView;
-    List<UpdateDishModel> updateDishModelList;
+    List<FoodDetails> foodDetailsList;
     CustomerHomeAdapter adapter;
     String State,City,Area;
     DatabaseReference dataa,databaseReference;
@@ -55,7 +57,7 @@ public class CustomerHomeFragment extends Fragment implements SwipeRefreshLayout
         Animation animation = AnimationUtils.loadAnimation(getContext(),R.anim.move);
         recyclerView.startAnimation(animation);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        updateDishModelList = new ArrayList<UpdateDishModel>();
+        foodDetailsList = new ArrayList<FoodDetails>();
         swipeRefreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.swipelayout);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimaryDark,R.color.Red);
@@ -100,17 +102,17 @@ public class CustomerHomeFragment extends Fragment implements SwipeRefreshLayout
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                updateDishModelList.clear();
+                foodDetailsList.clear();
                 for (DataSnapshot snapshot1 : snapshot.getChildren()){
                     for(DataSnapshot snapshot2 : snapshot1.getChildren()){
-                        UpdateDishModel updateDishModel = snapshot2.getValue(UpdateDishModel.class);
-                        updateDishModelList.add(updateDishModel);
-                        String idtam = updateDishModel.getChefId();
+                        FoodDetails foodDetails = snapshot2.getValue(FoodDetails.class);
+                        foodDetailsList.add(foodDetails);
+                        String idtam = foodDetails.getChefId();
                         Log.e("idtam", idtam);
                     }
                 }
-                adapter = new CustomerHomeAdapter(getContext(),updateDishModelList);
-                RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 1);
+                adapter = new CustomerHomeAdapter(getContext(),foodDetailsList);
+                RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
                 recyclerView.setLayoutManager(mLayoutManager);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
                 recyclerView.setAdapter(adapter);

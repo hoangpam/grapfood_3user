@@ -39,10 +39,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
-            android:background="#FF5722"
+            android:background="@drawable/shape_rect01"
             android:text="Kết nối với tư cách cửa hàng"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp" />
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:drawableLeft="@drawable/ic_shop"/>
 
         <Button
             android:id="@+id/customer"
@@ -50,9 +51,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
-            android:background="#FF5722"
+            android:background="@drawable/shape_rect01"
+            android:drawableLeft="@drawable/ic_user_hh"
             android:text="Kết nối với tư cách khách hàng"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:textSize="18sp" />
 
         <Button
@@ -62,9 +64,10 @@
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="30dp"
-            android:background="#FF5722"
+            android:background="@drawable/shape_rect01"
             android:text="Kết nối với tư giao hàng"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp" />
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:drawableLeft="@drawable/ic_delivery"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

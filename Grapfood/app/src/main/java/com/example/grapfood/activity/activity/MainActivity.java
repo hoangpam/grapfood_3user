@@ -10,6 +10,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,10 +36,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //make fullscreen
+        //làm cho toàn màn hình
+        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
         imageView = (ImageView) findViewById(R.id.imageView);
         textView = (TextView) findViewById(R.id.textView7);
-
+//        set text movement after 1 period
+        //thiết lập chuyển động chữ sau 1 khoảng thời gian
         imageView.animate().alpha(0f).setDuration(0);
         textView.animate().alpha(0f).setDuration(0);
 
@@ -53,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+//        store your account in your device
+        //lưu trữ tài khoản trong máy
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

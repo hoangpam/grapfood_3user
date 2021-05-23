@@ -149,7 +149,7 @@ public class Delivery_Login extends AppCompatActivity {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             Customer user = dataSnapshot.child(edPhone.getText().toString()).getValue(Customer.class);
-                            if (user.getSecureCode().equals(edSecureCode.getText().toString())){
+                            if (user.getPincode().equals(edSecureCode.getText().toString())){
                                 Toast.makeText(Delivery_Login.this, "Mật khẩu của bạn "+ user.getPassword(), Toast.LENGTH_SHORT).show();
                             }else {
                                 Toast.makeText(Delivery_Login.this, "Mã bảo mật sai !", Toast.LENGTH_SHORT).show();

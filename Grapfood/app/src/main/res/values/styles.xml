@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light">
+<!--    Chủ đề ứng dụng cơ bản-->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/green</item>
         <item name="colorPrimaryDark">@color/Black</item>
         <item name="colorAccent">@color/darkgray</item>
         <item name="pinViewStyle">@style/PinWidget.PinView</item>
     </style>
-
-    <style name="AppThemeNoActionbar" parent="AppTheme">
+    <!--theme without actionbar-->
+<!--    chủ đề không có thanh tác vụ-->
+    <style name="AppTheme.NoActionbar" >
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
     </style>

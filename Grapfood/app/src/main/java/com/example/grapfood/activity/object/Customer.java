@@ -1,62 +1,40 @@
 package com.example.grapfood.activity.object;
 
 public class Customer {
-    String city,FirstName,LastName,Password,ConfirmPassword,EmailId,MobileNo,State,Area,LocalAddress;
-    private  String secureCode;
+    String Area,City,ConfirmPassword,EmailId,FirstName,LastName,LocalAddress,MobileNo,Password,Pincode,State;
     public Customer(){
     }
     // Press Alt+insert
 
 
-    public void setSecureCode(String secureCode) {
-        this.secureCode = secureCode;
-    }
-
-    public Customer(String city, String firstName, String lastName, String password, String confirmPassword, String emailId, String mobileNo, String state, String area, String localAddress) {
-        this.city = city;
-        FirstName = firstName;
-        LastName = lastName;
-        Password = password;
+    public Customer(String area, String city, String confirmPassword, String emailId, String firstName, String lastName, String localAddress, String mobileNo, String password, String pincode, String state) {
+        Area = area;
+        City = city;
         ConfirmPassword = confirmPassword;
         EmailId = emailId;
-        MobileNo = mobileNo;
-        State = state;
-        Area = area;
+        FirstName = firstName;
+        LastName = lastName;
         LocalAddress = localAddress;
+        MobileNo = mobileNo;
+        Password = password;
+        Pincode = pincode;
+        State = state;
     }
-    public String getSecureCode() {
-        return secureCode;
+
+    public String getArea() {
+        return Area;
     }
+
+    public void setArea(String area) {
+        Area = area;
+    }
+
     public String getCity() {
-        return city;
+        return City;
     }
 
     public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getFirstName() {
-        return FirstName;
-    }
-
-    public void setFirstName(String firstName) {
-        FirstName = firstName;
-    }
-
-    public String getLastName() {
-        return LastName;
-    }
-
-    public void setLastName(String lastName) {
-        LastName = lastName;
-    }
-
-    public String getPassword() {
-        return Password;
-    }
-
-    public void setPassword(String password) {
-        Password = password;
+        City = city;
     }
 
     public String getConfirmPassword() {
@@ -75,28 +53,20 @@ public class Customer {
         EmailId = emailId;
     }
 
-    public String getMobileNo() {
-        return MobileNo;
+    public String getFirstName() {
+        return FirstName;
     }
 
-    public void setMobileNo(String mobileNo) {
-        MobileNo = mobileNo;
+    public void setFirstName(String firstName) {
+        FirstName = firstName;
     }
 
-    public String getState() {
-        return State;
+    public String getLastName() {
+        return LastName;
     }
 
-    public void setState(String state) {
-        State = state;
-    }
-
-    public String getArea() {
-        return Area;
-    }
-
-    public void setArea(String area) {
-        Area = area;
+    public void setLastName(String lastName) {
+        LastName = lastName;
     }
 
     public String getLocalAddress() {
@@ -105,5 +75,37 @@ public class Customer {
 
     public void setLocalAddress(String localAddress) {
         LocalAddress = localAddress;
+    }
+
+    public String getMobileNo() {
+        return MobileNo;
+    }
+
+    public void setMobileNo(String mobileNo) {
+        MobileNo = mobileNo;
+    }
+
+    public String getPassword() {
+        return Password;
+    }
+
+    public void setPassword(String password) {
+        Password = password;
+    }
+
+    public String getPincode() {
+        return Pincode;
+    }
+
+    public void setPincode(String pincode) {
+        Pincode = pincode;
+    }
+
+    public String getState() {
+        return State;
+    }
+
+    public void setState(String state) {
+        State = state;
     }
 }
