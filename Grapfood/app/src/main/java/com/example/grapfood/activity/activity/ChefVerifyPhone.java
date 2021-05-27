@@ -21,6 +21,7 @@ import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthSettings;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
@@ -35,7 +36,8 @@ public class ChefVerifyPhone extends AppCompatActivity {
     TextView txt;
     EditText entercode;
     String phoneno;
-    String smsCode = "7000";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +56,7 @@ public class ChefVerifyPhone extends AppCompatActivity {
 
         sendverificationcode(phoneno);
 
+
         verify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,7 +69,12 @@ public class ChefVerifyPhone extends AppCompatActivity {
                     entercode.requestFocus();
                     return;
                 }
+
+                Toast.makeText(ChefVerifyPhone.this, "Đang gửi code qua máy bạn đợi tí...", Toast.LENGTH_SHORT).show();
                 verifyCode(code);
+
+
+
             }
         });
 
@@ -94,6 +102,8 @@ public class ChefVerifyPhone extends AppCompatActivity {
         Resend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Toast.makeText(ChefVerifyPhone.this, "Đang gửi code qua máy của bạn đợi tí...", Toast.LENGTH_SHORT).show();
 
                 Resend.setVisibility(View.INVISIBLE);
                 Resendotp(phoneno);
@@ -126,35 +136,7 @@ public class ChefVerifyPhone extends AppCompatActivity {
     private void Resendotp(String phonenum) {
         sendverificationcode(phonenum);
     }
-//    private void sendverificationcode(String number)
-//    {
-//        FirebaseAuthSettings firebaseAuthSettings = FAuth.getFirebaseAuthSettings();
-//
-//// Configure faking the auto-retrieval with the whitelisted numbers.
-//        firebaseAuthSettings.setAutoRetrievedSmsCodeForPhoneNumber(number, smsCode);
-//
-//        PhoneAuthOptions options = PhoneAuthOptions.newBuilder(FAuth)
-//                .setPhoneNumber(number)
-//                .setTimeout(60L, TimeUnit.SECONDS)
-//                .setActivity(this)
-//                .setCallbacks(new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-//                    @Override
-//                    public void onVerificationCompleted(PhoneAuthCredential credential) {
-//                        // Instant verification is applied and a credential is directly returned.
-//                        // ...
-//
-//                    }
-//
-//                    @Override
-//                    public void onVerificationFailed(@NonNull FirebaseException e) {
-//                        Toast.makeText(ChefVerifyPhone.this , e.getMessage(),Toast.LENGTH_LONG).show();
-//                    }
-//
-//                    // ...
-//                })
-//                .build();
-//        PhoneAuthProvider.verifyPhoneNumber(options);
-//    }
+
     private void sendverificationcode(String number) {
 
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
@@ -173,8 +155,10 @@ public class ChefVerifyPhone extends AppCompatActivity {
 
             String code = phoneAuthCredential.getSmsCode();
             if(code != null){
-                entercode.setText(code);  // Auto Verification
+                entercode.setText(code);  // Auto Verification // thiết lập tự đăng nhập thành công
+
                 verifyCode(code);
+
             }
         }
 

@@ -25,7 +25,70 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+<!--            border for registration-->
+            <!--            khung viền cho phần đăng ký-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60sp"
+                android:background="@drawable/shape_rect01"
+                android:padding="10sp">
 
+                <ImageButton
+                    android:id="@+id/backBN"
+                    android:layout_width="30sp"
+                    android:layout_height="30sp"
+                    android:src="@drawable/ic_back_white"
+                    android:background="@null"></ImageButton>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:text="Đăng ký"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white">
+
+                </TextView>
+                <ImageButton
+                    android:id="@+id/gpsBtn"
+                    android:layout_width="30sp"
+                    android:layout_height="30sp"
+                    android:layout_marginLeft="30sp"
+                    android:src="@drawable/ic_location"
+                    android:background="@null"/>
+            </LinearLayout>
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/shape_circle01"
+                android:padding="5dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_key_white"/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:clickable="true">
+                <com.blogspot.atifsoftwares.circularimageview.CircularImageView
+                    android:id="@+id/profileIv"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/img_avartar"
+                    app:c_background_color="@color/colorPrimary"
+                    app:c_border="true"
+                    app:c_border_color="#FF5722"
+                    app:c_border_width="5.5dp"
+                    app:c_shadow="true"
+                    app:c_shadow_color="#000"
+                    app:c_shadow_gravity="end"
+                    app:c_shadow_radius="5.5"
+
+                    />
+            </RelativeLayout>
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/Fname"
                 android:layout_width="match_parent"
@@ -35,8 +98,9 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_user_hh"
                     android:hint="Họ"
-                    android:inputType="text" />
+                    android:inputType="textMultiLine|textPersonName|textCapWords" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -49,8 +113,9 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_user_hh"
                     android:hint="Tên"
-                    android:inputType="text" />
+                    android:inputType="textMultiLine|textPersonName|textCapWords" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -132,8 +197,9 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_placeholder"
                     android:hint="Số nhà:140 "
-                    android:inputType="textMultiLine" />
+                    android:inputType="textMultiLine|textPersonName|textCapWords" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -145,51 +211,55 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_placeholder"
                     android:hint="Tên đường: Lê Trọng Tấn"
-                    android:inputType="textMultiLine" />
+                    android:inputType="textMultiLine|textPersonName|textCapWords" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/Pincode"
+                android:id="@+id/States1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="11dp">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <EditText
+                    android:id="@+id/edStates"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Mã Code"
-                    android:inputType="number" />
+                    android:drawableLeft="@drawable/ic_placeholder"
+                    android:hint="Quận/Huyện"
+                    android:inputType="textMultiLine|textPersonName|textCapWords" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/txt1"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/Citys1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Quận/huyện"
-                android:textSize="14sp" />
+                android:layout_marginTop="11dp">
 
-            <Spinner
-                android:id="@+id/Statee"
+                <EditText
+                    android:id="@+id/edCitys"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_placeholder"
+                    android:hint="Thành Phố"
+                    android:inputType="textMultiLine|textPersonName|textCapWords" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/completeAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:entries="@array/State" />
+                android:layout_marginTop="11dp">
 
-            <TextView
-                android:id="@+id/txt4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="11dp"
-                android:text="City" />
-
-            <Spinner
-                android:id="@+id/Citys"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:entries="@array/Citys"/>
-
+                <EditText
+                    android:id="@+id/edcompleteAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_placeholder"
+                    android:hint="Hoàn chỉnh địa chỉ"
+                    android:inputType="textMultiLine|textPersonName|textCapWords" />
+            </com.google.android.material.textfield.TextInputLayout>
             <Button
                 android:id="@+id/button"
                 android:layout_width="match_parent"

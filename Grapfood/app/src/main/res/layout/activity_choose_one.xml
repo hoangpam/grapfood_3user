@@ -19,7 +19,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.498">
-
+        <ImageButton
+            android:id="@+id/backBN"
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:src="@drawable/ic_back_white"
+            android:background="@drawable/shape_rect01"></ImageButton>
         <TextView
             android:id="@+id/textView"
 
@@ -69,5 +74,11 @@
             android:textColor="@color/white"
             android:textSize="18sp"
             android:drawableLeft="@drawable/ic_delivery"/>
+        <ImageView
+            android:id="@+id/imhienthi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_connection"
+            android:layout_gravity="center"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

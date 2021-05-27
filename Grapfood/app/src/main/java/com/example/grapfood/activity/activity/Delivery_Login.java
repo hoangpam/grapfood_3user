@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,7 @@ public class Delivery_Login extends AppCompatActivity {
     FirebaseAuth Fauth;
     String emailid,pwd;
     DatabaseReference table_User;
+    ImageButton btnBN;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +57,17 @@ public class Delivery_Login extends AppCompatActivity {
             Forgotpassword.setPaintFlags(Forgotpassword.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
             signup.setPaintFlags(signup.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
+            btnBN = (ImageButton) findViewById(R.id.backBN);
+            //mouse click event
+            //sự kiện click chuột
+            btnBN.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //trả về phía trước đó
+                    startActivity(new Intent(Delivery_Login.this,MainMenu.class));
+                    finish();
+                }
+            });
 
             Fauth = FirebaseAuth.getInstance();
 
@@ -70,7 +83,7 @@ public class Delivery_Login extends AppCompatActivity {
                         final ProgressDialog mDialog = new ProgressDialog(Delivery_Login.this);
                         mDialog.setCanceledOnTouchOutside(false);
                         mDialog.setCancelable(false);
-                        mDialog.setMessage("Sign In Please Wait.......");
+                        mDialog.setMessage("Đăng nhập Vui lòng đợi.......");
                         mDialog.show();
 
                         Fauth.signInWithEmailAndPassword(emailid,pwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -82,18 +95,18 @@ public class Delivery_Login extends AppCompatActivity {
 
                                     if(Fauth.getCurrentUser().isEmailVerified()){
                                         mDialog.dismiss();
-                                        Toast.makeText(Delivery_Login.this, "Congratulation! You Have Successfully Login", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(Delivery_Login.this, "Xin chúc mừng! Bạn đã đăng nhập thành công", Toast.LENGTH_SHORT).show();
                                         Intent Z = new Intent(Delivery_Login.this, DeliveryFoodPanel_BottomNavigation.class);
                                         startActivity(Z);
                                         finish();
 
                                     }else{
-                                        ReusableCodeForAll.ShowAlert(Delivery_Login.this,"Verification Failed","You Have Not Verified Your Email");
+                                        ReusableCodeForAll.ShowAlert(Delivery_Login.this,"Xác minh không hoàn thành","Bạn chưa xác minh Email của mình. Vui lòng kiểm tra Email");
 
                                     }
                                 }else{
                                     mDialog.dismiss();
-                                    ReusableCodeForAll.ShowAlert(Delivery_Login.this,"Error",task.getException().getMessage());
+                                    ReusableCodeForAll.ShowAlert(Delivery_Login.this,"Kết nối của bạn đang bị lỗi",task.getException().getMessage());
                                 }
                             }
                         });
@@ -174,7 +187,7 @@ public class Delivery_Login extends AppCompatActivity {
         });
         builder.show();
     }
-    String emailpattern  = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    String emailpattern  = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
 
     public boolean isValid(){
 
@@ -186,19 +199,19 @@ public class Delivery_Login extends AppCompatActivity {
         boolean isvalid=false,isvalidemail=false,isvalidpassword=false;
         if(TextUtils.isEmpty(emailid)){
             email.setErrorEnabled(true);
-            email.setError("Email is required");
+            email.setError("Email bắt buộc nhập");
         }else{
             if(emailid.matches(emailpattern)){
                 isvalidemail=true;
             }else{
                 email.setErrorEnabled(true);
-                email.setError("Invalid Email Address");
+                email.setError("Địa chỉ Email không hợp lệ");
             }
         }
         if(TextUtils.isEmpty(pwd)){
 
             pass.setErrorEnabled(true);
-            pass.setError("Password is Required");
+            pass.setError("Mật khẩu bắt buộc nhập");
         }else{
             isvalidpassword=true;
         }

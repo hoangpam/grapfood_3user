@@ -91,7 +91,7 @@ public class ChefProfileFragment extends Fragment implements View.OnClickListene
                 //kiem tra yêu cầu lấy data
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     //lấy dữ liệu
-                    String name = "" +  ds.child("First Name").getValue()+ ds.child("Last Name").getValue();
+                    String name = "" +  ds.child("FirstName").getValue()+ ds.child("LastName").getValue();
                     //đổ dữ liệu
                     ten.setText(name);
                 }

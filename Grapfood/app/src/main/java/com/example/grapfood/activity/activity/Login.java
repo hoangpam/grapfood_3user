@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,7 @@ public class Login extends AppCompatActivity {
     FirebaseAuth Fauth;
     String emailid,pwd;
     DatabaseReference table_User;
+    ImageButton btnBN;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +57,17 @@ public class Login extends AppCompatActivity {
             //gạch chân bên dưới
             Forgotpassword.setPaintFlags(Forgotpassword.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
             signup.setPaintFlags(signup.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
+            btnBN = (ImageButton) findViewById(R.id.backBN);
+            //mouse click event
+            //sự kiện click chuột
+            btnBN.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //trả về phía trước đó
+                    onBackPressed();
+                }
+            });
 
             Fauth = FirebaseAuth.getInstance();
 
@@ -87,12 +100,12 @@ public class Login extends AppCompatActivity {
                                         finish();
 
                                     }else{
-                                        ReusableCodeForAll.ShowAlert(Login.this,"Xác minh không hoàn thành","Bạn chưa xác minh Email của mình");
+                                        ReusableCodeForAll.ShowAlert(Login.this,"Xác minh không hoàn thành","Bạn chưa xác minh Email của mình. Vui lòng kiểm tra Email");
 
                                     }
                                 }else{
                                     mDialog.dismiss();
-                                    ReusableCodeForAll.ShowAlert(Login.this,"Error",task.getException().getMessage());
+                                    ReusableCodeForAll.ShowAlert(Login.this,"Kết nối của bạn đang bị lỗi",task.getException().getMessage());
                                 }
                             }
                         });
@@ -102,7 +115,7 @@ public class Login extends AppCompatActivity {
             signup.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(Login.this,Registration.class));
+                    startActivity(new Intent(Login.this,MainMenu.class));
                     finish();
                 }
             });
@@ -175,7 +188,7 @@ public class Login extends AppCompatActivity {
         });
         builder.show();
     }
-    String emailpattern  = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    String emailpattern  = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
 
     public boolean isValid(){
 
@@ -187,7 +200,7 @@ public class Login extends AppCompatActivity {
         boolean isvalid=false,isvalidemail=false,isvalidpassword=false;
         if(TextUtils.isEmpty(emailid)){
             email.setErrorEnabled(true);
-            email.setError("Email thì cần thiết");
+            email.setError("Email bắt buộc nhập");
         }else{
             if(emailid.matches(emailpattern)){
                 isvalidemail=true;
@@ -199,7 +212,7 @@ public class Login extends AppCompatActivity {
         if(TextUtils.isEmpty(pwd)){
 
             pass.setErrorEnabled(true);
-            pass.setError("Mật khẩu là bắt buộc");
+            pass.setError("Mật khẩu bắt buộc nhập");
         }else{
             isvalidpassword=true;
         }

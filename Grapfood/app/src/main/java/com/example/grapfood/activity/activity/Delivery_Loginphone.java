@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.grapfood.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,7 +23,7 @@ public class Delivery_Loginphone extends AppCompatActivity {
     CountryCodePicker cpp;
     FirebaseAuth Fauth;
     String number;
-
+    ImageButton btnBN;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +34,17 @@ public class Delivery_Loginphone extends AppCompatActivity {
         cpp=(CountryCodePicker)findViewById(R.id.countrycode);
         signinemail=(Button)findViewById(R.id.DbtnEmail);
         signup = (TextView)findViewById(R.id.Signupif);
+        btnBN = (ImageButton) findViewById(R.id.backBN);
+        //mouse click event
+        //sự kiện click chuột
+        btnBN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //trả về phía trước đó
+                startActivity(new Intent(Delivery_Loginphone.this,MainMenu.class));
+                finish();
+            }
+        });
 
         Fauth = FirebaseAuth.getInstance();
 

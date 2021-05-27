@@ -8,6 +8,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.grapfood.R;
 
@@ -17,6 +18,7 @@ public class ChooseOne extends AppCompatActivity {
     Intent intent;
     String type;
     ConstraintLayout bgimage;
+    ImageButton btnBN;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +54,16 @@ public class ChooseOne extends AppCompatActivity {
         DeliveryPerson = (Button)findViewById(R.id.delivery);
         Customer = (Button)findViewById(R.id.customer);
 
+        btnBN = (ImageButton) findViewById(R.id.backBN);
+        //mouse click event
+        //sự kiện click chuột
+        btnBN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ChooseOne.this,MainMenu.class));
+                finish();
+            }
+        });
 
         Chef.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -7,117 +7,167 @@
     android:background="@drawable/img8"
     tools:context=".activity.activity.Delivery_Loginphone">
 
-    <LinearLayout
-        android:layout_width="280dp"
-        android:layout_height="400dp"
-        android:id="@+id/linearlayout"
+    <ScrollView
+        android:layout_width="269dp"
+        android:layout_height="479dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
         android:background="@drawable/background_shape"
+        android:orientation="vertical"
+        android:padding="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:padding="15dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Xác minh bằng số điện thoại"
-            android:layout_gravity="center"
-            android:textSize="20sp"
-            android:textColor="#090909"
-            android:layout_marginTop="20dp"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.436">
+<!--        <LinearLayout-->
+<!--            android:layout_width="280dp"-->
+<!--            android:layout_height="400dp"-->
+<!--            android:id="@+id/linearlayout"-->
+<!--            android:background="@drawable/background_shape"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            android:padding="15dp"-->
+<!--            android:orientation="vertical">-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60sp"
+                android:background="@drawable/shape_rect01"
+                android:padding="10sp">
 
-            <com.hbb20.CountryCodePicker
-                android:id="@+id/countrycode"
-                android:layout_width="120dp"
-                android:layout_height="match_parent" />
+                <ImageButton
+                    android:id="@+id/backBN"
+                    android:layout_width="30sp"
+                    android:layout_height="30sp"
+                    android:src="@drawable/ic_back_white"
+                    android:background="@null"></ImageButton>
 
-            <EditText
-                android:layout_width="132dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/Dphonenumber"
-                android:layout_marginLeft="8dp"
-                android:inputType="number"/>
-        </LinearLayout>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:id="@+id/Sendotp"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/button_shape"
-            android:text="Gửi OTP"
-            android:textColor="@color/white"
-            android:textSize="18sp"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/Signupif"
-            android:layout_marginTop="13dp"
-            android:text="Bạn không có tài khoản?? Hãy tạo nhé"
-            android:textAlignment="center"
-            android:textColor="@color/Black"
-            android:textSize="16sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:text="Đăng nhập"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_gravity="center_horizontal"
-            android:orientation="horizontal">
+                </TextView>
 
-            <TableRow
-                android:id="@+id/hr"
-                android:layout_width="107dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="20dp"
-                android:background="@color/Black"/>
-            <TextView
-                android:layout_width="44dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/OR"
+            </LinearLayout>
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/shape_circle01"
+                android:padding="5dp"
                 android:layout_gravity="center"
-                android:text="OR"
-                android:textColor="@color/Black"
-                android:layout_marginTop="6dp"
-                android:textSize="16sp"
-                android:textAlignment="center"/>
-
-            <TableRow
-                android:id="@+id/dr"
-                android:layout_width="107dp"
-                android:layout_height="1dp"
+                android:src="@drawable/ic_key_white"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Xác minh bằng số điện thoại"
+                android:layout_gravity="center"
+                android:textSize="20sp"
+                android:textColor="#090909"
+                android:layout_marginTop="20dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@color/Black"/>
+                android:orientation="horizontal">
+
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/countrycode"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent" />
+
+                <EditText
+                    android:layout_width="132dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/Dphonenumber"
+                    android:layout_marginLeft="8dp"
+                    android:inputType="number"/>
+            </LinearLayout>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/Sendotp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/button_shape"
+                android:text="Gửi OTP"
+                android:textColor="@color/white"
+                android:textSize="18sp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/Signupif"
+                android:layout_marginTop="13dp"
+                android:text="Bạn không có tài khoản?? Hãy tạo nhé"
+                android:textAlignment="center"
+                android:textColor="@color/Black"
+                android:textSize="16sp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <TableRow
+                    android:id="@+id/hr"
+                    android:layout_width="107dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/Black"/>
+                <TextView
+                    android:layout_width="44dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/OR"
+                    android:layout_gravity="center"
+                    android:text="OR"
+                    android:textColor="@color/Black"
+                    android:layout_marginTop="6dp"
+                    android:textSize="16sp"
+                    android:textAlignment="center"/>
+
+                <TableRow
+                    android:id="@+id/dr"
+                    android:layout_width="107dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/Black"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/signphone"
+                android:layout_marginTop="20dp"
+                android:text="Đăng nhập với"
+                android:textAlignment="center"
+                android:textColor="@color/Black"
+                android:textSize="18sp"/>
+            <Button
+                android:layout_width="105dp"
+                android:layout_height="40dp"
+                android:id="@+id/DbtnEmail"
+                android:background="@drawable/btnred"
+                android:text="Email"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/white"
+                android:drawableLeft="@drawable/whitemail"
+                android:padding="10dp"
+                android:layout_gravity="center"/>
 
         </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/signphone"
-            android:layout_marginTop="20dp"
-            android:text="SignIn With"
-            android:textAlignment="center"
-            android:textColor="@color/Black"
-            android:textSize="18sp"/>
-        <Button
-            android:layout_width="105dp"
-            android:layout_height="40dp"
-            android:id="@+id/DbtnEmail"
-            android:background="@drawable/btnred"
-            android:text="Email"
-            android:layout_marginTop="15dp"
-            android:textColor="@color/white"
-            android:drawableLeft="@drawable/whitemail"
-            android:padding="10dp"
-            android:layout_gravity="center"/>
-
-    </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

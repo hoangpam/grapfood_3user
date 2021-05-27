@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +45,7 @@ public class Cheflogin extends AppCompatActivity {
     FirebaseAuth Fauth;
     String emailid,pwd;
     DatabaseReference table_User;
+    ImageButton btnBN;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +61,18 @@ public class Cheflogin extends AppCompatActivity {
             Signinphone = (Button)findViewById(R.id.btnphone);
             Forgotpassword.setPaintFlags(Forgotpassword.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
             signup.setPaintFlags(signup.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
+            btnBN = (ImageButton) findViewById(R.id.backBN);
+            //mouse click event
+            //sự kiện click chuột
+            btnBN.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //trả về phía trước đó
+                    startActivity(new Intent(Cheflogin.this,MainMenu.class));
+                    finish();
+                }
+            });
 
             Fauth = FirebaseAuth.getInstance();
 
@@ -93,7 +107,7 @@ public class Cheflogin extends AppCompatActivity {
                                         finish();
 
                                     }else{
-                                        ReusableCodeForAll.ShowAlert(Cheflogin.this,"Xác minh không hoàn thành","Bạn chưa xác minh email của mình");
+                                        ReusableCodeForAll.ShowAlert(Cheflogin.this,"Xác minh không hoàn thành","Bạn chưa xác minh email của mình. Vui lòng kiểm tra Email");
 
                                     }
                                 }else{
@@ -133,6 +147,13 @@ public class Cheflogin extends AppCompatActivity {
         }
 
     }
+    //hàm kiểm tra bạn bị quên mật khẩu
+
+    private void showchoiseForgotPassDialog()
+    {
+
+    }
+
     private void showForgotPassDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Quên mật khẩu");
@@ -182,7 +203,8 @@ public class Cheflogin extends AppCompatActivity {
         });
         builder.show();
     }
-    String emailpattern  = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+    String emailpattern  = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
 
     public boolean isValid(){
 
@@ -206,7 +228,7 @@ public class Cheflogin extends AppCompatActivity {
         if(TextUtils.isEmpty(pwd)){
 
             pass.setErrorEnabled(true);
-            pass.setError("Password bắt buộc");
+            pass.setError("Mật khẩu bắt buộc nhập");
         }else{
             isvalidpassword=true;
         }
@@ -242,7 +264,7 @@ public class Cheflogin extends AppCompatActivity {
     //hiển thị dòng lệnh khi không có internet
     private  void showCustomDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Vui lòng kiểm tar lại kết nôi mạng của bạn <!>")
+        builder.setMessage("Vui lòng kiểm tra lại kết nối mạng của bạn <!>")
                 .setCancelable(false)
                 .setPositiveButton("Kết nối", new DialogInterface.OnClickListener() {
                     @Override

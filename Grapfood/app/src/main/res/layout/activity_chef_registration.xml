@@ -6,15 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/img3"
     tools:context=".activity.activity.ChefRegistration">
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:minHeight="?attr/actionBarSize"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:titleTextColor="@android:color/white"
-        android:background="?attr/colorPrimary"
-        tools:ignore="MissingConstraints">
-    </androidx.appcompat.widget.Toolbar>
+
     <ScrollView
         android:layout_width="269dp"
         android:layout_height="479dp"
@@ -29,6 +21,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.436">
 
+<!--        Nút đang ký và xác dịnh GPS-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,23 +34,20 @@
                 android:layout_height="60sp"
                 android:background="@drawable/shape_rect01"
                 android:padding="10sp">
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
 
-                </RelativeLayout>
                 <ImageButton
                     android:id="@+id/backBN"
                     android:layout_width="30sp"
                     android:layout_height="30sp"
                     android:src="@drawable/ic_back_white"
-                    android:background="@null"></ImageButton>
+                    android:background="@null"
+                    ></ImageButton>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="50dp"
-                    android:text="Đăng ký"
+                    android:text="Đăng ký "
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:layout_gravity="center"
@@ -69,7 +59,7 @@
                     android:layout_width="30sp"
                     android:layout_height="30sp"
                     android:layout_marginLeft="30sp"
-                    android:src="@drawable/ic_gps_white"
+                    android:src="@drawable/ic_location"
                     android:background="@null"/>
             </LinearLayout>
             <ImageView
@@ -93,7 +83,7 @@
                     android:src="@drawable/img_avartar"
                     app:c_background_color="@color/colorPrimary"
                     app:c_border="true"
-                    app:c_border_color="#4A97E4"
+                    app:c_border_color="#FF5722"
                     app:c_border_width="5.5dp"
                     app:c_shadow="true"
                     app:c_shadow_color="#000"
@@ -169,7 +159,6 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_password"
                     android:hint="Mật khẩu"
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -184,7 +173,6 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_password"
                     android:hint="Nhập lại mật khẩu"
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -214,6 +202,21 @@
                         android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/deliveryfree"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp">
+
+                <EditText
+                    android:id="@+id/eddeliveryfree"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_delivery"
+                    android:hint="Giao hàng"
+                    android:inputType="textPersonName|textCapWords" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/houseNo"

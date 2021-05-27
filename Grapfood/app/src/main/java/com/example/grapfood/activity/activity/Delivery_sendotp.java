@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.TaskExecutors;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
@@ -34,7 +35,7 @@ public class Delivery_sendotp extends AppCompatActivity {
     TextView txt;
     EditText entercode;
     String phoneno;
-
+    FirebaseUser user = FAuth.getCurrentUser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +66,11 @@ public class Delivery_sendotp extends AppCompatActivity {
                     entercode.requestFocus();
                     return;
                 }
+
+                Toast.makeText(Delivery_sendotp.this, "Đang gửi code qua máy bạn đợi tí...", Toast.LENGTH_SHORT).show();
                 verifyCode(code);
+
+
             }
         });
 
@@ -93,6 +98,8 @@ public class Delivery_sendotp extends AppCompatActivity {
         Resend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Toast.makeText(Delivery_sendotp.this, "Đang gửi code qua máy bạn đợi tí...", Toast.LENGTH_SHORT).show();
 
                 Resend.setVisibility(View.INVISIBLE);
                 Resendotp(phoneno);
@@ -149,6 +156,8 @@ public class Delivery_sendotp extends AppCompatActivity {
             if(code != null){
                 entercode.setText(code);  // Auto Verification
                 verifyCode(code);
+
+
             }
         }
 
@@ -175,21 +184,30 @@ public class Delivery_sendotp extends AppCompatActivity {
 
     private void signInWithPhone(PhoneAuthCredential credential) {
 
-        FAuth.signInWithCredential(credential)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+        if(user != null){
+            FAuth.signInWithCredential(credential)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
 
-                        if(task.isSuccessful()){
-                            startActivity(new Intent(Delivery_sendotp.this, DeliveryFoodPanel_BottomNavigation.class));
-                            finish();
+                            if(task.isSuccessful()){
+                                startActivity(new Intent(Delivery_sendotp.this, DeliveryFoodPanel_BottomNavigation.class));
+                                finish();
 
-                        }else{
-                            ReusableCodeForAll.ShowAlert(Delivery_sendotp.this,"Error",task.getException().getMessage());
+                            }else{
+                                ReusableCodeForAll.ShowAlert(Delivery_sendotp.this,"Error",task.getException().getMessage());
+                            }
+
                         }
+                    });
+        }
+        else {
+            Toast.makeText(this, "Vui lòng đăng ký tài khoản để đăng nhập bằng số điện thoại", Toast.LENGTH_SHORT).show();
+            Intent b = new Intent(Delivery_sendotp.this, MainMenu.class);
+            startActivity(b);
+            finish();
+        }
 
-                    }
-                });
 
     }
 }

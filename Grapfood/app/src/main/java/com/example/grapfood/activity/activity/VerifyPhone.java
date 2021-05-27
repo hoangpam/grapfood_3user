@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.TaskExecutors;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
@@ -51,6 +52,7 @@ public class VerifyPhone extends AppCompatActivity {
         txt.setVisibility(View.INVISIBLE);
 
         sendverificationcode(phoneno);
+        Toast.makeText(VerifyPhone.this, "Đang gửi code qua máy bạn đợi tí...", Toast.LENGTH_SHORT).show();
 
         verify.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +66,11 @@ public class VerifyPhone extends AppCompatActivity {
                     entercode.requestFocus();
                     return;
                 }
+
+                Toast.makeText(VerifyPhone.this, "Đang gửi code qua máy bạn đợi tí...", Toast.LENGTH_SHORT).show();
                 verifyCode(code);
+
+
             }
         });
         new CountDownTimer(60000,1000){
@@ -91,6 +97,8 @@ public class VerifyPhone extends AppCompatActivity {
         Resend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Toast.makeText(VerifyPhone.this, "Đang gửi code qua máy bạn đợi tí...", Toast.LENGTH_SHORT).show();
 
                 Resend.setVisibility(View.INVISIBLE);
                 Resendotp(phoneno);
@@ -146,6 +154,7 @@ public class VerifyPhone extends AppCompatActivity {
             if(code != null){
                 entercode.setText(code);  // Auto Verification
                 verifyCode(code);
+
             }
         }
 

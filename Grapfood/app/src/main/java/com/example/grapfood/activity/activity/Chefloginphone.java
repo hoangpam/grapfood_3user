@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.grapfood.R;
@@ -21,7 +22,7 @@ public class Chefloginphone extends AppCompatActivity {
     CountryCodePicker cpp;
     FirebaseAuth Fauth;
     String number;
-
+    ImageButton btnBN;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +33,18 @@ public class Chefloginphone extends AppCompatActivity {
         cpp=(CountryCodePicker)findViewById(R.id.CountryCode);
         signinemail=(Button)findViewById(R.id.btnEmail);
         signup = (TextView)findViewById(R.id.acsignup);
+        btnBN = (ImageButton) findViewById(R.id.backBN);
+        //mouse click event
+        //sự kiện click chuột
+        btnBN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //trả về phía trước đó
+                startActivity(new Intent(Chefloginphone.this,MainMenu.class));
+                finish();
+            }
+        });
+
 
         Fauth = FirebaseAuth.getInstance();
 
