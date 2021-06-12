@@ -5,311 +5,558 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/bg_edittext_user">
+    android:background="@drawable/bg_edittext_user"
+    tools:context=".activity.chefFoodPanel.ProfileEditChef">
     <RelativeLayout
-        android:id="@+id/rl_tool_bar_top"
+        android:id="@+id/toolbarRl"
         android:layout_width="match_parent"
-        android:layout_height="38dp"
-        android:background="#10D123"
-        android:outlineProvider="bounds">
-
-
+        android:layout_height="80dp"
+        android:padding="10dp"
+        android:background="@drawable/shape_rect02"
+        >
+        <ImageButton
+            android:id="@+id/backBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_back_white"
+            android:background="@null"/>
         <TextView
-            android:id="@+id/tendv"
+            android:id="@+id/tenphansuatt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
             android:text="Sửa thông tin cá nhân"
             android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold" />
-    </RelativeLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        <ImageButton
+            android:id="@+id/gpsBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_gps_white"
+            android:layout_alignParentEnd="true"
+            android:background="@null"
+            />
+        <TextView
 
-        android:orientation="horizontal">
-        <LinearLayout
-            android:layout_margin="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="20"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Họ và đệm:"
-                android:textColor="#1499FF" />
-            <LinearLayout
-                android:layout_marginTop="2dp"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@drawable/bg_border"
-                android:backgroundTint="@color/white">
-
-                <EditText
-                    android:id="@+id/etho"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_weight="5"
-                    android:background="@drawable/bg_border"
-                    android:hint="Nguyễn Văn"
-                    android:paddingLeft="10dp"
-                    android:textSize="13sp" />
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-
-        android:orientation="horizontal">
-        <LinearLayout
-            android:layout_margin="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="20"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Tên :"
-                android:textColor="#1499FF" />
-            <LinearLayout
-                android:layout_marginTop="2dp"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@drawable/bg_border"
-                android:backgroundTint="@color/white">
-
-                <EditText
-                    android:id="@+id/etten"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_weight="5"
-                    android:background="@drawable/bg_border"
-                    android:hint="A"
-                    android:paddingLeft="10dp"
-                    android:textSize="13sp" />
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-
-        android:orientation="horizontal">
-        <LinearLayout
-            android:layout_margin="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="20"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Số nhà:"
-                android:textColor="#1499FF" />
-            <LinearLayout
-                android:layout_marginTop="2dp"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@drawable/bg_border"
-                android:backgroundTint="@color/white">
-
-                <EditText
-                    android:id="@+id/etsonha"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_weight="5"
-                    android:background="@drawable/bg_border"
-                    android:hint="140 A31"
-                    android:paddingLeft="10dp"
-                    android:textSize="13sp" />
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-
-        android:orientation="horizontal">
-        <LinearLayout
-            android:layout_margin="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="20"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Tên đường:"
-                android:textColor="#1499FF" />
-            <LinearLayout
-                android:layout_marginTop="2dp"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@drawable/bg_border"
-                android:backgroundTint="@color/white">
-
-                <EditText
-                    android:id="@+id/ettenduong"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_weight="5"
-                    android:background="@drawable/bg_border"
-                    android:hint="Lê trọng tấn"
-                    android:paddingLeft="10dp"
-                    android:textSize="13sp" />
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-
-        android:orientation="horizontal">
-        <LinearLayout
-            android:layout_margin="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="20"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Quận:"
-                android:textColor="#1499FF" />
-            <LinearLayout
-                android:layout_marginTop="2dp"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@drawable/bg_border"
-                android:backgroundTint="@color/white">
-
-                <EditText
-                    android:id="@+id/etquan"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_weight="5"
-                    android:background="@drawable/bg_border"
-                    android:hint="Tân Phú"
-                    android:paddingLeft="10dp"
-                    android:textSize="13sp" />
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-
-        android:orientation="horizontal">
-        <LinearLayout
-            android:layout_margin="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="20"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Thành phố:"
-                android:textColor="#1499FF" />
-            <LinearLayout
-                android:layout_marginTop="2dp"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@drawable/bg_border"
-                android:backgroundTint="@color/white">
-
-                <EditText
-                    android:id="@+id/ettenthanhpho"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_weight="5"
-                    android:background="@drawable/bg_border"
-                    android:hint="Hồ Chí Minh"
-                    android:paddingLeft="10dp"
-                    android:textSize="13sp" />
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_margin="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-
-        android:orientation="horizontal">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="20"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Số điện thoại :"
-                android:textColor="#1499FF" />
-            <LinearLayout
-                android:layout_marginTop="2dp"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@drawable/bg_border"
-                android:backgroundTint="@color/white">
-
-                <EditText
-                    android:inputType="phone"
-                    android:id="@+id/etSDt"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_weight="5"
-                    android:background="@drawable/bg_border"
-                    android:hint="0312457896"
-                    android:paddingLeft="10dp"
-                    android:textSize="13sp" />
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-
-    <RelativeLayout
-        android:id="@+id/ll_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="150sp"
-        android:layout_marginBottom="30dp"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-
-        >
-        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/bt_thaydoithongtin"
-                android:layout_width="120dp"
-                android:layout_height="match_parent"
-                android:background="@drawable/bg_start_command"
-                android:text="Sửa"
-                android:textAllCaps="false"
-                android:textColor="@color/white" />
-        </LinearLayout>
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="7dp"
+            android:textColor="@color/white"
+            android:text="GPS"
+            android:textSize="20dp"></TextView>
     </RelativeLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:orientation="vertical"
+        android:padding="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.436">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_edittext_user">
+            <RelativeLayout
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:clickable="true">
+                <com.blogspot.atifsoftwares.circularimageview.CircularImageView
+                    android:id="@+id/profileIv"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/img_avartar"
+                    app:c_background_color="@color/colorPrimary"
+                    app:c_border="true"
+                    app:c_border_color="#FF5722"
+                    app:c_border_width="5.5dp"
+                    app:c_shadow="true"
+                    app:c_shadow_color="#000"
+                    app:c_shadow_gravity="end"
+                    app:c_shadow_radius="5.5"
+
+                    />
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="20"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Họ và đệm:"
+                        android:textColor="#1499FF" />
+                    <LinearLayout
+                        android:layout_marginTop="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_border"
+                        android:backgroundTint="@color/white">
+
+                        <EditText
+                            android:id="@+id/Firstname"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_weight="5"
+                            android:importantForAutofill="noExcludeDescendants"
+                            android:background="@drawable/bg_border"
+                            android:hint="Nguyễn Văn"
+                            android:paddingLeft="10dp"
+                            android:textSize="13sp"
+                            android:inputType="textPersonName|textCapWords"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="20"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tên :"
+                        android:textColor="#1499FF" />
+                    <LinearLayout
+                        android:layout_marginTop="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_border"
+                        android:backgroundTint="@color/white">
+
+                        <EditText
+                            android:id="@+id/Lastname"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_weight="5"
+                            android:importantForAutofill="noExcludeDescendants"
+                            android:background="@drawable/bg_border"
+                            android:hint="A"
+                            android:paddingLeft="10dp"
+                            android:textSize="13sp"
+                            android:inputType="textPersonName|textCapWords"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="20"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tên cửa hàng của bạn :"
+                        android:textColor="#1499FF" />
+                    <LinearLayout
+                        android:layout_marginTop="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_border"
+                        android:backgroundTint="@color/white">
+
+                        <EditText
+                            android:id="@+id/NameShop"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_weight="5"
+                            android:importantForAutofill="noExcludeDescendants"
+                            android:background="@drawable/bg_border"
+                            android:hint="Quán A Sìn"
+                            android:paddingLeft="10dp"
+                            android:textSize="13sp"
+                            android:inputType="textPersonName|textCapWords"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="20"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tên Email:"
+                        android:textColor="#1499FF" />
+                    <LinearLayout
+                        android:layout_marginTop="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_border"
+                        android:backgroundTint="@color/white">
+
+                        <EditText
+                            android:id="@+id/Email"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_weight="5"
+                            android:importantForAutofill="noExcludeDescendants"
+                            android:background="@drawable/bg_border"
+                            android:hint="thien@gmail.com"
+                            android:paddingLeft="10dp"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="20"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Số điện thoại và nhớ chọn quốc gia:"
+                        android:textColor="#1499FF" />
+                    <LinearLayout
+                        android:layout_marginTop="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_border"
+                        android:backgroundTint="@color/white"
+                        android:orientation="horizontal">
+                        <com.hbb20.CountryCodePicker
+                            android:id="@+id/CountryCode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            app:ccp_defaultNameCode="VN">
+
+                        </com.hbb20.CountryCodePicker>
+                        <EditText
+                            android:inputType="phone"
+                            android:id="@+id/Mobileno"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_weight="5"
+                            android:importantForAutofill="noExcludeDescendants"
+                            android:background="@drawable/bg_border"
+                            android:hint="0312457896"
+                            android:paddingLeft="10dp"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="20"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Giao hàng :"
+                        android:textColor="#1499FF" />
+                    <LinearLayout
+                        android:layout_marginTop="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_border"
+                        android:backgroundTint="@color/white">
+
+                        <EditText
+                            android:id="@+id/DeliveryFree"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_weight="5"
+                            android:importantForAutofill="noExcludeDescendants"
+                            android:background="@drawable/bg_border"
+                            android:hint="Miễn phí hoặc tính phí"
+                            android:paddingLeft="10dp"
+                            android:textSize="13sp"
+                            android:inputType="textPersonName|textCapWords"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="20"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Số nhà:"
+                        android:textColor="#1499FF" />
+                    <LinearLayout
+                        android:layout_marginTop="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_border"
+                        android:backgroundTint="@color/white">
+
+                        <EditText
+                            android:id="@+id/houseNo"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_weight="5"
+                            android:importantForAutofill="noExcludeDescendants"
+                            android:background="@drawable/bg_border"
+                            android:hint="140 A31"
+                            android:paddingLeft="10dp"
+                            android:textSize="13sp"
+                            android:inputType="textPersonName|textCapWords"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="20"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tên đường:"
+                        android:textColor="#1499FF" />
+                    <LinearLayout
+                        android:layout_marginTop="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_border"
+                        android:backgroundTint="@color/white">
+
+                        <EditText
+                            android:id="@+id/edArea"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_weight="5"
+                            android:importantForAutofill="noExcludeDescendants"
+                            android:background="@drawable/bg_border"
+                            android:hint="Lê trọng tấn"
+                            android:paddingLeft="10dp"
+                            android:textSize="13sp"
+                            android:inputType="textPersonName|textCapWords"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="20"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Quận:"
+                        android:textColor="#1499FF" />
+                    <LinearLayout
+                        android:layout_marginTop="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_border"
+                        android:backgroundTint="@color/white">
+
+                        <EditText
+                            android:id="@+id/edStates"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_weight="5"
+                            android:importantForAutofill="noExcludeDescendants"
+                            android:background="@drawable/bg_border"
+                            android:hint="Tân Phú"
+                            android:paddingLeft="10dp"
+                            android:textSize="13sp"
+                            android:inputType="textPersonName|textCapWords"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="20"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Thành phố:"
+                        android:textColor="#1499FF" />
+                    <LinearLayout
+                        android:layout_marginTop="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_border"
+                        android:backgroundTint="@color/white">
+
+                        <EditText
+                            android:id="@+id/edCitys"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_weight="5"
+                            android:importantForAutofill="noExcludeDescendants"
+                            android:background="@drawable/bg_border"
+                            android:hint="Hồ Chí Minh"
+                            android:paddingLeft="10dp"
+                            android:textSize="13sp"
+                            android:inputType="textPersonName|textCapWords"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="20"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Hoàn thành địa chỉ:"
+                        android:textColor="#1499FF" />
+                    <LinearLayout
+                        android:layout_marginTop="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_border"
+                        android:backgroundTint="@color/white">
+
+                        <EditText
+                            android:id="@+id/edcompleteAddress"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_weight="5"
+                            android:importantForAutofill="noExcludeDescendants"
+                            android:background="@drawable/bg_border"
+                            android:hint="140 Lê Trọng Tấn Quận Tân Quý thành phố Hồ Chí Minh"
+                            android:paddingLeft="10dp"
+                            android:textSize="13sp"
+                            android:inputType="textPersonName|textCapWords"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/shopOpenSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cửa hàng mở cửa"
+                android:textColor="@color/black"
+                android:layout_margin="5dp"
+                android:shadowColor="@color/itemchon"
+                android:textOff="Đóng"
+                android:textOn="Mở"
+                app:theme="@style/AppTheme2"
+                app:showText="true"
+                />
+            <RelativeLayout
+                android:id="@+id/ll_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+
+                >
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/bt_thaydoithongtin"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_start_command"
+                        android:textSize="20dp"
+                        android:text="Sửa"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
 </LinearLayout>

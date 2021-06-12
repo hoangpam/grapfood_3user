@@ -58,7 +58,8 @@
             android:drawableLeft="@drawable/whitemail"
             android:paddingLeft="10dp"
             android:text="Đăng nhập bằng gmail"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:textSize="18dp"/>
 
         <Button
             android:id="@+id/SignwithPhone"
@@ -71,7 +72,8 @@
             android:gravity="center"
             android:paddingLeft="10dp"
             android:text="Đăng nhập bằng điện thoại"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:textSize="18dp"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -119,6 +121,7 @@
             android:drawableLeft="@drawable/ic_dangky"
             android:text="Đăng kí"
             android:textAllCaps="true"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:textSize="18dp"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

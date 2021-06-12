@@ -3,6 +3,7 @@ package com.example.grapfood.activity.activity;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -95,10 +96,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class Delivery_Registration extends AppCompatActivity implements LocationListener {
-
-    String[] TPHCM = {"Quận 1","Quận 3","Quận 4","Quận 5","Quận 6","Quận 8","Quận 10","Quận 11","Quận Tân Phú","Quận Tân Bình","Quận Bình Tân","Quận Phú Nhuận","Quận Gò Vấp","Quận 9","Quận 2","Quận Thủ Đức"};
-    String[] TPHN = {"Quận Hoàn Kiếm","Quận Đống Đa","Quận Ba Đình","Quận Hoàng Mai","Quận Thanh Xuân","Quận Long Biên","Quận Nam Từ Liêm","Quận Bắc Từ Liêm","Quận Tây Hồ","Quận Cầu Giấy","Quận Hà Đông"};
-    String[] TPTN = {"Huyện Châu Thành","Huyện Hoà Thành","Huyện Bến Cầu","Huyện Trảng Bàn","Huyện Tân Châu","Huyện Dương Minh Châu"};
 
     final String TAG = "GPS";
     //permission constants
@@ -249,7 +246,9 @@ public class Delivery_Registration extends AppCompatActivity implements Location
             }
         });
 
-
+        ButterKnife.bind(this);
+        initLocation();
+        restoreValuesFromBundle(savedInstanceState);
 
         databaseReference = firebaseDatabase.getInstance().getReference("DeliveryPerson");
         FAuth = FirebaseAuth.getInstance();
@@ -271,7 +270,12 @@ public class Delivery_Registration extends AppCompatActivity implements Location
                 cityy = Citys.getEditText().getText().toString().trim();
                 String timestamp = "" + System.currentTimeMillis();
 
-                if (isValid() && image_uri == null){
+                if (isValid() && image_uri == null ){
+
+//                    Context context = new ContextThemeWrapper(Delivery_Registration.this, R.style.AppTheme2);
+//
+//                    final ProgressDialog mDialog = new ProgressDialog(context,R.style.MaterialAlertDialog_rounded);
+
                     final ProgressDialog mDialog = new ProgressDialog(Delivery_Registration.this);
                     mDialog.setCancelable(false);
                     mDialog.setCanceledOnTouchOutside(false);
@@ -303,10 +307,10 @@ public class Delivery_Registration extends AppCompatActivity implements Location
                                         hashMap1.put("State",statee);
                                         hashMap1.put("ConfirmPassword",confpassword);
                                         hashMap1.put("House",house);
-                                        hashMap1.put("Timestamp", "" + timestamp);
+                                        hashMap1.put("Timestamp", "" + timestamp +" "+DateFormat.getTimeInstance().format(new Date()));
                                         hashMap1.put("ImageURL", "");
-                                        hashMap1.put("Latitude", "" + latitude);
-                                        hashMap1.put("Longitude", "" + longitude);
+                                        hashMap1.put("Latitude", "" + mCurrentLocation.getLatitude());
+                                        hashMap1.put("Longitude", "" + mCurrentLocation.getLongitude());
                                         hashMap1.put("CompleteAddress", cpAddress);
 
                                         firebaseDatabase.getInstance().getReference("DeliveryPerson")
@@ -360,7 +364,13 @@ public class Delivery_Registration extends AppCompatActivity implements Location
                     });
                 }
                 else if (isValid() && image_uri != null){
+
+//                    Context context = new ContextThemeWrapper(Delivery_Registration.this, R.style.AppTheme2);
+
                     String filePathAndName = "profile_image/" + "" + FAuth.getUid();
+
+//                    final ProgressDialog progressDialog = new ProgressDialog(context,R.style.MaterialAlertDialog_rounded);
+
                     final ProgressDialog progressDialog = new ProgressDialog(Delivery_Registration.this);
                     progressDialog.setTitle("Đang đăng ký và tải hình ảnh đại diện lên, vui lòng đợi tí....");
                     progressDialog.show();
@@ -402,13 +412,13 @@ public class Delivery_Registration extends AppCompatActivity implements Location
                                                             hashMap1.put("State",statee);
                                                             hashMap1.put("ConfirmPassword",confpassword);
                                                             hashMap1.put("House",house);
-                                                            hashMap1.put("Timestamp", "" + timestamp);
+                                                            hashMap1.put("Timestamp", "" + timestamp+" "+DateFormat.getTimeInstance().format(new Date()));
                                                             hashMap1.put("ImageURL", ""+downloadImageUri);
-                                                            hashMap1.put("Latitude", "" + latitude);
-                                                            hashMap1.put("Longitude", "" + longitude);
+                                                            hashMap1.put("Latitude", "" + mCurrentLocation.getLatitude());
+                                                            hashMap1.put("Longitude", "" + mCurrentLocation.getLongitude());
                                                             hashMap1.put("CompleteAddress", cpAddress);
 
-                                                            firebaseDatabase.getInstance().getReference("Customer")
+                                                            firebaseDatabase.getInstance().getReference("DeliveryPerson")
                                                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                                                     .setValue(hashMap1).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                 @Override
@@ -420,6 +430,9 @@ public class Delivery_Registration extends AppCompatActivity implements Location
                                                                         public void onComplete(@NonNull Task<Void> task) {
 
                                                                             if(task.isSuccessful()){
+//                                                                                Context context = new ContextThemeWrapper(Delivery_Registration.this, R.style.AppTheme2);
+//                                                                                AlertDialog.Builder builder = new AlertDialog.Builder(context,R.style.MaterialAlertDialog_rounded);
+
                                                                                 AlertDialog.Builder builder = new AlertDialog.Builder(Delivery_Registration.this);
                                                                                 builder.setMessage("Bạn đã đăng ký! Đảm bảo xác minh Email của bạn");
                                                                                 builder.setCancelable(false);
@@ -497,9 +510,7 @@ public class Delivery_Registration extends AppCompatActivity implements Location
             }
         });
         isOnline();
-        ButterKnife.bind(this);
-        initLocation();
-        restoreValuesFromBundle(savedInstanceState);
+
     }
 
     private void initLocation() {
@@ -1050,13 +1061,24 @@ public class Delivery_Registration extends AppCompatActivity implements Location
     //phần kiểm tra đã nhấn nút GPS hay chưa để xác định đúng vị trí hiện tại
     // check whether the GPS button has been pressed or not to determine the current location
     //
-    private void init()
+    private boolean init()
     {
-        if(latitude == 0.0 || longitude == 0.0)
+//        if(mCurrentLocation.getLatitude() == latitude  || mCurrentLocation.getLongitude() == longitude)
+//        {
+//            Toast.makeText(this, "Vui lòng nhấn vào nút GPS góc phải bên trên ...", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+        boolean isValid=false,isValidLocation = false;
+        double nullString = Double.parseDouble(null);
+        if(mCurrentLocation.getLongitude() == nullString || mCurrentLocation.getLongitude() == nullString)
         {
             Toast.makeText(this, "Vui lòng nhấn vào nút GPS góc phải bên trên ...", Toast.LENGTH_SHORT).show();
-            return;
         }
+        else{
+            isValidLocation = true;
+        }
+        isValid = isValidLocation ? true : false;
+        return isValid;
     }
     // hàm kiểm tra quyền địa chỉ
     // function to check address permissions

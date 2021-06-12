@@ -3,6 +3,7 @@ package com.example.grapfood.activity.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -33,6 +34,8 @@ public class Loginphone extends AppCompatActivity {
         cpp=(CountryCodePicker)findViewById(R.id.CountryCode);
         signinemail=(Button)findViewById(R.id.btnEmail);
         signup = (TextView)findViewById(R.id.acsignup);
+        //hiển thị từ gạch dưới
+        signup.setPaintFlags(signup.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         btnBN = (ImageButton) findViewById(R.id.backBN);
         //mouse click event
         //sự kiện click chuột

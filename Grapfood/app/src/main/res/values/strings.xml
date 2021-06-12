@@ -117,6 +117,6 @@
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <integer name="animation_duration_medium">3000</integer>
-<!--        google map-->
+    <!--        google map-->
     <string name="map_api_key">AIzaSyBauAEFD9_PC4-5x9YnZK3I6BAb2aopTrU</string>
 </resources>

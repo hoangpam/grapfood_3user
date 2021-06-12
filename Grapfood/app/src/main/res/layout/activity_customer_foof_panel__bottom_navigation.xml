@@ -9,9 +9,39 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="80dp"
         android:id="@+id/fragment_container"
         android:layout_above="@id/bottom_navigation"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:padding="10dp"
+        android:background="@drawable/shape_rect02">
 
+        <TextView
+            android:id="@+id/nameTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"
+            android:text="Ngô Hoàng Thiên"
+            android:textSize="20dp"
+            android:textColor="@color/white"/>
+        <ImageButton
+            android:id="@+id/editProfileBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_edit"
+            android:layout_toStartOf="@+id/logoutBTN"
+            android:background="@null"/>
+        <ImageButton
+            android:id="@+id/logoutBTN"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@mipmap/ic_exit"
+            android:layout_alignParentEnd="true"
+            android:background="@null"/>
+    </RelativeLayout>
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

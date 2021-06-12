@@ -1,24 +1,29 @@
 package com.example.grapfood.activity.object;
 
 public class Customer {
-    String Area,City,ConfirmPassword,EmailId,FirstName,LastName,LocalAddress,MobileNo,Password,Pincode,State;
-    public Customer(){
-    }
-    // Press Alt+insert
+    String Area,City,CompleAddress,ConfirmPassword,EmailId,FistName,House,ImageURL,Lastname,Latitude,Longitude,MobileNo,Password,ShopOpen,State,Timestamp,UID;
 
-
-    public Customer(String area, String city, String confirmPassword, String emailId, String firstName, String lastName, String localAddress, String mobileNo, String password, String pincode, String state) {
+    public Customer(String area, String city, String compleAddress, String confirmPassword, String emailId, String fistName, String house, String imageURL, String lastname, String latitude, String longitude, String mobileNo, String password, String shopOpen, String state, String timestamp, String UID) {
         Area = area;
         City = city;
+        CompleAddress = compleAddress;
         ConfirmPassword = confirmPassword;
         EmailId = emailId;
-        FirstName = firstName;
-        LastName = lastName;
-        LocalAddress = localAddress;
+        FistName = fistName;
+        House = house;
+        ImageURL = imageURL;
+        Lastname = lastname;
+        Latitude = latitude;
+        Longitude = longitude;
         MobileNo = mobileNo;
         Password = password;
-        Pincode = pincode;
+        ShopOpen = shopOpen;
         State = state;
+        Timestamp = timestamp;
+        this.UID = UID;
+    }
+
+    public Customer() {
     }
 
     public String getArea() {
@@ -37,6 +42,14 @@ public class Customer {
         City = city;
     }
 
+    public String getCompleAddress() {
+        return CompleAddress;
+    }
+
+    public void setCompleAddress(String compleAddress) {
+        CompleAddress = compleAddress;
+    }
+
     public String getConfirmPassword() {
         return ConfirmPassword;
     }
@@ -53,28 +66,52 @@ public class Customer {
         EmailId = emailId;
     }
 
-    public String getFirstName() {
-        return FirstName;
+    public String getFistName() {
+        return FistName;
     }
 
-    public void setFirstName(String firstName) {
-        FirstName = firstName;
+    public void setFistName(String fistName) {
+        FistName = fistName;
     }
 
-    public String getLastName() {
-        return LastName;
+    public String getHouse() {
+        return House;
     }
 
-    public void setLastName(String lastName) {
-        LastName = lastName;
+    public void setHouse(String house) {
+        House = house;
     }
 
-    public String getLocalAddress() {
-        return LocalAddress;
+    public String getImageURL() {
+        return ImageURL;
     }
 
-    public void setLocalAddress(String localAddress) {
-        LocalAddress = localAddress;
+    public void setImageURL(String imageURL) {
+        ImageURL = imageURL;
+    }
+
+    public String getLastname() {
+        return Lastname;
+    }
+
+    public void setLastname(String lastname) {
+        Lastname = lastname;
+    }
+
+    public String getLatitude() {
+        return Latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        Latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return Longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        Longitude = longitude;
     }
 
     public String getMobileNo() {
@@ -93,12 +130,12 @@ public class Customer {
         Password = password;
     }
 
-    public String getPincode() {
-        return Pincode;
+    public String getShopOpen() {
+        return ShopOpen;
     }
 
-    public void setPincode(String pincode) {
-        Pincode = pincode;
+    public void setShopOpen(String shopOpen) {
+        ShopOpen = shopOpen;
     }
 
     public String getState() {
@@ -107,5 +144,21 @@ public class Customer {
 
     public void setState(String state) {
         State = state;
+    }
+
+    public String getTimestamp() {
+        return Timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        Timestamp = timestamp;
+    }
+
+    public String getUID() {
+        return UID;
+    }
+
+    public void setUID(String UID) {
+        this.UID = UID;
     }
 }

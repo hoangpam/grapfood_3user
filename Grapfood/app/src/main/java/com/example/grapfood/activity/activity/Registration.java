@@ -3,6 +3,7 @@ package com.example.grapfood.activity.activity;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -95,10 +96,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class Registration extends AppCompatActivity implements LocationListener {
-
-    String[] TPHCM = {"Quận 1","Quận 3","Quận 4","Quận 5","Quận 6","Quận 8","Quận 10","Quận 11","Quận Tân Phú","Quận Tân Bình","Quận Bình Tân","Quận Phú Nhuận","Quận Gò Vấp","Quận 9","Quận 2","Quận Thủ Đức"};
-    String[] TPHN = {"Quận Hoàn Kiếm","Quận Đống Đa","Quận Ba Đình","Quận Hoàng Mai","Quận Thanh Xuân","Quận Long Biên","Quận Nam Từ Liêm","Quận Bắc Từ Liêm","Quận Tây Hồ","Quận Cầu Giấy","Quận Hà Đông"};
-    String[] TPTN = {"Huyện Châu Thành","Huyện Hoà Thành","Huyện Bến Cầu","Huyện Trảng Bàn","Huyện Tân Châu","Huyện Dương Minh Châu"};
 
     final String TAG = "GPS";
     //permission constants
@@ -256,6 +253,10 @@ public class Registration extends AppCompatActivity implements LocationListener 
             }
         });
 
+        ButterKnife.bind(this);
+        initLocation();
+        restoreValuesFromBundle(savedInstanceState);
+
         databaseReference = firebaseDatabase.getInstance().getReference("Customer");
         FAuth = FirebaseAuth.getInstance();
 
@@ -277,7 +278,10 @@ public class Registration extends AppCompatActivity implements LocationListener 
                 cityy = Citys1.getEditText().getText().toString().trim();
                 String timestamp = "" + System.currentTimeMillis();
 
-                if (isValid() && image_uri == null){
+                if (isValid() && image_uri == null ){
+//                    Context context = new ContextThemeWrapper(Registration.this, R.style.AppTheme2);
+//                    final ProgressDialog mDialog = new ProgressDialog(context,R.style.MaterialAlertDialog_rounded);
+
                     final ProgressDialog mDialog = new ProgressDialog(Registration.this);
                     mDialog.setCancelable(false);
                     mDialog.setCanceledOnTouchOutside(false);
@@ -310,10 +314,10 @@ public class Registration extends AppCompatActivity implements LocationListener 
                                         hashMap1.put("CompleteAddress", cpAddress);
                                         hashMap1.put("ConfirmPassword",confpassword);
                                         hashMap1.put("House",Localaddress);
-                                        hashMap1.put("Timestamp", "" + timestamp);
+                                        hashMap1.put("Timestamp", "" + timestamp+" "+DateFormat.getTimeInstance().format(new Date()));
                                         hashMap1.put("ImageURL", "");
-                                        hashMap1.put("Latitude", "" + latitude);
-                                        hashMap1.put("Longitude", "" + longitude);
+                                        hashMap1.put("Latitude", "" + mCurrentLocation.getLatitude());
+                                        hashMap1.put("Longitude", "" + mCurrentLocation.getLongitude());
 
                                         firebaseDatabase.getInstance().getReference("Customer")
                                                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
@@ -364,9 +368,15 @@ public class Registration extends AppCompatActivity implements LocationListener 
                         }
                     });
                 }
-                else if (isValid() && image_uri != null) {
-//                    init();
+                else if (isValid() && image_uri != null ) {
+
+
+//                    Context context = new ContextThemeWrapper(Registration.this, R.style.AppTheme2);
+
                     String filePathAndName = "profile_image/" + "" + FAuth.getUid();
+
+//                    final ProgressDialog progressDialog = new ProgressDialog(context,R.style.MaterialAlertDialog_rounded);
+
                     final ProgressDialog progressDialog = new ProgressDialog(Registration.this);
                     progressDialog.setTitle("Đang đăng ký và tải hình ảnh đại diện lên, vui lòng đợi tí....");
                     progressDialog.show();
@@ -398,20 +408,20 @@ public class Registration extends AppCompatActivity implements LocationListener 
 
                                                             HashMap<String , String> hashMap1 = new HashMap<>();
                                                             hashMap1.put("UID", "" + FAuth.getUid());
-                                                            hashMap1.put("Mobile No",mobile);
-                                                            hashMap1.put("First Name",fname);
-                                                            hashMap1.put("Last Name",lname);
+                                                            hashMap1.put("MobileNo",mobile);
+                                                            hashMap1.put("FirstName",fname);
+                                                            hashMap1.put("LastName",lname);
                                                             hashMap1.put("EmailId",emailid);
                                                             hashMap1.put("City",cityy);
                                                             hashMap1.put("Area",Area);
                                                             hashMap1.put("Password",password);
                                                             hashMap1.put("State",statee);
-                                                            hashMap1.put("Confirm Password",confpassword);
-                                                            hashMap1.put("Local Address",Localaddress);
-                                                            hashMap1.put("Timestamp", "" + timestamp);
+                                                            hashMap1.put("ConfirmPassword",confpassword);
+                                                            hashMap1.put("LocalAddress",Localaddress);
+                                                            hashMap1.put("Timestamp", "" + timestamp+" "+DateFormat.getTimeInstance().format(new Date()));
                                                             hashMap1.put("ImageURL", ""+ downloadImageUri);
-                                                            hashMap1.put("Latitude", "" + latitude);
-                                                            hashMap1.put("Longitude", "" + longitude);
+                                                            hashMap1.put("Latitude", "" + mCurrentLocation.getLatitude());
+                                                            hashMap1.put("Longitude", "" + mCurrentLocation.getLongitude());
 
                                                             firebaseDatabase.getInstance().getReference("Customer")
                                                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
@@ -425,6 +435,9 @@ public class Registration extends AppCompatActivity implements LocationListener 
                                                                         public void onComplete(@NonNull Task<Void> task) {
 
                                                                             if(task.isSuccessful()){
+//                                                                                Context context = new ContextThemeWrapper(Registration.this, R.style.AppTheme2);
+//                                                                                AlertDialog.Builder builder = new AlertDialog.Builder(context,R.style.MaterialAlertDialog_rounded);
+
                                                                                 AlertDialog.Builder builder = new AlertDialog.Builder(Registration.this);
                                                                                 builder.setMessage("Bạn đã đăng ký! Đảm bảo xác minh Email của bạn");
                                                                                 builder.setCancelable(false);
@@ -502,9 +515,7 @@ public class Registration extends AppCompatActivity implements LocationListener 
             }
         });
         isOnline();
-        ButterKnife.bind(this);
-        initLocation();
-        restoreValuesFromBundle(savedInstanceState);
+
     }
     private void initLocation() {
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -590,7 +601,7 @@ public class Registration extends AppCompatActivity implements LocationListener 
                         //All location settings are satisfied.
                         Log.i(TAG, "Tất cả các cài đặt vị trí đều hài lòng.");
                         //Started location updates!
-                        Toast.makeText(getApplicationContext(), "Đã bắt đầu cập nhật vị trí hiện tại của bạn!\nVui lòng tự điền tên đường\n Kiểm tra lại xem đã đúng đại chỉ chưa", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Đã bắt đầu cập nhật vị trí hiện tại của bạn!\nVui lòng tự điền tên đường\nKiểm tra lại xem đã đúng đại chỉ chưa", Toast.LENGTH_LONG).show();
 
                         //noinspection MissingPermission
                         mFusedLocationClient.requestLocationUpdates(mLocationRequest,
@@ -720,6 +731,7 @@ public class Registration extends AppCompatActivity implements LocationListener 
 
         alertDialog.show();
     }
+
     private void getLocation() {
         try {
             if (canGetLocation) {
@@ -1044,13 +1056,30 @@ public class Registration extends AppCompatActivity implements LocationListener 
 
     }
 
-    private void init()
+    private boolean init()
     {
-        if(latitude == 0.0 || longitude == 0.0)
+//        if(mCurrentLocation.getLatitude() == latitude  || mCurrentLocation.getLongitude() == longitude)
+//        {
+//            Toast.makeText(this, "Vui lòng nhấn vào nút GPS góc phải bên trên ...", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+        boolean isValid=false,isValidLocation = false;
+        double nullString = Double.parseDouble(null);
+        if(mCurrentLocation.getLongitude() == nullString || mCurrentLocation.getLongitude() == nullString)
         {
+//            Context context = new ContextThemeWrapper(Registration.this, R.style.AppTheme2);
+//            final ProgressDialog progressDialog = new ProgressDialog(context,R.style.MaterialAlertDialog_rounded);
+
+            final ProgressDialog progressDialog = new ProgressDialog(Registration.this);
+            progressDialog.setTitle("Vui lòng nhấn vào nút GPS góc phải bên trên ...");
+            progressDialog.show();
             Toast.makeText(this, "Vui lòng nhấn vào nút GPS góc phải bên trên ...", Toast.LENGTH_SHORT).show();
-            return;
         }
+        else{
+            isValidLocation = true;
+        }
+        isValid = isValidLocation ? true : false;
+        return isValid;
     }
     // hàm kiểm tra quyền địa chỉ
     //tình trạng kết nối wifi để dùng app
@@ -1243,11 +1272,13 @@ public class Registration extends AppCompatActivity implements LocationListener 
             case REQUEST_CHECK_SETTINGS:
                 switch (resultCode) {
                     case Activity.RESULT_OK:
-                        Log.e(TAG, "User agreed to make required location settings changes.");
+                        //User agreed to make required location settings changes.
+                        Log.e(TAG, "Người dùng đã đồng ý thực hiện các thay đổi cài đặt vị trí cần thiết.");
                         // Nothing to do. startLocationupdates() gets called in onResume again.
                         break;
                     case Activity.RESULT_CANCELED:
-                        Log.e(TAG, "User chose not to make required location settings changes.");
+                        //User chose not to make required location settings changes.
+                        Log.e(TAG, "Người dùng đã chọn không thực hiện các thay đổi cài đặt vị trí bắt buộc.");
                         mRequestingLocationUpdates = false;
                         break;
                 }

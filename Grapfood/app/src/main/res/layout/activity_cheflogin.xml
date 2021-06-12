@@ -82,6 +82,7 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_baseline_email_24"
                     android:drawablePadding="10dp"
+                    android:importantForAutofill="noExcludeDescendants"
                     android:hint="Email id"
                     android:inputType="textEmailAddress"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -98,6 +99,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawablePadding="10dp"
+                    android:importantForAutofill="noExcludeDescendants"
                     android:hint="Mật khẩu"
                     android:inputType="textPassword"/>
             </com.google.android.material.textfield.TextInputLayout>

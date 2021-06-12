@@ -97,6 +97,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_user_hh"
+                    android:importantForAutofill="noExcludeDescendants"
                     android:hint="Họ"
                     android:inputType="textMultiLine|textPersonName|textCapWords" />
 
@@ -112,6 +113,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_user_hh"
+                    android:importantForAutofill="noExcludeDescendants"
                     android:hint="Tên"
                     android:inputType="textMultiLine|textPersonName|textCapWords" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -127,6 +129,7 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_baseline_email_24"
                     android:drawablePadding="10dp"
+                    android:importantForAutofill="noExcludeDescendants"
                     android:hint="Email id"
                     android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -141,6 +144,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:importantForAutofill="noExcludeDescendants"
                     android:hint="Mật khẩu"
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -156,6 +160,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Nhập lại mật khẩu"
+                    android:importantForAutofill="noExcludeDescendants"
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -167,8 +172,9 @@
 
                 <com.hbb20.CountryCodePicker
                     android:id="@+id/ctrycode"
-                    android:layout_width="120dp"
-                    android:layout_height="match_parent">
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:ccp_defaultNameCode="VN">
 
                 </com.hbb20.CountryCodePicker>
 
@@ -180,6 +186,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:importantForAutofill="noExcludeDescendants"
                         android:hint="0123456789"
                         android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -195,6 +202,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_placeholder"
+                    android:importantForAutofill="noExcludeDescendants"
                     android:hint="Số nhà 140"
                     android:inputType="textMultiLine|textPersonName|textCapWords" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -209,6 +217,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_placeholder"
+                    android:importantForAutofill="noExcludeDescendants"
                     android:hint="Tên đường: Lê Trọng Tấn"
                     android:inputType="textMultiLine|textPersonName|textCapWords" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -224,6 +233,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_placeholder"
+                    android:importantForAutofill="noExcludeDescendants"
                     android:hint="Quận/Huyện"
                     android:inputType="textMultiLine|textPersonName|textCapWords" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -239,6 +249,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_placeholder"
+                    android:importantForAutofill="noExcludeDescendants"
                     android:hint="Thành Phố"
                     android:inputType="textMultiLine|textPersonName|textCapWords" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -254,6 +265,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_placeholder"
+                    android:importantForAutofill="noExcludeDescendants"
                     android:hint="Hoàn chỉnh địa chỉ"
                     android:inputType="textMultiLine|textPersonName|textCapWords" />
             </com.google.android.material.textfield.TextInputLayout>

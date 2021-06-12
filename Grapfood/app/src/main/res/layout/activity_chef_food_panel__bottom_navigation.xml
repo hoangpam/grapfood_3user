@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,16 +10,121 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/frame_container"
+        android:layout_marginTop="80dp"
         android:layout_above="@id/chef_bottom_navigation"/>
+    <!--Toolbar-->
+    <RelativeLayout
+        android:id="@+id/toolbarRl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@drawable/shape_rect02">
+
+
+        <ImageButton
+            android:id="@+id/editProfileBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_edit"
+            android:layout_toStartOf="@+id/logoutBTN"
+            android:background="@null"/>
+        <ImageButton
+            android:id="@+id/logoutBTN"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@mipmap/ic_exit"
+            android:layout_alignParentEnd="true"
+            android:background="@null"/>
+
+<!--        add product button-->
+        <ImageButton
+            android:id="@+id/addProductBTN"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_add"
+            android:layout_toStartOf="@+id/editProfileBtn"
+            android:background="@null"/>
+        <com.blogspot.atifsoftwares.circularimageview.CircularImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:id="@+id/profileIv"
+            android:layout_marginEnd="10dp"
+            app:c_border="true"
+            app:c_border_color="@color/white"
+            android:src="@drawable/ic_shop"/>
+        <TextView
+            android:id="@+id/nameTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Ngô Hoàng Thiên"
+            android:layout_toEndOf="@+id/profileIv"
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/ShopNameTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Quán úi chà"
+            android:layout_toEndOf="@+id/profileIv"
+            android:layout_below="@+id/nameTv"
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            />
+        <TextView
+            android:id="@+id/EmailTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="chutchit@gm.com"
+            android:layout_toEndOf="@+id/profileIv"
+            android:layout_below="@+id/ShopNameTv"
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            />
+        <!--Tabs Products, Order -->
+        <LinearLayout
+            android:layout_below="@+id/profileIv"
+            android:id="@+id/ll_dieukhien"
+            android:layout_width="wrap_content"
+            android:background="@drawable/shape_rect03"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:id="@+id/tabProductsTv"
+                android:layout_width="160dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/shape_rect04"
+                android:gravity="center"
+                android:text="Sản phẩm"
+                android:textColor="@color/black"
+                android:textSize="20dp"/>
+
+            <TextView
+                android:id="@+id/tabOrderTv"
+                android:layout_width="160dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Đơn đặt hàng"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+        </LinearLayout>
+    </RelativeLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/chef_bottom_navigation"
         android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
         android:background="?android:attr/windowBackground"
         android:backgroundTint="@color/white"
         app:itemTextColor="@android:color/black"
         app:itemIconTint="@android:color/black"
         app:menu="@menu/chef_bottom_navigation"/>
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

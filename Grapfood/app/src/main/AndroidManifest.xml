@@ -2,26 +2,26 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.grapfood"
-    android:installLocation="auto"
     android:appComponentFactory="android.support.v4.app.CoreComponentFactory"
-    tools:replace="android:appComponentFactory"
-    >
-
-    <meta-data android:name="com.inthecheesefactory.lab.glidepicasso.GlideConfiguration"
-        android:value="GlideModule"/>
-    <meta-data android:name="com.google.android.gms.version"
+    android:installLocation="auto"
+    tools:replace="android:appComponentFactory">
+    <!-- android:usesCleartextTraffic="true" -->
+    <meta-data
+        android:name="com.inthecheesefactory.lab.glidepicasso.GlideConfiguration"
+        android:value="GlideModule" />
+    <meta-data
+        android:name="com.google.android.gms.version"
         android:value="@integer/google_play_services_version" />
     <meta-data
         android:name="com.google.android.geo.API_KEY"
-        android:value="@string/map_api_key" />
-<!--    grant application permissions-->
-<!--    cấp quyền truy câp ứng dụng-->
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+        android:value="@string/map_api_key" /> <!-- grant application permissions -->
+    <!-- cấp quyền truy câp ứng dụng -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -30,8 +30,12 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.activity.Food_details"></activity>
-        <activity android:name=".activity.activity.UpdateDelete_Dish"></activity>
+        <activity android:name=".activity.chefFoodPanel.EditProductActivity"></activity>
+        <activity android:name=".activity.chefFoodPanel.AddProductActivity" />
+        <activity android:name=".activity.deliveryFoodPanel.ProfileEditDelivery" />
+        <activity android:name=".activity.customerFoodPanel.ProfileEditCus" />
+        <activity android:name=".activity.activity.Food_details" />
+        <activity android:name=".activity.activity.UpdateDelete_Dish" />
         <activity android:name=".activity.chefFoodPanel.chef_postDish" />
         <activity android:name=".activity.bottomnavigation.CustomerFoofPanel_BottomNavigation" />
         <activity android:name=".activity.bottomnavigation.ChefFoodPanel_BottomNavigation" />
@@ -55,6 +59,7 @@
         <activity android:name=".activity.activity.ChooseOne" />
         <activity android:name=".activity.activity.MainMenu" />
         <activity android:name=".activity.activity.sendotp" />
+        <activity android:name=".activity.chefFoodPanel.ProfileEditChef" />
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" />
         <activity
             android:name=".activity.activity.MainActivity"

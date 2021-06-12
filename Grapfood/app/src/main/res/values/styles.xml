@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Base application theme. -->
+    <style name="MyCustomButton" parent="android:Widget.Button">
+        <item name="android:background">@drawable/shape_rect01</item>
+    </style>
+    <style name="MyCustomSwice" parent="android:Widget.Button">
+        <item name="android:background">@drawable/com_facebook_auth_dialog_background</item>
+    </style>
 <!--    Chủ đề ứng dụng cơ bản-->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/green</item>
-        <item name="colorPrimaryDark">@color/Black</item>
-        <item name="colorAccent">@color/darkgray</item>
+        <item name="colorPrimaryDark">@color/darkgreen</item>
+        <item name="colorAccent">@color/darkgreen</item>
         <item name="pinViewStyle">@style/PinWidget.PinView</item>
+        <item name="android:buttonStyle">@style/MyCustomButton</item>
     </style>
     <!--theme without actionbar-->
 <!--    chủ đề không có thanh tác vụ-->
@@ -16,4 +23,20 @@
         <item name="windowActionBar">false</item>
     </style>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme2" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/green</item>
+        <item name="colorAccent">@color/blueish</item>
+    </style>
+
+    <style name="MaterialAlertDialog_rounded" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="shapeAppearanceOverlay">@style/DialogCorners</item>
+    </style>
+
+    <style name="DialogCorners">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
 </resources>

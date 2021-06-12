@@ -39,6 +39,8 @@ public class ChooseOne extends AppCompatActivity {
         animationDrawable.addFrame(getResources().getDrawable(R.drawable.img11),3000);
         animationDrawable.addFrame(getResources().getDrawable(R.drawable.img11),3000);
 
+
+
         animationDrawable.setOneShot(false);
         animationDrawable.setEnterFadeDuration(850);
         animationDrawable.setExitFadeDuration(1600);

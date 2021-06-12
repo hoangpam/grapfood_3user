@@ -84,14 +84,16 @@
 
                 <com.hbb20.CountryCodePicker
                     android:id="@+id/countrycode"
-                    android:layout_width="120dp"
-                    android:layout_height="match_parent" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:ccp_defaultNameCode="VN"/>
 
                 <EditText
                     android:layout_width="132dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/Dphonenumber"
                     android:layout_marginLeft="8dp"
+                    android:importantForAutofill="noExcludeDescendants"
                     android:inputType="number"/>
             </LinearLayout>
             <Button

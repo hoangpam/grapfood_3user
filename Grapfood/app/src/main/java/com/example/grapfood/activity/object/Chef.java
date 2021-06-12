@@ -1,28 +1,30 @@
 package com.example.grapfood.activity.object;
 
-import android.location.Address;
-
 public class Chef {
-    String Area,City,CompleteAddress,ConnfirmPassword,EmailId,FirstName,House,LastName,MobileNo,NameShop,Password,State,ImageURL;
+
+    String Area,City,CompleAddress,ConfirmPassword,DeliveryFree,EmailId,FistName,House,ImageURL,Lastname,Latitude,Longitude,MobileNo,NameShop,Online,Password,ShopOpen,State,Timestamp,UID;
     String getSecureCode;
-    // Press Alt+Insert
-
-
-    public Chef(String area, String city, String completeAddress, String connfirmPassword, String emailId, String firstName, String house, String imageURL, String lastName, String mobileNo, String nameShop, String password, String state) {
+    public Chef(String area, String city, String compleAddress, String confirmPassword, String deliveryFree, String emailId, String fistName, String house, String imageURL, String lastname, String latitude, String longitude, String mobileNo, String nameShop, String online, String password, String shopOpen, String state, String timestamp, String UID) {
         Area = area;
         City = city;
-        CompleteAddress = completeAddress;
-        ConnfirmPassword = connfirmPassword;
+        CompleAddress = compleAddress;
+        ConfirmPassword = confirmPassword;
+        DeliveryFree = deliveryFree;
         EmailId = emailId;
-        FirstName = firstName;
+        FistName = fistName;
         House = house;
-        LastName = lastName;
+        ImageURL = imageURL;
+        Lastname = lastname;
+        Latitude = latitude;
+        Longitude = longitude;
         MobileNo = mobileNo;
         NameShop = nameShop;
+        Online = online;
         Password = password;
+        ShopOpen = shopOpen;
         State = state;
-        this.ImageURL = imageURL;
-
+        Timestamp = timestamp;
+        this.UID = UID;
     }
 
     public Chef() {
@@ -32,9 +34,6 @@ public class Chef {
         return getSecureCode;
     }
 
-    public void setGetSecureCode(String getSecureCode) {
-        this.getSecureCode = getSecureCode;
-    }
 
     public String getArea() {
         return Area;
@@ -52,20 +51,28 @@ public class Chef {
         City = city;
     }
 
-    public String getCompleteAddress() {
-        return CompleteAddress;
+    public String getCompleAddress() {
+        return CompleAddress;
     }
 
-    public void setCompleteAddress(String completeAddress) {
-        CompleteAddress = completeAddress;
+    public void setCompleAddress(String compleAddress) {
+        CompleAddress = compleAddress;
     }
 
-    public String getConnfirmPassword() {
-        return ConnfirmPassword;
+    public String getConfirmPassword() {
+        return ConfirmPassword;
     }
 
-    public void setConnfirmPassword(String connfirmPassword) {
-        ConnfirmPassword = connfirmPassword;
+    public void setConfirmPassword(String confirmPassword) {
+        ConfirmPassword = confirmPassword;
+    }
+
+    public String getDeliveryFree() {
+        return DeliveryFree;
+    }
+
+    public void setDeliveryFree(String deliveryFree) {
+        DeliveryFree = deliveryFree;
     }
 
     public String getEmailId() {
@@ -76,12 +83,12 @@ public class Chef {
         EmailId = emailId;
     }
 
-    public String getFirstName() {
-        return FirstName;
+    public String getFistName() {
+        return FistName;
     }
 
-    public void setFirstName(String firstName) {
-        FirstName = firstName;
+    public void setFistName(String fistName) {
+        FistName = fistName;
     }
 
     public String getHouse() {
@@ -92,12 +99,36 @@ public class Chef {
         House = house;
     }
 
-    public String getLastName() {
-        return LastName;
+    public String getImageURL() {
+        return ImageURL;
     }
 
-    public void setLastName(String lastName) {
-        LastName = lastName;
+    public void setImageURL(String imageURL) {
+        ImageURL = imageURL;
+    }
+
+    public String getLastname() {
+        return Lastname;
+    }
+
+    public void setLastname(String lastname) {
+        Lastname = lastname;
+    }
+
+    public String getLatitude() {
+        return Latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        Latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return Longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        Longitude = longitude;
     }
 
     public String getMobileNo() {
@@ -116,12 +147,28 @@ public class Chef {
         NameShop = nameShop;
     }
 
+    public String getOnline() {
+        return Online;
+    }
+
+    public void setOnline(String online) {
+        Online = online;
+    }
+
     public String getPassword() {
         return Password;
     }
 
     public void setPassword(String password) {
         Password = password;
+    }
+
+    public String getShopOpen() {
+        return ShopOpen;
+    }
+
+    public void setShopOpen(String shopOpen) {
+        ShopOpen = shopOpen;
     }
 
     public String getState() {
@@ -132,15 +179,22 @@ public class Chef {
         State = state;
     }
 
-    public String getImageURL() {
-        return ImageURL;
+    public String getTimestamp() {
+        return Timestamp;
     }
 
-    public void setImageURL(String imageURL) {
-        this.ImageURL = imageURL;
+    public void setTimestamp(String timestamp) {
+        Timestamp = timestamp;
     }
 
-    public String getGetSecureCode() {
-        return getSecureCode;
+    public String getUID() {
+        return UID;
     }
+
+    public void setUID(String UID) {
+        this.UID = UID;
+    }
+
+
+
 }

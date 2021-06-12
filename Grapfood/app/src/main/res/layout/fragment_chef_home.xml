@@ -3,13 +3,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/allproductRL"
     android:orientation="vertical"
     tools:menu="@menu/logout">
-    <androidx.recyclerview.widget.RecyclerView
+    <!--Products-->
+    <RelativeLayout
+        android:id="@+id/productRL"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/Recycle_menu"
-        >
-    </androidx.recyclerview.widget.RecyclerView>
+        android:layout_marginTop="70dp" >
+        <!--SearchView-->
+        <EditText
+            android:id="@+id/searchProductEt"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/bg_states"
+            android:drawableStart="@drawable/ic_search_black_24dp"
+            android:hint="Tìm kiếm đồ ăn thức uống ở đây"
+            android:imeOptions="actionSearch"
+            android:singleLine="true"/>
+        <!--Filter-->
+        <ImageButton
+            android:id="@+id/filterProductBtn"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_filter_gray"/>
+        <TextView
+            android:id="@+id/filterProductTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/searchProductEt"
+            android:textColor="@color/black"
+            android:text="Hiển thị tất cả"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="5dp"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_below="@+id/filterProductTv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/Recycle_menu"
+            tools:listitem="@layout/row_product_chef"
+            >
+        </androidx.recyclerview.widget.RecyclerView>
+    </RelativeLayout>
+
     
 </RelativeLayout>

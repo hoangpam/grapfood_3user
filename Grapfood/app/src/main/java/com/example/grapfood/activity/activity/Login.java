@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -20,12 +21,17 @@ import android.widget.Toast;
 
 import com.example.grapfood.R;
 import com.example.grapfood.activity.bottomnavigation.CustomerFoofPanel_BottomNavigation;
-import com.example.grapfood.activity.object.Customer;
+import com.example.grapfood.activity.object.Chef;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -41,6 +47,8 @@ public class Login extends AppCompatActivity {
     String emailid,pwd;
     DatabaseReference table_User;
     ImageButton btnBN;
+    String Email;
+    ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +66,14 @@ public class Login extends AppCompatActivity {
             Forgotpassword.setPaintFlags(Forgotpassword.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
             signup.setPaintFlags(signup.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
+            progressDialog = new ProgressDialog(this);
+//            progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.GREEN));
+            progressDialog.getWindow().setIcon(R.drawable.common_google_signin_btn_icon_dark);
+
+            progressDialog.setTitle("Tình hình");
+            progressDialog.setCanceledOnTouchOutside(false);
+
+
             btnBN = (ImageButton) findViewById(R.id.backBN);
             //mouse click event
             //sự kiện click chuột
@@ -65,7 +81,8 @@ public class Login extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     //trả về phía trước đó
-                    onBackPressed();
+                    startActivity(new Intent(Login.this,MainMenu.class));
+                    finish();
                 }
             });
 
@@ -80,9 +97,10 @@ public class Login extends AppCompatActivity {
                     if(isValid()){
 
                         final ProgressDialog mDialog = new ProgressDialog(Login.this);
+                        mDialog.setTitle("Tình hình");
                         mDialog.setCanceledOnTouchOutside(false);
                         mDialog.setCancelable(false);
-                        mDialog.setMessage("Đăng nhập Vui lòng đợi.......");
+                        mDialog.setMessage("Đang đăng nhập Vui lòng đợi.......");
                         mDialog.show();
 
                         Fauth.signInWithEmailAndPassword(emailid,pwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -122,8 +140,7 @@ public class Login extends AppCompatActivity {
             Forgotpassword.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showForgotPassDialog();
-//                    startActivity(new Intent(Login.this,ForgotPassword.class));
+                    showchoiseForgotPassDialog();
 
                 }
             });
@@ -139,8 +156,102 @@ public class Login extends AppCompatActivity {
         }
 
     }
+    private void showchoiseForgotPassDialog()
+    {
+        //options to display in dialog
+        //các tùy chọn để hiển thị trong hộp thoại
+        String[] options = {"Qua Email", "Qua số điện thoại"};//camara, gallery
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Vui lòng chọn cách thức để lấy lại mật khẩu")//pick image
+                .setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == 0) {
+
+                            showForgotPassDialogEmail();
+                        } else {
+                            showForgotPassDialog();
+                        }
+                    }
+                })
+                .show();
+    }
+
+    private  void showForgotPassDialogEmail() {
+//        Context context = new ContextThemeWrapper(Login.this, R.style.AppTheme2);
+//        final MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context,R.style.MaterialAlertDialog_rounded);
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
+        builder.setTitle("Quên mật khẩu");
+        builder.setMessage("Nhập mã bảo mật của bạn");
+        builder.setIcon(R.drawable.common_google_signin_btn_icon_dark);
+
+
+        LayoutInflater inflater = this.getLayoutInflater();
+        View forgotPassView = inflater.inflate(R.layout.activity_forgot_password, null);
+
+        builder.setView(forgotPassView);
+        builder.setIcon(R.drawable.common_google_signin_btn_icon_dark);
+        final EditText edPhone = forgotPassView.findViewById(R.id.edtPhone);
+
+        Email = edPhone.getText().toString().trim();
+
+        builder.setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(!Patterns.EMAIL_ADDRESS.matcher(Email).matches())
+                {
+                    Toast.makeText(Login.this, "Cách thức nhập Email của bạn bị sai", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                progressDialog.setMessage("Đang gửi mã đổi mật khẩu sang Email của bạn\nVui lòng kiểm tra hòm thư Email đã gửi chưa\nNếu chưa thì bạn hãy chờ vài phút để hệ thống đang trong tiến trình gửi cho bạn..");
+                progressDialog.show();
+
+                Fauth.sendPasswordResetEmail(Email)
+                        .addOnCompleteListener(new OnCompleteListener() {
+                            @Override
+                            public void onComplete(@NonNull Task task) {
+                                if (task.isSuccessful()) {
+                                    //instructions sent
+                                    //hướng dẫn được gửi để reset lại password của bạn
+                                    progressDialog.dismiss();
+                                    dialog.dismiss();
+                                    //Password reset instructions sent to your email
+                                    Toast.makeText(Login.this, "Đã gửi link đặt lại mật khẩu đến Email của bạn", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                //failed sending instructions
+                                //không gửi được hướng dẫn để reset lại password của bạn
+                                progressDialog.dismiss();
+                                dialog.dismiss();
+                                ReusableCodeForAll.ShowAlert(Login.this,"Lỗi kìa","Chưa có tài khoản mà đòi quên với chả không");
+                                Toast.makeText(Login.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
+
+
+            }
+        });
+        builder.setNegativeButton("Huỷ", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.show();
+    }
+    //quên mật khẩu theo hình thức số điện thoại
     private void showForgotPassDialog() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        Context context = new ContextThemeWrapper(Login.this, R.style.AppTheme2);
+//        final MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context,R.style.MaterialAlertDialog_rounded);
+
+        final MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(Login.this);
         builder.setTitle("Quên mật khẩu");
         builder.setMessage("Nhập mã bảo mật của bạn");
 
@@ -150,34 +261,69 @@ public class Login extends AppCompatActivity {
         builder.setView(forgotPassView);
         builder.setIcon(R.drawable.ic_security_black_24dp);
         final EditText edPhone = forgotPassView.findViewById(R.id.edtPhone);
-        final EditText edSecureCode = forgotPassView.findViewById(R.id.edtSecureCode);
+
 
         builder.setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                FirebaseUser user = Fauth.getCurrentUser();
-                if(user != null){
-                    table_User.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            Customer user = dataSnapshot.child(edPhone.getText().toString()).getValue(Customer.class);
-                            if (user.getPincode().equals(edSecureCode.getText().toString())){
-                                Toast.makeText(Login.this, "Mật khẩu của bạn "+ user.getPassword(), Toast.LENGTH_SHORT).show();
-                            }else {
-                                Toast.makeText(Login.this, "Mã bảo mật sai !", Toast.LENGTH_SHORT).show();
+
+                Fauth.verifyPasswordResetCode(edPhone.getText().toString())
+                        .addOnSuccessListener(new OnSuccessListener<String>() {
+                            @Override
+                            public void onSuccess(String s) {
+                                //instructions sent
+                                //hướng dẫn được gửi để reset lại password của bạn
+                                dialog.dismiss();
+                                //Password reset instructions sent to your email
+                                FirebaseUser user = Fauth.getCurrentUser();
+                                if(user != null){
+                                    table_User.addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            Chef user = dataSnapshot.child(edPhone.getText().toString()).getValue(Chef.class);
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    });
+                                }else {
+                                    ReusableCodeForAll.ShowAlert(Login.this,"Lỗi kìa","Chưa có tài khoản mà đòi quên với chả không");
+                                }
+//                                Toast.makeText(Cheflogin.this, "Đã gửi mã code đặt lại mật khẩu đến số "+" " +" của bạn", Toast.LENGTH_SHORT).show();
                             }
-                        }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                }else {
-                    ReusableCodeForAll.ShowAlert(Login.this,"Lỗi kìa","Chưa có tài khoản mà đòi quên với chả không");
-                }
+                            }
+                        });
+//                dialog.dismiss();
+//                FirebaseUser user = Fauth.getCurrentUser();
+//                if(user != null){
+//                    table_User.addValueEventListener(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            Chef user = dataSnapshot.child(edPhone.getText().toString()).getValue(Chef.class);
+//                            if (user.getSecureCode().equals(edSecureCode.getText().toString())){
+//                                Toast.makeText(Cheflogin.this, "Mật khẩu của bạn "+ user.getPassword(), Toast.LENGTH_SHORT).show();
+//                            }else {
+//                                Toast.makeText(Cheflogin.this, "Mã bảo mật sai !", Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {
+//
+//                        }
+//                    });
+//                }else {
+//                    ReusableCodeForAll.ShowAlert(Cheflogin.this,"Lỗi kìa","Chưa có tài khoản mà đòi quên với chả không");
+//                }
             }
         });
         builder.setNegativeButton("Huỷ", new DialogInterface.OnClickListener() {

@@ -3,6 +3,7 @@ package com.example.grapfood.activity.activity;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -102,6 +103,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -111,9 +113,6 @@ import butterknife.OnClick;
 import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
 
 public class ChefRegistration extends AppCompatActivity implements LocationListener {
-    String[] TPHCM = {"Quận 1", "Quận 3", "Quận 4", "Quận 5", "Quận 6", "Quận 8", "Quận 10", "Quận 11", "Quận Tân Phú", "Quận Tân Bình", "Quận Bình Tân", "Quận Phú Nhuận", "Quận Gò Vấp", "Quận 9", "Quận 2", "Quận Thủ Đức"};
-    String[] TPHN = {"Quận Hoàn Kiếm", "Quận Đống Đa", "Quận Ba Đình", "Quận Hoàng Mai", "Quận Thanh Xuân", "Quận Long Biên", "Quận Nam Từ Liêm", "Quận Bắc Từ Liêm", "Quận Tây Hồ", "Quận Cầu Giấy", "Quận Hà Đông"};
-    String[] TPTN = {"Huyện Châu Thành", "Huyện Hoà Thành", "Huyện Bến Cầu", "Huyện Trảng Bàn", "Huyện Tân Châu", "Huyện Dương Minh Châu"};
 
     final String TAG = "GPS";
     //permission constants
@@ -267,6 +266,11 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
             }
         });
 
+
+        ButterKnife.bind(this);
+        initLocation();
+        restoreValuesFromBundle(savedInstanceState);
+
         databaseReference = firebaseDatabase.getInstance().getReference("Chef");
         FAuth = FirebaseAuth.getInstance();
 
@@ -289,11 +293,14 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
                 ImageURL = String.valueOf(image_uri).trim();
                 Delivery = delivery.getEditText().getText().toString().trim();
                 String timestamp = "" + System.currentTimeMillis();
-                //cập nhật ảnh lên firebase storage nếu hình ảnh là null
-                if (isValid() && image_uri == null) {
-                    init();
-                    final ProgressDialog mDialog = new ProgressDialog(ChefRegistration.this);
 
+                //cập nhật ảnh lên firebase storage nếu hình ảnh là null
+                if (isValid() && image_uri == null ) {
+//                    Context context = new ContextThemeWrapper(ChefRegistration.this, R.style.AppTheme2);
+//                    final ProgressDialog mDialog = new ProgressDialog(context,R.style.MaterialAlertDialog_rounded);
+
+
+                    final ProgressDialog mDialog = new ProgressDialog(ChefRegistration.this);
                     mDialog.setCancelable(false);
                     mDialog.setCanceledOnTouchOutside(false);
                     mDialog.setMessage("Đang đăng ký và tải hình đại diện lên, vui lòng đợi tí......");
@@ -331,9 +338,9 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
                                         hashMap1.put("ConfirmPassword", confpassword);
                                         hashMap1.put("House", house);//Số đường
                                         hashMap1.put("ImageURL", "");
-                                        hashMap1.put("Latitude", "" + latitude);
-                                        hashMap1.put("Longitude", "" + longitude);
-                                        hashMap1.put("Timestamp", "" + timestamp);
+                                        hashMap1.put("Latitude", "" + mCurrentLocation.getLatitude());
+                                        hashMap1.put("Longitude", "" + mCurrentLocation.getLongitude());
+                                        hashMap1.put("Timestamp", "" + timestamp+" "+DateFormat.getTimeInstance().format(new Date()));
                                         hashMap1.put("Online", "true");
                                         hashMap1.put("ShopOpen", "true");
 
@@ -385,9 +392,13 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
                     });
                 }
                 //cập nhật ảnh lên firebase storage nếu hình ảnh không bị null
-                else if (isValid() && image_uri != null) {
-                    init();
+                else if (isValid() && image_uri != null ) {
+//                    Context context = new ContextThemeWrapper(ChefRegistration.this, R.style.AppTheme2);
+
                     String filePathAndName = "profile_image/" + "" + FAuth.getUid();
+
+//                    final ProgressDialog progressDialog = new ProgressDialog(context,R.style.MaterialAlertDialog_rounded);
+
                     final ProgressDialog progressDialog = new ProgressDialog(ChefRegistration.this);
                     progressDialog.setTitle("Đang đăng ký và tải hình ảnh đại diện lên, vui lòng đợi tí....");
                     progressDialog.show();
@@ -424,19 +435,19 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
                                                             hashMap1.put("DeliveryFree", Delivery);
                                                             hashMap1.put("FirstName", fname);
                                                             hashMap1.put("LastName", lname);
-                                                            hashMap1.put("Name Shop", nameshop);
-                                                            hashMap1.put("Email Id", emailid);
+                                                            hashMap1.put("NameShop", nameshop);
+                                                            hashMap1.put("EmailId", emailid);
                                                             hashMap1.put("City", cityy);
                                                             hashMap1.put("Area", Area);//phường xã
                                                             hashMap1.put("Password", password);
-                                                            hashMap1.put("Complete Address", cpAddress);
+                                                            hashMap1.put("CompleteAddress", cpAddress);
                                                             hashMap1.put("State", statee);//Quận huyện
-                                                            hashMap1.put("Confirm Password", confpassword);
+                                                            hashMap1.put("ConfirmPassword", confpassword);
                                                             hashMap1.put("House", house);//Số đường
                                                             hashMap1.put("ImageURL", "" + downloadImageUri);//url of uploadted image
-                                                            hashMap1.put("Latitude", "" + latitude);
-                                                            hashMap1.put("Longitude", "" + longitude);
-                                                            hashMap1.put("Timestamp", "" + timestamp);
+                                                            hashMap1.put("Latitude", "" + mCurrentLocation.getLatitude());
+                                                            hashMap1.put("Longitude", "" + mCurrentLocation.getLongitude());
+                                                            hashMap1.put("Timestamp", "" + timestamp+" "+DateFormat.getTimeInstance().format(new Date()));
                                                             hashMap1.put("Online", "true");
                                                             hashMap1.put("ShopOpen", "true");
 
@@ -452,6 +463,10 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
                                                                         public void onComplete(@NonNull Task<Void> task) {
 
                                                                             if (task.isSuccessful()) {
+
+//                                                                                Context context = new ContextThemeWrapper(ChefRegistration.this, R.style.AppTheme2);
+//                                                                                AlertDialog.Builder builder = new AlertDialog.Builder(context,R.style.MaterialAlertDialog_rounded);
+
                                                                                 AlertDialog.Builder builder = new AlertDialog.Builder(ChefRegistration.this);
                                                                                 builder.setMessage("Bạn đã đăng ký! Đảm bảo xác minh email của bạn");
                                                                                 builder.setCancelable(false);
@@ -525,9 +540,7 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
             }
         });
         isOnline();
-        ButterKnife.bind(this);
-        initLocation();
-        restoreValuesFromBundle(savedInstanceState);
+
     }
 
 
@@ -745,6 +758,7 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
 
         alertDialog.show();
     }
+
     private void getLocation() {
         try {
             if (canGetLocation) {
@@ -1086,12 +1100,27 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
 
 
     }
-
-    private void init() {
-        if (mCurrentLocation.getLatitude() == latitude  || mCurrentLocation.getLongitude() == longitude ) {
+    public static double unboxed(Double v) {
+        return v == null ? 0 : v.doubleValue();
+    }
+    private boolean init()
+    {
+//        if(mCurrentLocation.getLatitude() == latitude  || mCurrentLocation.getLongitude() == longitude)
+//        {
+//            Toast.makeText(this, "Vui lòng nhấn vào nút GPS góc phải bên trên ...", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+        boolean isValid=false,isValidLocation = false;
+        double nullString = Double.parseDouble(null);
+        if(unboxed(mCurrentLocation.getLongitude())  == nullString || unboxed(mCurrentLocation.getLongitude())  == nullString)
+        {
             Toast.makeText(this, "Vui lòng nhấn vào nút GPS góc phải bên trên ...", Toast.LENGTH_SHORT).show();
-            return;
         }
+        else{
+            isValidLocation = true;
+        }
+        isValid = isValidLocation ? true : false;
+        return isValid;
     }
 
     // hàm kiểm tra quyền địa chỉ

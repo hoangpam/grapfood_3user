@@ -17,9 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.grapfood.R;
-import com.example.grapfood.activity.activity.ReusableCodeForAll;
 import com.example.grapfood.activity.adapter_defFood.CustomerHomeAdapter;
-import com.example.grapfood.activity.model.UpdateDishModel;
 import com.example.grapfood.activity.object.Customer;
 import com.example.grapfood.activity.object.FoodDetails;
 import com.google.firebase.auth.FirebaseAuth;

@@ -82,13 +82,15 @@
                 android:orientation="horizontal">
 
                 <com.hbb20.CountryCodePicker
-                    android:layout_width="120dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:id="@+id/CountryCode"/>
+                    android:id="@+id/CountryCode"
+                    app:ccp_defaultNameCode="VN"/>
                 <EditText
                     android:layout_width="132dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/number"
+                    android:importantForAutofill="noExcludeDescendants"
                     android:layout_marginLeft="8dp"
                     android:inputType="number"/>
             </LinearLayout>
