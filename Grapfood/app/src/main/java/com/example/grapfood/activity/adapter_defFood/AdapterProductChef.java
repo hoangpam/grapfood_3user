@@ -4,8 +4,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Icon;
+import android.text.Spannable;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +36,11 @@ import com.rey.material.app.BottomSheetDialog;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Locale;
+
+import es.dmoral.toasty.Toasty;
+
+import static com.example.grapfood.activity.object.Utils.searchString;
 
 public class AdapterProductChef extends RecyclerView.Adapter<AdapterProductChef.HolderProductChef> implements Filterable {
 
@@ -95,8 +103,8 @@ public class AdapterProductChef extends RecyclerView.Adapter<AdapterProductChef.
         holder.titleTv.setText(title);
         holder.quantilyTv.setText(quantity);
         holder.discountNoteTv.setText(discountNote);
-        holder.discountPriceTv.setText(discountPrice+" "+"VND");
-        holder.originalPriceTv.setText(originalPrice+" "+"VND");
+        holder.discountPriceTv.setText(" VND"+discountPrice+"");
+        holder.originalPriceTv.setText("VND"+originalPrice+"");
         if(discountAvailable.equals("true"))
         {
             //product is on discount
@@ -121,6 +129,7 @@ public class AdapterProductChef extends RecyclerView.Adapter<AdapterProductChef.
                 detailsBottomSheet(modelProduct);//here modelProduct contrains detailt of click product
             }
         });
+
     }
 
     private void detailsBottomSheet(ModelProduct modelProduct) {
@@ -164,10 +173,10 @@ public class AdapterProductChef extends RecyclerView.Adapter<AdapterProductChef.
         titleTv.setText(title);
         descriptionTv.setText(productDescription);
         categoryTv.setText(productCategory);
-        quantilyTv.setText("Số lượng:"+quantity);
+        quantilyTv.setText(quantity);
         discountNoteTv.setText(discountNote);
-        discountPriceTv.setText(discountPrice+" "+"VND");
-        originalPriceTv.setText(originalPrice+" "+"VND");
+        discountPriceTv.setText("VND"+discountPrice+"");
+        originalPriceTv.setText("VND"+originalPrice+"");
 
         if(discountAvailable.equals("true"))
         {
@@ -203,6 +212,7 @@ public class AdapterProductChef extends RecyclerView.Adapter<AdapterProductChef.
             @Override
             public void onClick(View v) {
                 //show delete confirm dialog
+                Toasty.warning(context, "Bạn đang xoá sản phẩm"+title+" hay không ???", Toast.LENGTH_SHORT, true).show();
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Thông báo xoá")
                         .setMessage("Bạn chắc có muốn xoá sản phẩm "+title+" hay không ???")
@@ -246,14 +256,14 @@ public class AdapterProductChef extends RecyclerView.Adapter<AdapterProductChef.
                     @Override
                     public void onSuccess(Void aVoid) {
                         //product deleted
-                        Toast.makeText(context, "Sản phẩm đã được xoá...", Toast.LENGTH_SHORT).show();
+                        Toasty.success(context, "Sản phẩm đã được xoá...", Toast.LENGTH_SHORT, true).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         //failed deleting product
-                        Toast.makeText(context, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toasty.error(context, ""+e.getMessage(), Toast.LENGTH_SHORT, true).show();
                     }
                 });
     }
@@ -262,15 +272,23 @@ public class AdapterProductChef extends RecyclerView.Adapter<AdapterProductChef.
     public int getItemCount() {
         return productsList.size();
     }
+
     public void filterList(ArrayList<ModelProduct> filteredList) {
         filterList = filteredList;
         notifyDataSetChanged();
     }
+
     @Override
     public Filter getFilter() {
-        if(filter == null){
-            filter = new FilterProduct(this,filterList);
+        if(filter == null) {
+            filter = new FilterProduct(this, filterList);
         }
+//        }else{
+//
+//            notifyDataSetChanged();
+//            Toasty.error(context, "Không có trong hệ thống sản phẩm này", Toast.LENGTH_SHORT).show();
+////            Toast.makeText(context, "Không có trong hệ thống sản phẩm này", Toast.LENGTH_SHORT).show();
+//        }
 
         return filter;
     }

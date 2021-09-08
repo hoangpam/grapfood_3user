@@ -3,6 +3,7 @@ package com.example.grapfood.activity.bottomnavigation;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ContextThemeWrapper;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -40,7 +41,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
-public class DeliveryFoodPanel_BottomNavigation extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class DeliveryFoodPanel_BottomNavigation extends AppCompatActivity  {
 
     Fragment fragmenthientai;
     FrameLayout layoutHost;
@@ -54,8 +55,12 @@ public class DeliveryFoodPanel_BottomNavigation extends AppCompatActivity implem
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delivery_food_panel__bottom_navigation);
-        BottomNavigationView navigationView = findViewById(R.id.bottom_navigation_devivery);
-        navigationView.setOnNavigationItemSelectedListener(this);
+
+//        BottomNavigationView navigationView = findViewById(R.id.bottom_navigation_devivery);
+//        navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+//        // attaching bottom sheet behaviour - hide / show on scroll
+//        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigationView.getLayoutParams();
+//        layoutParams.setBehavior(new BottomNavigationBehavior());
         layoutHost = findViewById(R.id.fragment_container);
         fragmenthientai = new DeliveryProfile();
         loadFragment(fragmenthientai);
@@ -66,7 +71,7 @@ public class DeliveryFoodPanel_BottomNavigation extends AppCompatActivity implem
 //        progressDialog = new ProgressDialog(context,R.style.MaterialAlertDialog_rounded);
 
         progressDialog = new ProgressDialog(DeliveryFoodPanel_BottomNavigation.this);
-        progressDialog.setTitle("Tình hình");
+        progressDialog.setTitle("Tình hình mạng yếu");
         progressDialog.setCanceledOnTouchOutside(false);
         firebaseAuth = FirebaseAuth.getInstance();
         checkUser();
@@ -82,28 +87,32 @@ public class DeliveryFoodPanel_BottomNavigation extends AppCompatActivity implem
 
 
     }
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-        Fragment fragment = null;
-        switch (item.getItemId()){
-            case R.id.pendingorders:
-                fragment=new DeliveryPendingOrderFragment();
-                break;
-        }
-        switch (item.getItemId()){
-            case R.id.shiporders:
-                fragment=new DeliveryShipOrders();
-                break;
-        }
-        switch (item.getItemId()){
-            case R.id.delivery_profile:
-                fragment=new DeliveryProfile();
-                break;
-        }
-        return loadcheffragment(fragment);
+            Fragment fragment = null;
+            switch (item.getItemId()){
+                case R.id.pendingorders:
+                    fragment=new DeliveryPendingOrderFragment();
+                    break;
+            }
+            switch (item.getItemId()){
+                case R.id.shiporders:
+                    fragment=new DeliveryShipOrders();
+                    break;
+            }
+            switch (item.getItemId()){
+                case R.id.delivery_profile:
+                    fragment=new DeliveryProfile();
+                    break;
+            }
+            return loadcheffragment(fragment);
 
-    }
+        }
+    };
+
 
     private boolean loadcheffragment(Fragment fragment) {
 

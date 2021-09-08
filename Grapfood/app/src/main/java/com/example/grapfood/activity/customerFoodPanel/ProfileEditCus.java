@@ -43,7 +43,6 @@ import com.blogspot.atifsoftwares.circularimageview.CircularImageView;
 import com.example.grapfood.R;
 import com.example.grapfood.activity.activity.MainMenu;
 import com.example.grapfood.activity.bottomnavigation.CustomerFoofPanel_BottomNavigation;
-import com.example.grapfood.activity.chefFoodPanel.ProfileEditChef;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -88,6 +87,7 @@ import java.util.Locale;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import es.dmoral.toasty.Toasty;
 
 public class ProfileEditCus extends AppCompatActivity implements LocationListener {
     private ImageButton backBtn;
@@ -213,7 +213,8 @@ public class ProfileEditCus extends AppCompatActivity implements LocationListene
         state = (EditText) findViewById(R.id.edStates);
         city = (EditText) findViewById(R.id.edCitys);
         completeAd = (EditText) findViewById(R.id.edcompleteAddress);
-        Toast.makeText(this, "Vui lòng nhấn nút trên chữ GPS", Toast.LENGTH_LONG).show();
+        Toasty.warning(this, "Vui lòng nhấn nút trên chữ GPS", Toast.LENGTH_SHORT, true).show();
+//        Toast.makeText(this, "Vui lòng nhấn nút trên chữ GPS", Toast.LENGTH_LONG).show();
         btnsua = (Button) findViewById(R.id.bt_thaydoithongtin);
         //truy cập thông tin
         firebaseAuth = FirebaseAuth.getInstance();
@@ -253,6 +254,14 @@ public class ProfileEditCus extends AppCompatActivity implements LocationListene
 
     }
 
+    private void Erro() {
+        AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+        alerta.setTitle("Ơ kìa lỗi");
+        alerta.setMessage("Vui lòng nhấn nút màu đỏ GPS bên phải chữ Đăng Ký");
+        alerta.setPositiveButton("OK", null);
+        alerta.show();
+    }
+
     private void updateProfile() {
         final ProgressDialog progressDialog = new ProgressDialog(ProfileEditCus.this);
         progressDialog.setMessage("Đang cập nhật lại cho bạn...");
@@ -261,101 +270,118 @@ public class ProfileEditCus extends AppCompatActivity implements LocationListene
         progressDialog.show();
 
         if(image_uri == null ){
-            //update without image
+            try {
+                //update without image
 
-            //setup date to update
-            HashMap<String,Object> hashMap = new HashMap<>();
-            hashMap.put("MobileNo",""+nphone);
-            hashMap.put("FirstName",""+fn);
-            hashMap.put("LastName",""+ln);
-            hashMap.put("EmailId",""+Email);
-            hashMap.put("City",""+City);
-            hashMap.put("Area",""+Area);
-            hashMap.put("State",""+State);
-            hashMap.put("House",""+Houseno);
-            hashMap.put("CompleteAddress",""+CompleteAd);
-            hashMap.put("Latitude", "" + mCurrentLocation.getLatitude());
-            hashMap.put("Longitude", "" + mCurrentLocation.getLongitude());
+                //setup date to update
+                HashMap<String,Object> hashMap = new HashMap<>();
+                hashMap.put("MobileNo",""+nphone);
+                hashMap.put("FirstName",""+fn);
+                hashMap.put("LastName",""+ln);
+                hashMap.put("EmailId",""+Email);
+                hashMap.put("City",""+City);
+                hashMap.put("Area",""+Area);
+                hashMap.put("State",""+State);
+                hashMap.put("House",""+Houseno);
+                hashMap.put("CompleteAddress",""+CompleteAd);
+                hashMap.put("Latitude", "" + mCurrentLocation.getLatitude());
+                hashMap.put("Longitude", "" + mCurrentLocation.getLongitude());
 
 
-            //update to db
-            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Chef");
-            ref.child(firebaseAuth.getUid()).updateChildren(hashMap)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            //update
-                            progressDialog.dismiss();
-                            Toast.makeText(ProfileEditCus.this, "Cập nhật thành công y...", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            //failed to update
-                            Toast.makeText(ProfileEditCus.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                //update to db
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+                ref.child(firebaseAuth.getUid()).updateChildren(hashMap)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                //update
+                                progressDialog.dismiss();
+                                Toasty.success(ProfileEditCus.this, "Cập nhật thành công y...", Toast.LENGTH_SHORT, true).show();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                //failed to update
+                                Toasty.error(ProfileEditCus.this, ""+e.getMessage(), Toast.LENGTH_SHORT, true).show();
+//                            Toast.makeText(ProfileEditCus.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }catch (Exception e){
+                Erro();
+                Toasty.warning(ProfileEditCus.this, "Vui lòng nhấn vào nút GPS góc phải bên trên ..."+"\n"+e.getMessage(), Toast.LENGTH_LONG, true).show();
+                progressDialog.dismiss();
+            }
+
         }
         else{
-            //update with image
+            try {
+                //update with image
 
-            //*******Upload image first*************/
-            String filePathAndName = "profile_image/" + "" + firebaseAuth.getUid();
-            //get storage reference
-            StorageReference storageReference = FirebaseStorage.getInstance().getReference(filePathAndName);
-            storageReference.putFile(image_uri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            //image uploaded get url of uploaded image
-                            Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                            while (!uriTask.isSuccessful());
-                            Uri downloadImageUri = uriTask.getResult();
+                //*******Upload image first*************/
+                String filePathAndName = "profile_image/" + "" + firebaseAuth.getUid();
+                //get storage reference
+                StorageReference storageReference = FirebaseStorage.getInstance().getReference(filePathAndName);
+                storageReference.putFile(image_uri)
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                //image uploaded get url of uploaded image
+                                Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                                while (!uriTask.isSuccessful());
+                                Uri downloadImageUri = uriTask.getResult();
 
-                            if(uriTask.isSuccessful()){
-                                //image url received,now update db
-                                HashMap<String,Object> hashMap = new HashMap<>();
-                                hashMap.put("MobileNo",""+nphone);
-                                hashMap.put("FirstName",""+fn);
-                                hashMap.put("LastName",""+ln);
-                                hashMap.put("EmailId",""+Email);
-                                hashMap.put("City",""+City);
-                                hashMap.put("Area",""+Area);
-                                hashMap.put("State",""+State);
-                                hashMap.put("House",""+Houseno);
-                                hashMap.put("CompleteAddress",""+CompleteAd);
-                                hashMap.put("Latitude", "" + mCurrentLocation.getLatitude());
-                                hashMap.put("Longitude", "" + mCurrentLocation.getLongitude());
-                                hashMap.put("ImageURL",""+downloadImageUri);
-                                //update to db
-                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Chef");
-                                ref.child(firebaseAuth.getUid()).updateChildren(hashMap)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                //update
-                                                progressDialog.dismiss();
-                                                Toast.makeText(ProfileEditCus.this, "Cập nhật thành công y...", Toast.LENGTH_SHORT).show();
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                //failed to update
-                                                Toast.makeText(ProfileEditCus.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
+                                if(uriTask.isSuccessful()){
+                                    //image url received,now update db
+                                    HashMap<String,Object> hashMap = new HashMap<>();
+                                    hashMap.put("MobileNo",""+nphone);
+                                    hashMap.put("FirstName",""+fn);
+                                    hashMap.put("LastName",""+ln);
+                                    hashMap.put("EmailId",""+Email);
+                                    hashMap.put("City",""+City);
+                                    hashMap.put("Area",""+Area);
+                                    hashMap.put("State",""+State);
+                                    hashMap.put("House",""+Houseno);
+                                    hashMap.put("CompleteAddress",""+CompleteAd);
+                                    hashMap.put("Latitude", "" + mCurrentLocation.getLatitude());
+                                    hashMap.put("Longitude", "" + mCurrentLocation.getLongitude());
+                                    hashMap.put("ImageURL",""+downloadImageUri);
+                                    //update to db
+                                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+                                    ref.child(firebaseAuth.getUid()).updateChildren(hashMap)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    //update
+                                                    progressDialog.dismiss();
+                                                    Toasty.success(ProfileEditCus.this, "Cập nhật thành công y...", Toast.LENGTH_SHORT, true).show();
+//                                                Toast.makeText(ProfileEditCus.this, "Cập nhật thành công y...", Toast.LENGTH_SHORT).show();
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    //failed to update
+                                                    Toasty.error(ProfileEditCus.this, ""+e.getMessage(), Toast.LENGTH_SHORT, true).show();
+//                                                Toast.makeText(ProfileEditCus.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                }
                             }
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            Toast.makeText(ProfileEditCus.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                progressDialog.dismiss();
+                                Toasty.error(ProfileEditCus.this, ""+e.getMessage(), Toast.LENGTH_SHORT, true).show();
+                            }
+                        });
+            }catch (Exception e){
+                Erro();
+                Toasty.warning(ProfileEditCus.this, "Vui lòng nhấn vào nút GPS góc phải bên trên ..."+"\n"+e.getMessage(), Toast.LENGTH_LONG, true).show();
+                progressDialog.dismiss();
+            }
+
         }
     }
     //viết sự kiện cho load hình ảnh của user
@@ -372,7 +398,7 @@ public class ProfileEditCus extends AppCompatActivity implements LocationListene
 
     private void loadMyInfo() {
         //load user info, and set to views
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Chef");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
         ref.orderByChild("UID").equalTo(firebaseAuth.getUid())
                 .addValueEventListener(new ValueEventListener() {
                     @Override
@@ -410,14 +436,13 @@ public class ProfileEditCus extends AppCompatActivity implements LocationListene
                                 Picasso.get().load(ImageURL).placeholder(R.drawable.ic_camera_24).into(profileIv);
                             }catch (Exception e ){
                                 profileIv.setImageResource(R.drawable.ic_camera_24);
-                                Toast.makeText(ProfileEditCus.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toasty.error(ProfileEditCus.this, ""+e.getMessage(), Toast.LENGTH_SHORT, true).show();
                             }
                         }
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
                     }
                 });
     }
@@ -567,7 +592,8 @@ public class ProfileEditCus extends AppCompatActivity implements LocationListene
                     completeAd.setText(address);
                 }
             } catch (Exception e) {
-                Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toasty.error(this, ""+e.getMessage(), Toast.LENGTH_SHORT, true).show();
+//                Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -589,7 +615,8 @@ public class ProfileEditCus extends AppCompatActivity implements LocationListene
                         //All location settings are satisfied.
                         Log.i(TAG, "Tất cả các cài đặt vị trí đều hài lòng.");
                         //Started location updates!
-                        Toast.makeText(getApplicationContext(), "Đã bắt đầu cập nhật vị trí hiện tại của bạn!\nVui lòng tự điền tên đường\n Kiểm tra lại xem đã đúng đại chỉ chưa", Toast.LENGTH_LONG).show();
+                        Toasty.warning(getApplicationContext(), "Đã bắt đầu cập nhật vị trí hiện tại của bạn!\nVui lòng tự điền tên đường\n Kiểm tra lại xem đã đúng đại chỉ chưa", Toast.LENGTH_SHORT, true).show();
+//                        Toast.makeText(getApplicationContext(), "Đã bắt đầu cập nhật vị trí hiện tại của bạn!\nVui lòng tự điền tên đường\n Kiểm tra lại xem đã đúng đại chỉ chưa", Toast.LENGTH_LONG).show();
 
                         //noinspection MissingPermission
                         mFusedLocationClient.requestLocationUpdates(mLocationRequest,
@@ -621,8 +648,8 @@ public class ProfileEditCus extends AppCompatActivity implements LocationListene
                                 String errorMessage = "Location settings are inadequate, and cannot be " +
                                         "fixed here. Fix in Settings.";
                                 Log.e(TAG, errorMessage);
-
-                                Toast.makeText(ProfileEditCus.this, errorMessage, Toast.LENGTH_LONG).show();
+                                Toasty.error(ProfileEditCus.this, ""+errorMessage+"\n"+e.getMessage(), Toast.LENGTH_LONG, true).show();
+//                                Toast.makeText(ProfileEditCus.this, errorMessage, Toast.LENGTH_LONG).show();
                         }
 
                         updateLocationUI();
@@ -754,6 +781,7 @@ public class ProfileEditCus extends AppCompatActivity implements LocationListene
             }
         } catch (SecurityException e) {
             e.printStackTrace();
+            Toasty.error(ProfileEditCus.this, ""+e.getMessage(), Toast.LENGTH_SHORT, true).show();
         }
     }
 
@@ -793,12 +821,13 @@ public class ProfileEditCus extends AppCompatActivity implements LocationListene
                 //            houseno.getEditText().setText(postalCode);
                 //            delivery.getEditText().setText(country);
                 //            compleaddress.getEditText().setText(address);
-                completeAd.setText(address + " " + city + " " + state + " " + country);
+                completeAd.setText(address + " " + city + " " + state );
             }
 //
 //
         } catch (Exception e) {
-            Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toasty.error(ProfileEditCus.this, "\n"+e.getMessage(), Toast.LENGTH_SHORT, true).show();
+//            Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -823,12 +852,12 @@ public class ProfileEditCus extends AppCompatActivity implements LocationListene
             wifiConnected = ni.getType() == ConnectivityManager.TYPE_WIFI;
             mobileConnected = ni.getType() == ConnectivityManager.TYPE_MOBILE;
             if (wifiConnected) {
-                Toast.makeText(this, "Bạn đã kết nối thành công đến wifi", Toast.LENGTH_SHORT).show();
+                Toasty.success(this, "Bạn đã kết nối thành công đến wifi", Toast.LENGTH_SHORT, true).show();
             } else if (mobileConnected) {
-                Toast.makeText(this, "Bạn đã kết nối thành công đến điện thoại", Toast.LENGTH_SHORT).show();
+                Toasty.success(this, "Bạn đã kết nối thành công đến wifi", Toast.LENGTH_SHORT, true).show();
             }
         } else {
-            Toast.makeText(this, "Hiện tại bạn không có kết nối", Toast.LENGTH_SHORT).show();
+            Toasty.error(this, "Hiện tại bạn không có kết nối.", Toast.LENGTH_SHORT, true).show();
             showSettingsWifis();
         }
     }
@@ -918,23 +947,7 @@ public class ProfileEditCus extends AppCompatActivity implements LocationListene
                     canGetLocation = true;
                     getLocation();
                 }
-//                if(grantResults.length > 0)
-//                {
-//                    boolean locationAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-//                    if(locationAccepted){
-//                        //permission allowed
-//                        //sự cho phép được phép cấp quyền
-////                            detectLocation();
-//                            startLocationUpdates();
-//
-//                    }
-//                    else {
-//                        //permission denied
-//                        //sự cho phép không được phép cấp quyền
-//                        //location permission is necessary
-//                        Toast.makeText(this,"Sự cho phép vị trí là cần thiết.....",Toast.LENGTH_SHORT).show();
-//                    }
-//                }
+
 
             }break;
             case CAMERA_REQUEST_CODE:{
@@ -952,7 +965,7 @@ public class ProfileEditCus extends AppCompatActivity implements LocationListene
                         //permission denied
                         //sự cho phép không được phép cấp quyền
                         //location permission is necessary
-                        Toast.makeText(this,"Sự cho phép máy ảnh là cần thiết.....",Toast.LENGTH_SHORT).show();
+                        Toasty.success(this, "Sự cho phép máy ảnh là cần thiết.....", Toast.LENGTH_SHORT, true).show();
                     }
                 }
             }break;
@@ -969,7 +982,7 @@ public class ProfileEditCus extends AppCompatActivity implements LocationListene
                         //permission denied
                         //sự cho phép không được phép cấp quyền
                         //location permission is necessary
-                        Toast.makeText(this,"Sự cho phép bộ nhớ là cần thiết.....",Toast.LENGTH_SHORT).show();
+                        Toasty.success(this, "Sự cho phép máy ảnh là cần thiết.....", Toast.LENGTH_SHORT, true).show();
                     }
                 }
             }break;
@@ -988,10 +1001,12 @@ public class ProfileEditCus extends AppCompatActivity implements LocationListene
                 switch (resultCode) {
                     case Activity.RESULT_OK:
                         Log.e(TAG, "User agreed to make required location settings changes.");
+                        Toasty.success(this, "Người dùng đã đồng ý thực hiện các thay đổi cài đặt vị trí cần thiết.", Toast.LENGTH_SHORT, true).show();
                         // Nothing to do. startLocationupdates() gets called in onResume again.
                         break;
                     case Activity.RESULT_CANCELED:
                         Log.e(TAG, "User chose not to make required location settings changes.");
+                        Toasty.error(this, "Người dùng đã chọn không thực hiện các thay đổi cài đặt vị trí bắt buộc.", Toast.LENGTH_SHORT, true).show();
                         mRequestingLocationUpdates = false;
                         break;
                 }
@@ -1002,7 +1017,7 @@ public class ProfileEditCus extends AppCompatActivity implements LocationListene
                 //get picked image
                 image_uri = data.getData();
                 ((CircularImageView) findViewById(R.id.profileIv)).setImageURI(image_uri);
-                Toast.makeText(this, "Đã chọn hình thành công!", Toast.LENGTH_SHORT).show();
+                Toasty.success(this, "Đã chọn hình thành công!", Toast.LENGTH_SHORT, true).show();
                 //set to imageview
                 profileIv.setImageURI(image_uri);
 
@@ -1011,7 +1026,7 @@ public class ProfileEditCus extends AppCompatActivity implements LocationListene
 
                 profileIv.setImageURI(image_uri);
                 ((CircularImageView) findViewById(R.id.profileIv)).setImageURI(image_uri);
-                Toast.makeText(this, "Đã chụp hình thành công!", Toast.LENGTH_SHORT).show();
+                Toasty.success(this, "Đã chụp hình thành công!", Toast.LENGTH_SHORT, true).show();
             }
         }
 
@@ -1044,7 +1059,7 @@ public class ProfileEditCus extends AppCompatActivity implements LocationListene
         if (locationManager != null) {
             locationManager.removeUpdates(this);
         }
-        Toast.makeText(this,"Vui lòng mở vị trí....",Toast.LENGTH_SHORT).show();
+        Toasty.warning(this, "Vui lòng mở vị trí....", Toast.LENGTH_SHORT, true).show();
     }
 
     @Override

@@ -44,6 +44,8 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 import java.util.UUID;
 
+import es.dmoral.toasty.Toasty;
+
 public class ChefFoodPanel_BottomNavigation extends AppCompatActivity  {
 
     Fragment fragmenthientai;
@@ -57,7 +59,6 @@ public class ChefFoodPanel_BottomNavigation extends AppCompatActivity  {
     CircularImageView profileIv;
     String RandomUID;
 
-    //    Context context = new ContextThemeWrapper(ChefFoodPanel_BottomNavigation.this, R.style.AppTheme2);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,11 +66,11 @@ public class ChefFoodPanel_BottomNavigation extends AppCompatActivity  {
         setContentView(R.layout.activity_chef_food_panel__bottom_navigation);
 
 
-        BottomNavigationView navigationView = (BottomNavigationView) findViewById(R.id.chef_bottom_navigation);
-        navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        // attaching bottom sheet behaviour - hide / show on scroll
-        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigationView.getLayoutParams();
-        layoutParams.setBehavior(new BottomNavigationBehavior());
+//        BottomNavigationView navigationView = (BottomNavigationView) findViewById(R.id.chef_bottom_navigation);
+//        navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+//        // attaching bottom sheet behaviour - hide / show on scroll
+//        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigationView.getLayoutParams();
+//        layoutParams.setBehavior(new BottomNavigationBehavior());
         layoutHost = findViewById(R.id.frame_container);
         fragmenthientai = new ChefHomeFragment();
         loadFragment(fragmenthientai);
@@ -85,10 +86,9 @@ public class ChefFoodPanel_BottomNavigation extends AppCompatActivity  {
         editProfileBtn = (ImageButton) findViewById(R.id.editProfileBtn);
         addProductBtn = (ImageButton) findViewById(R.id.addProductBTN);
         profileIv = (CircularImageView) findViewById(R.id.profileIv);
-//        progressDialog = new ProgressDialog(context,R.style.MaterialAlertDialog_rounded);
 
         progressDialog = new ProgressDialog(ChefFoodPanel_BottomNavigation.this);
-        progressDialog.setTitle("Tình hình");
+        progressDialog.setTitle("Tình hình mạng yếu");
         progressDialog.setCanceledOnTouchOutside(false);
         firebaseAuth = FirebaseAuth.getInstance();
         checkUser();
@@ -218,7 +218,7 @@ public class ChefFoodPanel_BottomNavigation extends AppCompatActivity  {
     }
 
     private void loadMyInfo() {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Chef");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
         ref.orderByChild("UID").equalTo(firebaseAuth.getUid())
                 .addValueEventListener( new ValueEventListener(){
 
@@ -240,6 +240,8 @@ public class ChefFoodPanel_BottomNavigation extends AppCompatActivity  {
                             }catch (Exception e)
                             {
                                 profileIv.setImageResource(R.drawable.ic_camera_24);
+//                                Toasty.error(ChefFoodPanel_BottomNavigation.this, ""+e.getMessage(), Toast.LENGTH_SHORT, true).show();
+
                             }
                         }
                     }
@@ -261,7 +263,7 @@ public class ChefFoodPanel_BottomNavigation extends AppCompatActivity  {
 
 
         //update value to db
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Chef");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
         ref.child(firebaseAuth.getUid()).updateChildren(hashMap)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

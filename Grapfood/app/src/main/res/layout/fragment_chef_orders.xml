@@ -1,7 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout android:id="@+id/orderRL"
+    android:layout_marginTop="70dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <!--Products-->
+    <RelativeLayout
+        android:id="@+id/orderRLl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="70dp" >
+        <!--SearchView-->
+        <EditText
+            android:id="@+id/searchProductEt"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/search_bg"
+            android:drawableStart="@drawable/ic_search_black_24dp"
+            android:hint="Tìm kiếm đồ ăn thức uống ở đây"
+            android:inputType="textPersonName|textCapWords"
+            android:imeOptions="actionSearch"
+            android:textSize="12dp"
+            android:singleLine="true"/>
+        <!--Voice text-->
+        <ImageButton
+            android:id="@+id/voiceProductBtn"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_toLeftOf="@+id/filterOrderBtn"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_microphone"/>
+        <!--Filter order-->
+        <ImageButton
+            android:id="@+id/filterOrderBtn"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_filter_gray"/>
+        <TextView
+            android:id="@+id/filterOrderTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/searchProductEt"
+            android:textColor="@color/black"
+            android:text="Hiển thị tất cả"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="5dp"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/ordersRv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/filterOrderTv"
+            android:layout_marginTop="0dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:reverseLayout="true"
+            app:stackFromEnd="true"
+            tools:listitem="@layout/row_order_chef" />
+    </RelativeLayout>
 
 </RelativeLayout>

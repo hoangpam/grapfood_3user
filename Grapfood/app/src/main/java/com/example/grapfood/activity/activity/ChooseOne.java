@@ -52,6 +52,8 @@ public class ChooseOne extends AppCompatActivity {
         intent = getIntent();
         type = intent.getStringExtra("Home").toString().trim();
 
+
+
         Chef = (Button)findViewById(R.id.chef);
         DeliveryPerson = (Button)findViewById(R.id.delivery);
         Customer = (Button)findViewById(R.id.customer);
@@ -84,6 +86,7 @@ public class ChooseOne extends AppCompatActivity {
                     Intent Register  = new Intent(ChooseOne.this,ChefRegistration.class);
                     startActivity(Register);
                 }
+
             }
         });
 
@@ -106,6 +109,7 @@ public class ChooseOne extends AppCompatActivity {
                     startActivity(Registercust);
                 }
 
+
             }
         });
 
@@ -127,6 +131,7 @@ public class ChooseOne extends AppCompatActivity {
                     Intent Registerdelivery  = new Intent(ChooseOne.this,Delivery_Registration.class);
                     startActivity(Registerdelivery);
                 }
+
 
             }
         });

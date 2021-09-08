@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import com.example.grapfood.R;
 import com.example.grapfood.activity.bottomnavigation.DeliveryFoodPanel_BottomNavigation;
-import com.example.grapfood.activity.object.Chef;
+import com.example.grapfood.activity.model.ModelShop;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,7 +34,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+
+import es.dmoral.toasty.Toasty;
 
 public class Delivery_Login extends AppCompatActivity {
 
@@ -95,7 +100,7 @@ public class Delivery_Login extends AppCompatActivity {
                     if(isValid()){
 
                         final ProgressDialog mDialog = new ProgressDialog(Delivery_Login.this);
-                        mDialog.setTitle("Tình hình");
+                        mDialog.setTitle("\uD83E\uDD84 Tình hình mạng yếu");
                         mDialog.setCanceledOnTouchOutside(false);
                         mDialog.setCancelable(false);
                         mDialog.setMessage("Đang đăng nhập Vui lòng đợi.......");
@@ -110,7 +115,32 @@ public class Delivery_Login extends AppCompatActivity {
 
                                     if(Fauth.getCurrentUser().isEmailVerified()){
                                         mDialog.dismiss();
-                                        Toast.makeText(Delivery_Login.this, "Xin chúc mừng! Bạn đã đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                                        HashMap<String, Object> hashMap = new HashMap<>();
+                                        hashMap.put("Online","true");
+
+
+                                        //update value to db
+                                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+                                        ref.child(Fauth.getUid()).updateChildren(hashMap)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Toasty.success(Delivery_Login.this, "Người giao hàng đang online!", Toast.LENGTH_SHORT, true).show();
+
+                                                        mDialog.dismiss();
+
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        mDialog.dismiss();
+                                                        Toast.makeText(Delivery_Login.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                        Toasty.success(Delivery_Login.this, "Xin chúc mừng! Bạn đã đăng nhập thành công!", Toast.LENGTH_SHORT, true).show();
+
+//                                        Toast.makeText(Delivery_Login.this, "Xin chúc mừng! Bạn đã đăng nhập thành công", Toast.LENGTH_SHORT).show();
                                         Intent Z = new Intent(Delivery_Login.this, DeliveryFoodPanel_BottomNavigation.class);
                                         startActivity(Z);
                                         finish();
@@ -149,7 +179,8 @@ public class Delivery_Login extends AppCompatActivity {
                 }
             });
         }catch (Exception e){
-            Toast.makeText(this,e.getMessage(),Toast.LENGTH_LONG).show();
+            Toasty.error(this, ""+e.getMessage(), Toast.LENGTH_SHORT, true).show();
+
         }
 
     }
@@ -199,7 +230,9 @@ public class Delivery_Login extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 if(!Patterns.EMAIL_ADDRESS.matcher(Email).matches())
                 {
-                    Toast.makeText(Delivery_Login.this, "Cách thức nhập Email của bạn bị sai", Toast.LENGTH_SHORT).show();
+                    Toasty.error(Delivery_Login.this, "Cách thức nhập Email của bạn bị sai", Toast.LENGTH_SHORT, true).show();
+
+//                    Toast.makeText(Delivery_Login.this, "Cách thức nhập Email của bạn bị sai", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 progressDialog.setMessage("Đang gửi mã đổi mật khẩu sang Email của bạn\nVui lòng kiểm tra hòm thư Email đã gửi chưa\nNếu chưa thì bạn hãy chờ vài phút để hệ thống đang trong tiến trình gửi cho bạn..");
@@ -215,7 +248,9 @@ public class Delivery_Login extends AppCompatActivity {
                                     progressDialog.dismiss();
                                     dialog.dismiss();
                                     //Password reset instructions sent to your email
-                                    Toast.makeText(Delivery_Login.this, "Đã gửi link đặt lại mật khẩu đến Email của bạn", Toast.LENGTH_SHORT).show();
+                                    Toasty.success(Delivery_Login.this, "Đã gửi link đặt lại mật khẩu đến Email của bạn!", Toast.LENGTH_SHORT, true).show();
+
+//                                    Toast.makeText(Delivery_Login.this, "Đã gửi link đặt lại mật khẩu đến Email của bạn", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         })
@@ -227,7 +262,9 @@ public class Delivery_Login extends AppCompatActivity {
                                 progressDialog.dismiss();
                                 dialog.dismiss();
                                 ReusableCodeForAll.ShowAlert(Delivery_Login.this,"Lỗi kìa","Chưa có tài khoản mà đòi quên với chả không");
-                                Toast.makeText(Delivery_Login.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toasty.error(Delivery_Login.this, ""+e.getMessage(), Toast.LENGTH_SHORT, true).show();
+
+//                                Toast.makeText(Delivery_Login.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
 
                             }
                         });
@@ -279,7 +316,7 @@ public class Delivery_Login extends AppCompatActivity {
                                     table_User.addValueEventListener(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
-                                            Chef user = dataSnapshot.child(edPhone.getText().toString()).getValue(Chef.class);
+                                            ModelShop user = dataSnapshot.child(edPhone.getText().toString()).getValue(ModelShop.class);
 
                                         }
 
@@ -291,7 +328,6 @@ public class Delivery_Login extends AppCompatActivity {
                                 }else {
                                     ReusableCodeForAll.ShowAlert(Delivery_Login.this,"Lỗi kìa","Chưa có tài khoản mà đòi quên với chả không");
                                 }
-//                                Toast.makeText(Cheflogin.this, "Đã gửi mã code đặt lại mật khẩu đến số "+" " +" của bạn", Toast.LENGTH_SHORT).show();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -300,28 +336,7 @@ public class Delivery_Login extends AppCompatActivity {
 
                             }
                         });
-//                dialog.dismiss();
-//                FirebaseUser user = Fauth.getCurrentUser();
-//                if(user != null){
-//                    table_User.addValueEventListener(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(DataSnapshot dataSnapshot) {
-//                            Chef user = dataSnapshot.child(edPhone.getText().toString()).getValue(Chef.class);
-//                            if (user.getSecureCode().equals(edSecureCode.getText().toString())){
-//                                Toast.makeText(Cheflogin.this, "Mật khẩu của bạn "+ user.getPassword(), Toast.LENGTH_SHORT).show();
-//                            }else {
-//                                Toast.makeText(Cheflogin.this, "Mã bảo mật sai !", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(DatabaseError databaseError) {
-//
-//                        }
-//                    });
-//                }else {
-//                    ReusableCodeForAll.ShowAlert(Cheflogin.this,"Lỗi kìa","Chưa có tài khoản mà đòi quên với chả không");
-//                }
+
             }
         });
         builder.setNegativeButton("Huỷ", new DialogInterface.OnClickListener() {

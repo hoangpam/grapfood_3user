@@ -90,6 +90,7 @@ import java.util.Locale;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import es.dmoral.toasty.Toasty;
 
 public class ProfileEditDelivery extends AppCompatActivity implements LocationListener {
 
@@ -253,6 +254,14 @@ public class ProfileEditDelivery extends AppCompatActivity implements LocationLi
 
     }
 
+    private void Erro() {
+        AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+        alerta.setTitle("Ơ kìa lỗi");
+        alerta.setMessage("Vui lòng nhấn nút màu đỏ GPS bên phải chữ Đăng Ký");
+        alerta.setPositiveButton("OK", null);
+        alerta.show();
+    }
+
     private void updateProfile() {
         final ProgressDialog progressDialog = new ProgressDialog(ProfileEditDelivery.this);
         progressDialog.setMessage("Đang cập nhật lại cho bạn...");
@@ -261,101 +270,115 @@ public class ProfileEditDelivery extends AppCompatActivity implements LocationLi
         progressDialog.show();
 
         if(image_uri == null ){
-            //update without image
+            try {
+                //update without image
 
-            //setup date to update
-            HashMap<String,Object> hashMap = new HashMap<>();
-            hashMap.put("MobileNo",""+nphone);
-            hashMap.put("FirstName",""+fn);
-            hashMap.put("LastName",""+ln);
-            hashMap.put("EmailId",""+Email);
-            hashMap.put("City",""+City);
-            hashMap.put("Area",""+Area);
-            hashMap.put("State",""+State);
-            hashMap.put("House",""+Houseno);
-            hashMap.put("CompleteAddress",""+CompleteAd);
-            hashMap.put("Latitude", "" + mCurrentLocation.getLatitude());
-            hashMap.put("Longitude", "" + mCurrentLocation.getLongitude());
+                //setup date to update
+                HashMap<String,Object> hashMap = new HashMap<>();
+                hashMap.put("MobileNo",""+nphone);
+                hashMap.put("FirstName",""+fn);
+                hashMap.put("LastName",""+ln);
+                hashMap.put("EmailId",""+Email);
+                hashMap.put("City",""+City);
+                hashMap.put("Area",""+Area);
+                hashMap.put("State",""+State);
+                hashMap.put("House",""+Houseno);
+                hashMap.put("CompleteAddress",""+CompleteAd);
+                hashMap.put("Latitude", "" + mCurrentLocation.getLatitude());
+                hashMap.put("Longitude", "" + mCurrentLocation.getLongitude());
 
 
-            //update to db
-            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Chef");
-            ref.child(firebaseAuth.getUid()).updateChildren(hashMap)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            //update
-                            progressDialog.dismiss();
-                            Toast.makeText(ProfileEditDelivery.this, "Cập nhật thành công y...", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            //failed to update
-                            Toast.makeText(ProfileEditDelivery.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                //update to db
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Chef");
+                ref.child(firebaseAuth.getUid()).updateChildren(hashMap)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                //update
+                                progressDialog.dismiss();
+                                Toast.makeText(ProfileEditDelivery.this, "Cập nhật thành công y...", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                //failed to update
+                                Toast.makeText(ProfileEditDelivery.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }catch (Exception e){
+                Erro();
+                Toasty.warning(ProfileEditDelivery.this, "Vui lòng nhấn vào nút GPS góc phải bên trên ..."+"\n"+e.getMessage(), Toast.LENGTH_LONG, true).show();
+                progressDialog.dismiss();
+            }
+
         }
         else{
-            //update with image
+            try {
+                //update with image
 
-            //*******Upload image first*************/
-            String filePathAndName = "profile_image/" + "" + firebaseAuth.getUid();
-            //get storage reference
-            StorageReference storageReference = FirebaseStorage.getInstance().getReference(filePathAndName);
-            storageReference.putFile(image_uri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            //image uploaded get url of uploaded image
-                            Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                            while (!uriTask.isSuccessful());
-                            Uri downloadImageUri = uriTask.getResult();
+                //*******Upload image first*************/
+                String filePathAndName = "profile_image/" + "" + firebaseAuth.getUid();
+                //get storage reference
+                StorageReference storageReference = FirebaseStorage.getInstance().getReference(filePathAndName);
+                storageReference.putFile(image_uri)
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                //image uploaded get url of uploaded image
+                                Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                                while (!uriTask.isSuccessful());
+                                Uri downloadImageUri = uriTask.getResult();
 
-                            if(uriTask.isSuccessful()){
-                                //image url received,now update db
-                                HashMap<String,Object> hashMap = new HashMap<>();
-                                hashMap.put("MobileNo",""+nphone);
-                                hashMap.put("FirstName",""+fn);
-                                hashMap.put("LastName",""+ln);
-                                hashMap.put("EmailId",""+Email);
-                                hashMap.put("City",""+City);
-                                hashMap.put("Area",""+Area);
-                                hashMap.put("State",""+State);
-                                hashMap.put("House",""+Houseno);
-                                hashMap.put("CompleteAddress",""+CompleteAd);
-                                hashMap.put("Latitude", "" + mCurrentLocation.getLatitude());
-                                hashMap.put("Longitude", "" + mCurrentLocation.getLongitude());
-                                hashMap.put("ImageURL",""+downloadImageUri);
-                                //update to db
-                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Chef");
-                                ref.child(firebaseAuth.getUid()).updateChildren(hashMap)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                //update
-                                                progressDialog.dismiss();
-                                                Toast.makeText(ProfileEditDelivery.this, "Cập nhật thành công y...", Toast.LENGTH_SHORT).show();
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                //failed to update
-                                                Toast.makeText(ProfileEditDelivery.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
+                                if(uriTask.isSuccessful()){
+                                    //image url received,now update db
+                                    HashMap<String,Object> hashMap = new HashMap<>();
+                                    hashMap.put("MobileNo",""+nphone);
+                                    hashMap.put("FirstName",""+fn);
+                                    hashMap.put("LastName",""+ln);
+                                    hashMap.put("EmailId",""+Email);
+                                    hashMap.put("City",""+City);
+                                    hashMap.put("Area",""+Area);
+                                    hashMap.put("State",""+State);
+                                    hashMap.put("House",""+Houseno);
+                                    hashMap.put("CompleteAddress",""+CompleteAd);
+                                    hashMap.put("Latitude", "" + mCurrentLocation.getLatitude());
+                                    hashMap.put("Longitude", "" + mCurrentLocation.getLongitude());
+                                    hashMap.put("ImageURL",""+downloadImageUri);
+                                    //update to db
+                                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Chef");
+                                    ref.child(firebaseAuth.getUid()).updateChildren(hashMap)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    //update
+                                                    progressDialog.dismiss();
+                                                    Toast.makeText(ProfileEditDelivery.this, "Cập nhật thành công y...", Toast.LENGTH_SHORT).show();
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    //failed to update
+                                                    Toast.makeText(ProfileEditDelivery.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                }
                             }
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            Toast.makeText(ProfileEditDelivery.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                progressDialog.dismiss();
+                                Toast.makeText(ProfileEditDelivery.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }catch (Exception e){
+                Erro();
+                Toasty.warning(ProfileEditDelivery.this, "Vui lòng nhấn vào nút GPS góc phải bên trên ..."+"\n"+e.getMessage(), Toast.LENGTH_LONG, true).show();
+                progressDialog.dismiss();
+            }
+
         }
     }
     //viết sự kiện cho load hình ảnh của user

@@ -1,4 +1,4 @@
-package com.example.grapfood.activity.activity;
+ package com.example.grapfood.activity.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,23 +25,24 @@ import android.widget.Toast;
 
 import com.example.grapfood.R;
 import com.example.grapfood.activity.bottomnavigation.ChefFoodPanel_BottomNavigation;
-import com.example.grapfood.activity.object.Chef;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.PhoneAuthCredential;
-import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hbb20.CountryCodePicker;
+
+import java.util.HashMap;
+
+import es.dmoral.toasty.Toasty;
 
 public class Cheflogin extends AppCompatActivity {
 
@@ -79,7 +80,7 @@ public class Cheflogin extends AppCompatActivity {
 //            progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.GREEN));
             progressDialog.getWindow().setIcon(R.drawable.common_google_signin_btn_icon_dark);
 
-            progressDialog.setTitle("Tình hình mạng yếu");
+            progressDialog.setTitle("\uD83E\uDD84 Tình hình mạng yếu");
             progressDialog.setCanceledOnTouchOutside(false);
 
             btnBN = (ImageButton) findViewById(R.id.backBN);
@@ -115,6 +116,7 @@ public class Cheflogin extends AppCompatActivity {
                         mDialog.setMessage("Đang đăng nhập Vui lòng đợi.......");
                         mDialog.show();
 
+
                         Fauth.signInWithEmailAndPassword(emailid,pwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -124,7 +126,31 @@ public class Cheflogin extends AppCompatActivity {
 
                                     if(Fauth.getCurrentUser().isEmailVerified()){
                                         mDialog.dismiss();
-                                        Toast.makeText(Cheflogin.this, "Xin chúc mừng! Bạn đã đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                                        HashMap<String, Object> hashMap = new HashMap<>();
+                                        hashMap.put("Online","true");
+
+
+                                        //update value to db
+                                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+                                        ref.child(Fauth.getUid()).updateChildren(hashMap)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Toasty.success(Cheflogin.this, "Shop đang online!", Toast.LENGTH_SHORT, true).show();
+
+//                                                        Toast.makeText(Cheflogin.this, "Shop đang online", Toast.LENGTH_SHORT).show();
+                                                        mDialog.dismiss();
+
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        mDialog.dismiss();
+                                                        Toast.makeText(Cheflogin.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                        Toasty.success(Cheflogin.this, "Xin chúc mừng! Bạn đã đăng nhập thành công", Toast.LENGTH_SHORT, true).show();
                                         Intent Z = new Intent(Cheflogin.this, ChefFoodPanel_BottomNavigation.class);
                                         startActivity(Z);
                                         finish();
@@ -166,7 +192,8 @@ public class Cheflogin extends AppCompatActivity {
                 }
             });
         }catch (Exception e){
-            Toast.makeText(this,e.getMessage(),Toast.LENGTH_LONG).show();
+            Toasty.error(Cheflogin.this, ""+e.getMessage(), Toast.LENGTH_SHORT, true).show();
+//            Toast.makeText(this,e.getMessage(),Toast.LENGTH_LONG).show();
         }
 
     }
@@ -218,7 +245,9 @@ public class Cheflogin extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 if(!Patterns.EMAIL_ADDRESS.matcher(Email).matches())
                 {
-                    Toast.makeText(Cheflogin.this, "Cách thức nhập Email của bạn bị sai", Toast.LENGTH_SHORT).show();
+                    Toasty.error(Cheflogin.this, "Cách thức nhập Email của bạn bị sai", Toast.LENGTH_SHORT, true).show();
+
+//                    Toast.makeText(Cheflogin.this, "Cách thức nhập Email của bạn bị sai", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 progressDialog.setMessage("Đang gửi mã đổi mật khẩu sang Email của bạn\nVui lòng kiểm tra hòm thư Email đã gửi chưa\nNếu chưa thì bạn hãy chờ vài phút để hệ thống đang trong tiến trình gửi cho bạn..");
@@ -234,11 +263,15 @@ public class Cheflogin extends AppCompatActivity {
                                     progressDialog.dismiss();
                                     dialog.dismiss();
                                     //Password reset instructions sent to your email
-                                    Toast.makeText(Cheflogin.this, "Đã gửi link đặt lại mật khẩu đến Email của bạn", Toast.LENGTH_SHORT).show();
+                                    Toasty.success(Cheflogin.this, "Đã gửi link đặt lại mật khẩu đến Email của bạn", Toast.LENGTH_SHORT, true).show();
+
+//                                    Toast.makeText(Cheflogin.this, "Đã gửi link đặt lại mật khẩu đến Email của bạn", Toast.LENGTH_SHORT).show();
                                 }else{
                                     progressDialog.dismiss();
-                                    Toast.makeText(getApplicationContext(),
-                                            "Email không tồn tại", Toast.LENGTH_SHORT).show();
+                                    Toasty.error(Cheflogin.this, "Email không tồn tại", Toast.LENGTH_SHORT, true).show();
+
+//                                    Toast.makeText(getApplicationContext(),
+//                                            "Email không tồn tại", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         })
@@ -250,7 +283,9 @@ public class Cheflogin extends AppCompatActivity {
                                 progressDialog.dismiss();
                                 dialog.dismiss();
                                 ReusableCodeForAll.ShowAlert(Cheflogin.this,"Lỗi kìa","Chưa có tài khoản mà đòi quên với chả không");
-                                Toast.makeText(Cheflogin.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toasty.error(Cheflogin.this, ""+e.getMessage(), Toast.LENGTH_SHORT, true).show();
+
+//                                Toast.makeText(Cheflogin.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
 
                             }
                         });
@@ -293,7 +328,9 @@ public class Cheflogin extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<String>() {
                             @Override
                             public void onSuccess(String s) {
-                                Toast.makeText(Cheflogin.this, "Oke gần xíu", Toast.LENGTH_SHORT).show();
+                                Toasty.success(Cheflogin.this, "Oke gần xíu!", Toast.LENGTH_SHORT, true).show();
+
+//                                Toast.makeText(Cheflogin.this, "Oke gần xíu", Toast.LENGTH_SHORT).show();
                                 //instructions sent
                                 //hướng dẫn được gửi để reset lại password của bạn
                                 dialog.dismiss();

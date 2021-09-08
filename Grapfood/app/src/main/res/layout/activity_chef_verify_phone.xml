@@ -29,17 +29,37 @@
             android:layout_marginTop="20dp"
             android:fontFamily="monospace"
             android:textStyle="italic"/>
+        <com.chaos.view.PinView
+            android:id="@+id/code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/PinWidget.PinView"
+            android:hint="123456"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_marginTop="35sp"
+            android:inputType="number"
+            android:cursorVisible="true"
+            app:itemCount="6"
+            app:itemWidth="30sp"
+            app:itemHeight="30sp"
+            app:lineWidth="2dp"
+            app:viewType="rectangle"
+            app:cursorColor="@color/black"
+            app:hideLineWhenFilled="true"
+            app:itemRadius="5sp"/>
+<!--        <EditText-->
+<!--            android:id="@+id/code"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="70dp"-->
+<!--            android:layout_marginTop="15dp"-->
+<!--            android:ems="10"-->
+<!--            android:hint="OTP" />-->
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginTop="15dp"
-            android:hint="OTP"
-            android:ems="10"
-            android:id="@+id/code"/>
         <Button
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginTop="40dp"
             android:id="@+id/Verify"
             android:background="@drawable/btnblueish"
@@ -48,7 +68,7 @@
             android:textColor="@color/white"/>
         <Button
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginTop="15dp"
             android:id="@+id/Resendotp"
             android:textColor="@color/white"

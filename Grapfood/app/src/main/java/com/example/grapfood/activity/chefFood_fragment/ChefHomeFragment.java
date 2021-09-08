@@ -1,20 +1,28 @@
 package com.example.grapfood.activity.chefFood_fragment;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.location.Location;
 import android.os.Bundle;
+import android.speech.RecognitionListener;
+import android.speech.RecognizerIntent;
+import android.speech.SpeechRecognizer;
+import android.speech.tts.TextToSpeech;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -23,19 +31,17 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.grapfood.R;
-import com.example.grapfood.activity.activity.MainMenu;
 import com.example.grapfood.activity.adapter_defFood.AdapterProductChef;
-import com.example.grapfood.activity.adapter_defFood.ChefHomeAdapter;
-import com.example.grapfood.activity.bottomnavigation.ChefFoodPanel_BottomNavigation;
+import com.example.grapfood.activity.data.LanguageDetailsChecker;
 import com.example.grapfood.activity.model.ModelProduct;
-import com.example.grapfood.activity.model.UpdateDishModel;
-import com.example.grapfood.activity.object.Chef;
 import com.example.grapfood.activity.object.Constants;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -46,15 +52,23 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-public class ChefHomeFragment  extends Fragment {
+import es.dmoral.toasty.Toasty;
 
+import static android.app.Activity.RESULT_OK;
+import static com.facebook.FacebookSdk.getApplicationContext;
+
+public class ChefHomeFragment  extends Fragment implements TextToSpeech.OnInitListener{
+
+    private TextToSpeech tts;
     private RelativeLayout productRL,allproductRL;
     RecyclerView recyclerView;
-    private List<UpdateDishModel> updateDishModelList;
     private EditText searchProductEt;
-    private ImageButton filterProductBtn;
+    private ImageButton filterProductBtn,voiceProductBtn;
     private TextView filterProductTv;
+
+    private static final int REQUEST_CODE_SPEECH_INPUT = 100;
 
     DatabaseReference dataa;
     private String State,City,Area;
@@ -63,6 +77,9 @@ public class ChefHomeFragment  extends Fragment {
     private ArrayList<ModelProduct> productList;
     private AdapterProductChef adapterProductChef;
     ProgressDialog progressDialog;
+    TextToSpeech.OnInitListener listener ;
+    int count = 0;
+    SpeechRecognizer speechRecognizer;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -70,15 +87,19 @@ public class ChefHomeFragment  extends Fragment {
         View v = inflater.inflate(R.layout.fragment_chef_home,null);
         setHasOptionsMenu(true);
 
-
         firebaseAuth = FirebaseAuth.getInstance();
 
         allproductRL =(RelativeLayout) v.findViewById(R.id.allproductRL);
         productRL =(RelativeLayout) v.findViewById(R.id.productRL);
 
         searchProductEt =(EditText) v.findViewById(R.id.searchProductEt);
+        // Fire off an intent to check if a TTS engine is installed
+        Intent checkIntent = new Intent();
+        checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
+        startActivityForResult(checkIntent, REQUEST_CODE_SPEECH_INPUT);
 
         //search
+
 
         searchProductEt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -88,22 +109,16 @@ public class ChefHomeFragment  extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                progressDialog = new ProgressDialog(getContext());
-//                progressDialog.setTitle("Tình hình");
-//                progressDialog.setCanceledOnTouchOutside(false);
-//                progressDialog.setMessage("Đang tìm kiếm chờ xíu ...");
-//                progressDialog.setIndeterminate(false);
-//                progressDialog.setMax(100);
-//                progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-//                progressDialog.setCancelable(true);
-//                progressDialog.show();
+
                 try{
-                    filter(s.toString());
-                    Toast.makeText(getContext(), "Đang tìm kiếm", Toast.LENGTH_SHORT).show();
-//                    progressDialog.dismiss();
+//                    filter(s.toString());
+                    adapterProductChef.getFilter().filter(s);
+                    tts = new TextToSpeech(getContext(), listener );
+                    Toasty.info(getContext(), "Đang tìm kiếm thứ bạn muốn vui lòng chờ \uD83E\uDD69", Toast.LENGTH_SHORT, true).show();
+
                 }catch (Exception e){
                     e.printStackTrace();
-                    Toast.makeText(getContext(), ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    Toasty.info(getContext(), "\uD83E\uDD80\n"+e.getMessage(), Toast.LENGTH_SHORT, true).show();
                 }
             }
 
@@ -122,16 +137,28 @@ public class ChefHomeFragment  extends Fragment {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("Chọn thể loại")
+                builder.setTitle("Chọn thể loại đồ ăn")
                         .setItems(Constants.productCategory1, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 //get selected item
                                 String selected = Constants.productCategory1[which];
+                                String [] option = {
+
+                                        "Đặc sản",//
+                                        "Ăn vặt",//
+                                        "Bún/Phở" ,//
+                                        "Đồ Uống",//
+                                        "Thức ăn nhanh",//
+                                        "Sức Khỏe",//
+                                        "Cơm"//
+                                };
+
                                 filterProductTv.setText(selected);
-                                if(selected.equals("Tất cả")){
+                                if(selected.equals("Tất cả đồ ăn")){
                                     //load all
                                     loadAllProduct();
+                                    adapterProductChef.getFilter().filter("");
                                 }
                                 else {
                                     //load filtered
@@ -143,6 +170,34 @@ public class ChefHomeFragment  extends Fragment {
             }
         });
 
+        voiceProductBtn =(ImageButton) v.findViewById(R.id.voiceProductBtn);
+
+
+
+        voiceProductBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                speechRecognizer = SpeechRecognizer.createSpeechRecognizer(getContext());
+                final Intent speechRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                clickusevoice();
+                if(count==0)
+                {
+                    //start listening
+                    speechRecognizer.startListening(speechRecognizerIntent);
+                    speak();
+                    speakvoice();
+                    count=1;
+                }
+                else{
+                    //stop listening
+                    speechRecognizer.stopListening();
+                    count =0;
+                }
+
+            }
+        });
+
+
         loadAllProduct();
         recyclerView =(RecyclerView) v.findViewById(R.id.Recycle_menu);
 
@@ -151,57 +206,69 @@ public class ChefHomeFragment  extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         adapterProductChef = new AdapterProductChef(getContext(),productList);
         recyclerView.setAdapter(adapterProductChef);
-//        updateDishModelList = new ArrayList<>();
-//        String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//        dataa = FirebaseDatabase.getInstance().getReference("Chef").child(userid);
-//        dataa.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                Chef cheff = snapshot.getValue(Chef.class);
-//                State = cheff.getState();
-//                City = cheff.getCity();
-//                Area = cheff.getArea();
-//                chefDishes();
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
 
 
         return v;
     }
+
+    private void speak() {
+        //intent to show speech to text didlog
+
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Tìm kiếm đồ ăn thức uống yêu thích ở đây");
+        intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, REQUEST_CODE_SPEECH_INPUT);
+        intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE,
+                getContext().getPackageName());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
+                getString(R.string.speech_to_text_info));
+        //start intent
+        try {
+            //in there was no error
+            startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT);
+
+        }catch (Exception e){
+            //if there was some error
+            //get message of error
+//            Toasty.error(getContext(), "Lỗi kìa sữa gấp\n"+e.getMessage(), Toast.LENGTH_SHORT,true).show();
+        }
+    }
+
     private void filter(String text) {
-        ArrayList<ModelProduct> filteredList = new ArrayList<>();
-        for (ModelProduct item : productList) {
-            if (item.getProductTitle().toLowerCase().contains(text.toLowerCase())) {
-                filteredList.add(item);
+        productList = new ArrayList<>();
+        for (ModelProduct item : list) {
+            if (item.getProductTitle().toUpperCase().contains(text.toUpperCase())) {
+                productList.add(item);
             }
         }
-        adapterProductChef.filterList(filteredList);
+        adapterProductChef.filterList(productList);
     }
+
     private void loadFilteredProduct(final String selected) {
         productList = new ArrayList<>();
 
         //get all product
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chef");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
         reference.child(firebaseAuth.getUid()).child("Products")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         //before getting reset list
+                        productList.clear();
                         for (DataSnapshot ds: snapshot.getChildren()){
                             String productCategory = ""+ds.child("productCategory").getValue();
-
+                            String productTitle = ""+ds.child("productTitle").getValue();
                             //if selected category mathes product category then add in list
                             if(selected.equals(productCategory)){
                                 ModelProduct modelProduct = ds.getValue(ModelProduct.class);
                                 productList.add(modelProduct);
                             }
-
+                            if(selected.equals(productTitle)){
+                                ModelProduct modelProduct = ds.getValue(ModelProduct.class);
+                                productList.add(modelProduct);
+                            }
 
                         }
                         //setup adapter
@@ -221,12 +288,13 @@ public class ChefHomeFragment  extends Fragment {
         productList = new ArrayList<>();
 
         //get all product
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chef");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
         reference.child(firebaseAuth.getUid()).child("Products")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         //before getting reset list
+                        productList.clear();
                         for (DataSnapshot ds: snapshot.getChildren()){
                             ModelProduct modelProduct = ds.getValue(ModelProduct.class);
                             productList.add(modelProduct);
@@ -244,28 +312,36 @@ public class ChefHomeFragment  extends Fragment {
                 });
     }
 
-//    private void chefDishes() {
-//
-//        String useridd = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("FoodDetails").child(State).child(City).child(Area).child(useridd);
-//        databaseReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                updateDishModelList.clear();
-//                for(DataSnapshot snapshot1:snapshot.getChildren()){
-//                    UpdateDishModel updateDishModel = snapshot1.getValue(UpdateDishModel.class);
-//                    updateDishModelList.add(updateDishModel);
-//                }
-//                adapter = new ChefHomeAdapter(getContext(),updateDishModelList);
-//                recyclerView.setAdapter(adapter);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//    }
+    @Override
+    public void onInit(int status) {
+        // TODO Auto-generated method stub
+        if(status != TextToSpeech.ERROR) {
+            tts.setLanguage(Locale.US);
+        }
+        if (status == TextToSpeech.SUCCESS) {
+
+            int result = tts.setLanguage(Locale.getDefault());
+
+            // tts.setPitch(5); // set pitch level
+
+            // tts.setSpeechRate(2); // set speech speed rate
+
+            if (result == TextToSpeech.LANG_MISSING_DATA
+                    || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Toast.makeText(getContext(), "", Toast.LENGTH_SHORT).show();
+                Log.e("TTS", "Language is not supported");
+                Toasty.error(getContext(), "Ngôn ngữ không được hỗ trợ", Toast.LENGTH_SHORT,true).show();
+            } else {
+                voiceProductBtn.setEnabled(true);
+                speak();
+            }
+
+        } else {
+            Log.e("TTS", "Initilization Failed");
+            Toasty.error(getContext(), "Lỗi kìa sữa gấp\n"+ Log.e("TTS", "Initilization Failed"), Toast.LENGTH_SHORT,true).show();
+        }
+
+    }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
@@ -275,19 +351,118 @@ public class ChefHomeFragment  extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-//        int idd = item.getItemId();
-//        if(idd == R.id.LOGOUT){
-//            Logout();
-//            return true;
-//        }
+
         return super.onOptionsItemSelected(item);
     }
 
-//    private void Logout() {
-//
-//        FirebaseAuth.getInstance().signOut();
-//        Intent intent = new Intent(getActivity(), MainMenu.class);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//        startActivity(intent);
-//    }
+
+
+    @Override
+    public  void onActivityResult(int requestCode,int resultCode,@Nullable Intent data){
+        super.onActivityResult(requestCode,resultCode,data);
+
+        switch (requestCode){
+            case REQUEST_CODE_SPEECH_INPUT:{
+                if(requestCode == RESULT_OK && null!=data ){
+//                    //get text array from voice intent
+                    ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+//                    //set to text
+                    searchProductEt.setText(result.get(0));
+                    String tex = searchProductEt.getText().toString().trim();
+                    String toSpeak = tex;
+                    Toasty.success(getContext(), toSpeak,Toast.LENGTH_SHORT,true).show();
+                    tts.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
+                }
+                else{
+                    searchProductEt.setText("Chuyển đổi thành chữ bị lỗi");
+                }
+//                else
+//                {
+//                    searchProductEt.setText("Không tìm thấy thứ bạn cần tìm");
+//                    // missing data, install it
+//                }
+                break;
+            }
+        }
+    }
+
+    public void speak(String text) {
+        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+    }
+
+    public void clickusevoice()
+    {
+        if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED)
+        {
+            ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.RECORD_AUDIO},1);
+        }
+
+    }
+    public void speakvoice()
+    {
+        speechRecognizer.setRecognitionListener(new RecognitionListener() {
+            @Override
+            public void onReadyForSpeech(Bundle params) {
+
+            }
+
+            @Override
+            public void onBeginningOfSpeech() {
+
+            }
+
+            @Override
+            public void onRmsChanged(float rmsdB) {
+
+            }
+
+            @Override
+            public void onBufferReceived(byte[] buffer) {
+
+            }
+
+            @Override
+            public void onEndOfSpeech() {
+
+            }
+
+            @Override
+            public void onError(int error) {
+
+            }
+
+            @Override
+            public void onResults(Bundle results) {
+                ArrayList<String> data = results.getStringArrayList(speechRecognizer.RESULTS_RECOGNITION);
+
+                searchProductEt.setText(data.get(0));
+            }
+
+            @Override
+            public void onPartialResults(Bundle partialResults) {
+
+            }
+
+            @Override
+            public void onEvent(int eventType, Bundle params) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if(requestCode == 1)
+        {
+            if(grantResults[0]==PackageManager.PERMISSION_GRANTED)
+            {
+                Toasty.success(getContext(), "Bạn đã cấp quyền truy câp giọng nói",Toast.LENGTH_SHORT,true).show();
+            }
+            else{
+                Toasty.error(getContext(), "Bạn chưa cấp quyền truy câp giọng nói",Toast.LENGTH_SHORT,true).show();
+            }
+        }
+    }
 }
+

@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chaos.view.PinView;
 import com.example.grapfood.R;
 import com.example.grapfood.activity.bottomnavigation.DeliveryFoodPanel_BottomNavigation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,15 +28,17 @@ import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.concurrent.TimeUnit;
 
+import es.dmoral.toasty.Toasty;
+
 public class Delivery_sendotp extends AppCompatActivity {
 
     String verificationId;
     FirebaseAuth FAuth;
     Button verify , Resend ;
     TextView txt;
-    EditText entercode;
+    PinView entercode;
     String phoneno;
-    FirebaseUser user = FAuth.getCurrentUser();
+//    FirebaseUser user = FAuth.getCurrentUser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +46,7 @@ public class Delivery_sendotp extends AppCompatActivity {
 
         phoneno = getIntent().getStringExtra("Số điện thoại").trim();
 
-        entercode = (EditText) findViewById(R.id.code1);
+        entercode = (PinView) findViewById(R.id.code1);
         txt = (TextView) findViewById(R.id.text1);
         Resend = (Button)findViewById(R.id.Resendotp1);
         verify = (Button) findViewById(R.id.Verify1);
@@ -66,8 +69,9 @@ public class Delivery_sendotp extends AppCompatActivity {
                     entercode.requestFocus();
                     return;
                 }
+                Toasty.success(Delivery_sendotp.this, "Đang gửi code qua máy bạn đợi tí...!", Toast.LENGTH_SHORT, true).show();
 
-                Toast.makeText(Delivery_sendotp.this, "Đang gửi code qua máy bạn đợi tí...", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(Delivery_sendotp.this, "Đang gửi code qua máy bạn đợi tí...", Toast.LENGTH_SHORT).show();
                 verifyCode(code);
 
 
@@ -99,7 +103,10 @@ public class Delivery_sendotp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(Delivery_sendotp.this, "Đang gửi code qua máy bạn đợi tí...", Toast.LENGTH_SHORT).show();
+                Toasty.success(Delivery_sendotp.this, "Đang gửi code qua máy bạn đợi tí...!", Toast.LENGTH_SHORT, true).show();
+
+
+//                Toast.makeText(Delivery_sendotp.this, "Đang gửi code qua máy bạn đợi tí...", Toast.LENGTH_SHORT).show();
 
                 Resend.setVisibility(View.INVISIBLE);
                 Resendotp(phoneno);
@@ -163,7 +170,9 @@ public class Delivery_sendotp extends AppCompatActivity {
 
         @Override
         public void onVerificationFailed(@NonNull FirebaseException e) {
-            Toast.makeText(Delivery_sendotp.this , e.getMessage(),Toast.LENGTH_LONG).show();
+            Toasty.error(Delivery_sendotp.this, ""+e.getMessage(), Toast.LENGTH_SHORT, true).show();
+
+//            Toast.makeText(Delivery_sendotp.this , e.getMessage(),Toast.LENGTH_LONG).show();
 
         }
 
@@ -184,7 +193,7 @@ public class Delivery_sendotp extends AppCompatActivity {
 
     private void signInWithPhone(PhoneAuthCredential credential) {
 
-        if(user != null){
+
             FAuth.signInWithCredential(credential)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
@@ -195,19 +204,17 @@ public class Delivery_sendotp extends AppCompatActivity {
                                 finish();
 
                             }else{
+                                Toasty.warning(Delivery_sendotp.this, "Vui lòng đăng ký tài khoản để đăng nhập bằng số điện thoại", Toast.LENGTH_SHORT, true).show();
+                                Intent b = new Intent(Delivery_sendotp.this, MainMenu.class);
+                                startActivity(b);
                                 ReusableCodeForAll.ShowAlert(Delivery_sendotp.this,"Error",task.getException().getMessage());
+                                finish();
                             }
 
                         }
                     });
         }
-        else {
-            Toast.makeText(this, "Vui lòng đăng ký tài khoản để đăng nhập bằng số điện thoại", Toast.LENGTH_SHORT).show();
-            Intent b = new Intent(Delivery_sendotp.this, MainMenu.class);
-            startActivity(b);
-            finish();
-        }
+
 
 
     }
-}

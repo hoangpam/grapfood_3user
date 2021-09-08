@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -21,7 +23,7 @@
     <LinearLayout
         android:id="@+id/linearlayout"
         android:layout_width="275dp"
-        android:layout_height="390dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/background_shape"
         android:orientation="vertical"
         android:padding="10dp"
@@ -55,7 +57,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@drawable/btnred"
-            android:drawableLeft="@drawable/whitemail"
+            android:drawableLeft="@drawable/ic_email"
+            android:drawableRight="@drawable/ic_email"
             android:paddingLeft="10dp"
             android:text="Đăng nhập bằng gmail"
             android:textColor="#FFFFFF"
@@ -68,12 +71,100 @@
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:background="@drawable/btnblueish"
-            android:drawableLeft="@drawable/phonewhite"
+            android:drawableLeft="@drawable/ic_phone"
+            android:drawableRight="@drawable/ic_phone"
             android:gravity="center"
             android:paddingLeft="10dp"
             android:text="Đăng nhập bằng điện thoại"
             android:textColor="#FFFFFF"
             android:textSize="18dp"/>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="clip_horizontal|center"
+            android:layout_marginTop="7dp"
+            android:orientation="horizontal">
+
+            <TableRow
+                android:id="@+id/hrr"
+                android:layout_width="90dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="#474646">
+
+            </TableRow>
+
+            <TextView
+                android:id="@+id/ORr"
+                android:layout_width="44dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="7dp"
+                android:text="OR"
+                android:textAlignment="center"
+                android:textColor="#090909"
+                android:textSize="17sp" />
+
+            <TableRow
+                android:id="@+id/drr"
+                android:layout_width="90dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="#474646" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <Button
+                android:id="@+id/facebookSinginBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/button_facebook"
+                android:drawableLeft="@drawable/ic_facebook"
+                android:drawableRight="@drawable/ic_facebook"
+                android:text=" Facebook "
+                android:onClick="fbLogin"
+                android:textAllCaps="true"
+                android:textColor="#FFFFFF"
+                android:textSize="10dp"
+                />
+
+            <Button
+                android:id="@+id/googleSinginBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="25dp"
+                android:layout_toRightOf="@+id/facebookSinginBtn"
+                android:background="@drawable/button_google"
+                android:drawableLeft="@drawable/ic_google"
+                android:drawableRight="@drawable/ic_google"
+                android:text=" Google "
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="10dp" />
+
+<!--            <com.facebook.login.widget.LoginButton-->
+<!--                android:id="@+id/login_button"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/facebookSinginBtn"-->
+<!--                android:layout_gravity="center_horizontal"-->
+<!--                android:gravity="center_horizontal"-->
+<!--                android:layout_marginLeft="30dp"-->
+<!--                android:layout_marginTop="30dp"-->
+<!--                android:layout_marginBottom="30dp" />-->
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -119,6 +210,7 @@
             android:layout_marginTop="25dp"
             android:background="@drawable/button_shape"
             android:drawableLeft="@drawable/ic_dangky"
+            android:drawableRight="@drawable/ic_dangky"
             android:text="Đăng kí"
             android:textAllCaps="true"
             android:textColor="#FFFFFF"

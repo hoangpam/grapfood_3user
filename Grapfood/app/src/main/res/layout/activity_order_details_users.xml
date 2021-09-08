@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.activity.OrderDetailsUsersActivity">
+
+
+    <!--Adding option(button) to write review in order details
+        so if user has ordered than he can write review-->
+
+    <!--Toolbar-->
+    <RelativeLayout
+        android:id="@+id/toolbarRl"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:padding="10dp"
+        android:background="@drawable/shape_rect02"
+        >
+        <ImageButton
+            android:id="@+id/backBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_back"
+            android:background="@null"/>
+        <TextView
+            android:id="@+id/tenphansuatt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Chi tiết đã đặt hàng"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+        <ImageButton
+            android:id="@+id/writeReviewBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:background="@null"
+            android:src="@drawable/ic_rating"/>
+    </RelativeLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="3dp"
+        app:contentPadding="5dp">
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:text="Mã đặt hàng ID:"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/orderIdTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+
+                    android:text="121212121"
+                    android:textColor="@color/black"
+                     />
+            </TableRow>
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:text="Ngày đặt:"
+                    android:textColor="@color/black"
+
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/dateTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+
+                    android:text="18/0602021"
+                    android:textColor="@color/black"
+
+                    />
+            </TableRow>
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:text="Trạng thái đặt hàng:"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/orderStatusTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="Đang thực hiện đặt hàng"
+                    android:textColor="@color/colorPrimary"
+
+                    />
+            </TableRow>
+            <TableRow
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:text="Tên cửa hàng:"
+                    android:textColor="@color/black"
+
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/shopNameTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+
+                    android:text="ABC cửa hàng"
+                    android:textColor="@color/black"
+
+                    />
+            </TableRow>
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:text="Mặt hàng:"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/totalItemsTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+
+                    android:text="8"
+                    android:textColor="@color/black"
+
+                    />
+            </TableRow>
+            <TableRow
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:text="Giá tiền:"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/amountTv"
+                    android:layout_width="180sp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+
+                    android:text="đ80000"
+                    android:textColor="@color/black"
+
+                    />
+            </TableRow>
+            <TableRow
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:text="Địa chỉ giao:"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/addressTv"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+
+                    android:text="ABC hồ chí minh"
+                    android:textColor="@color/black"
+
+                    />
+            </TableRow>
+        </TableLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white"
+        android:text="Các mặt hàng đã đặt"
+        android:textAlignment="center"
+        android:textStyle="bold"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/itemRv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/row_orderditem"/>
+</LinearLayout>

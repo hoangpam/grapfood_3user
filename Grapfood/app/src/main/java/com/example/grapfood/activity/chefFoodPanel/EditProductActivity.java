@@ -47,6 +47,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
+import es.dmoral.toasty.Toasty;
+
 public class EditProductActivity extends AppCompatActivity {
 
     private String productId;
@@ -165,8 +167,8 @@ public class EditProductActivity extends AppCompatActivity {
 
     private void loadProductDetails() {
         try {
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chef");
-            reference.child(firebaseAuth.getUid()).child("Product").child(productId)
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+            reference.child(firebaseAuth.getUid()).child("Products").child(productId)
                     .addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -211,7 +213,7 @@ public class EditProductActivity extends AppCompatActivity {
                                 Picasso.get().load(productIcon).placeholder(R.drawable.ic_shop).into(productIconIv);
                             }catch (Exception e){
                                 productIconIv.setImageResource(R.drawable.ic_add);
-                                Toast.makeText(EditProductActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toasty.error(EditProductActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT, true).show();
                             }
                         }
 
@@ -221,7 +223,8 @@ public class EditProductActivity extends AppCompatActivity {
                         }
                     });
         }catch (Exception e){
-            Toast.makeText(this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toasty.error(EditProductActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT, true).show();
+
         }
 
     }
@@ -242,27 +245,27 @@ public class EditProductActivity extends AppCompatActivity {
         priceEt.setError("");
         //2> Validate data
         if(TextUtils.isEmpty(productTitle)){
-            Toast.makeText(this, "Tên sản phẩm là cần thiết ..", Toast.LENGTH_SHORT).show();
+            Toasty.error(EditProductActivity.this, "Tên sản phẩm là cần thiết ..", Toast.LENGTH_SHORT, true).show();
             titleEt.setError("Tên sản phẩm là cần thiết ..");
             return;//don't proceed further
         }
         if(TextUtils.isEmpty(productDesciptions)){
-            Toast.makeText(this, "Mô tả chi tiết sản phẩm là cần thiết ..", Toast.LENGTH_SHORT).show();
+            Toasty.error(EditProductActivity.this, "Mô tả chi tiết sản phẩm là cần thiết ..", Toast.LENGTH_SHORT, true).show();
             descriptionEt.setError("Mô tả chi tiết sản phẩm là cần thiết ..");
             return;//don't proceed further
         }
         if(TextUtils.isEmpty(productCategory)){
-            Toast.makeText(this, "Thể sản phẩm là cần thiết ..", Toast.LENGTH_SHORT).show();
+            Toasty.error(EditProductActivity.this, "Thể sản phẩm là cần thiết ..", Toast.LENGTH_SHORT, true).show();
             categoryTv.setError("Thể sản phẩm là cần thiết ..");
             return;//don't proceed further
         }
         if(TextUtils.isEmpty(productQuanlity)){
-            Toast.makeText(this, "Định lượng sản phẩm là cần thiết ..", Toast.LENGTH_SHORT).show();
+            Toasty.error(EditProductActivity.this, "Định lượng sản phẩm là cần thiết ..", Toast.LENGTH_SHORT, true).show();
             quantilyEt.setError("Định lượng sản phẩm là cần thiết ..");
             return;//don't proceed further
         }
         if(TextUtils.isEmpty(originalPrice)){
-            Toast.makeText(this, "Giá sản phẩm là cần thiết ..", Toast.LENGTH_SHORT).show();
+            Toasty.error(EditProductActivity.this, "Giá sản phẩm là cần thiết ..", Toast.LENGTH_SHORT, true).show();
             priceEt.setError("Giá sản phẩm là cần thiết ..");
             return;//don't proceed further
         }
@@ -273,12 +276,12 @@ public class EditProductActivity extends AppCompatActivity {
             discountpriceEt.setError("");
             discountNoteEt.setError("");
             if(TextUtils.isEmpty(discountPrice)){
-                Toast.makeText(this, "Số tiền giảm giá sản phẩm là cần thiết ..", Toast.LENGTH_SHORT).show();
+                Toasty.error(EditProductActivity.this, "Số tiền giảm giá sản phẩm là cần thiết ..", Toast.LENGTH_SHORT, true).show();
                 discountpriceEt.setError("Số tiền giảm giá sản phẩm là cần thiết ..");
                 return;//don't proceed further
             }
             if(TextUtils.isEmpty(discountNote)){
-                Toast.makeText(this, "Tên và mô tả giảm giá sản phẩm là cần thiết ..", Toast.LENGTH_SHORT).show();
+                Toasty.error(EditProductActivity.this, "Tên và mô tả giảm giá sản phẩm là cần thiết ..", Toast.LENGTH_SHORT, true).show();
                 discountNoteEt.setError("Tên và mô tả giảm giá sản phẩm là cần thiết ..");
                 return;//don't proceed further
             }
@@ -314,7 +317,7 @@ public class EditProductActivity extends AppCompatActivity {
             hashMap.put("discountAvailable",""+discountAvailable);
 
             //update to db
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chef");
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
             reference.child(firebaseAuth.getUid()).child("Products").child(productId)
                     .updateChildren(hashMap)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -322,7 +325,7 @@ public class EditProductActivity extends AppCompatActivity {
                         public void onSuccess(Void aVoid) {
                             //update success
                             progressDialog.dismiss();
-                            Toast.makeText(EditProductActivity.this, "Đã sửa sản phẩm thành công...", Toast.LENGTH_SHORT).show();
+                            Toasty.success(EditProductActivity.this, "Đã sửa sản phẩm thành công...!", Toast.LENGTH_SHORT, true).show();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -330,7 +333,7 @@ public class EditProductActivity extends AppCompatActivity {
                         public void onFailure(@NonNull Exception e) {
                             //failed adding to db
                             progressDialog.dismiss();
-                            Toast.makeText(EditProductActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toasty.error(EditProductActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT, true).show();
                         }
                     });
         }
@@ -370,7 +373,7 @@ public class EditProductActivity extends AppCompatActivity {
 
 
                                 //add to db
-                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chef");
+                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
                                 reference.child(firebaseAuth.getUid()).child("Products").child(productId)
                                         .updateChildren(hashMap)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -378,8 +381,8 @@ public class EditProductActivity extends AppCompatActivity {
                                             public void onSuccess(Void aVoid) {
                                                 //added to db
                                                 progressDialog.dismiss();
-                                                Toast.makeText(EditProductActivity.this, "Đã thêm sản phẩm thành công...", Toast.LENGTH_SHORT).show();
-                                                clearData();
+                                                Toasty.success(EditProductActivity.this, "Đã sữa sản phẩm thành công...!", Toast.LENGTH_SHORT, true).show();
+
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {
@@ -387,7 +390,7 @@ public class EditProductActivity extends AppCompatActivity {
                                             public void onFailure(@NonNull Exception e) {
                                                 //failed adding to db
                                                 progressDialog.dismiss();
-                                                Toast.makeText(EditProductActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                Toasty.error(EditProductActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT, true).show();
                                             }
                                         });
                             }
@@ -398,7 +401,7 @@ public class EditProductActivity extends AppCompatActivity {
                         public void onFailure(@NonNull Exception e) {
                             //failed uploading image
                             progressDialog.dismiss();
-                            Toast.makeText(EditProductActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toasty.error(EditProductActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT, true).show();
                         }
                     });
         }
@@ -534,7 +537,8 @@ public class EditProductActivity extends AppCompatActivity {
                         //permission denied
                         //sự cho phép không được phép cấp quyền
                         //location permission is necessary
-                        Toast.makeText(this,"Sự cho phép máy ảnh là cần thiết.....",Toast.LENGTH_SHORT).show();
+                        Toasty.error(this, "Sự cho phép máy ảnh là cần thiết.....", Toast.LENGTH_SHORT, true).show();
+
                     }
                 }
             }break;
@@ -551,7 +555,7 @@ public class EditProductActivity extends AppCompatActivity {
                         //permission denied
                         //sự cho phép không được phép cấp quyền
                         //location permission is necessary
-                        Toast.makeText(this,"Sự cho phép bộ nhớ là cần thiết.....",Toast.LENGTH_SHORT).show();
+                        Toasty.error(this, "Sự cho phép bộ nhớ là cần thiết.....", Toast.LENGTH_SHORT, true).show();
                     }
                 }
             }break;
@@ -570,7 +574,7 @@ public class EditProductActivity extends AppCompatActivity {
                 //get picked image
                 image_uri = data.getData();
                 ((CircularImageView) findViewById(R.id.profileIv)).setImageURI(image_uri);
-                Toast.makeText(this, "Đã chọn hình thành công!", Toast.LENGTH_SHORT).show();
+                Toasty.success(this, "Đã chọn hình thành công!..", Toast.LENGTH_SHORT, true).show();
                 //set to imageview
                 productIconIv.setImageURI(image_uri);
 
@@ -579,7 +583,7 @@ public class EditProductActivity extends AppCompatActivity {
 
                 productIconIv.setImageURI(image_uri);
                 ((CircularImageView) findViewById(R.id.profileIv)).setImageURI(image_uri);
-                Toast.makeText(this, "Đã chụp hình thành công!", Toast.LENGTH_SHORT).show();
+                Toasty.success(this, "Đã chụp hình thành công!..", Toast.LENGTH_SHORT, true).show();
             }
         }
 

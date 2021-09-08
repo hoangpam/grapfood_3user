@@ -6,7 +6,10 @@ plugins {
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
-
+    buildFeatures {
+        dataBinding true
+        viewBinding = true
+    }
     defaultConfig {
         applicationId "com.example.grapfood"
         minSdkVersion 25
@@ -14,8 +17,9 @@ android {
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        //other stuff
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -67,6 +71,7 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.cepheuen.elegant-number-button:lib:1.0.2'
     implementation 'androidx.recyclerview:recyclerview:1.1.+'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.+'
     implementation 'com.firebaseui:firebase-ui-database:6.2.1'
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
@@ -115,5 +120,28 @@ dependencies {
     // ButterKnife view binding
     implementation 'com.jakewharton:butterknife:10.2.3'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
+    //search
+    implementation 'com.github.ivbaranov:materiallettericon:0.2.3'
+    //toaskty
+    implementation 'com.github.GrenderG:Toasty:1.5.0'
+    //add sqlite
+    implementation 'com.github.p32929:AndroidEasySQL-Library:1.4.1'
+    //login google
+    // Also declare the dependency for the Google Play services library and specify its version
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
+    implementation 'com.github.bumptech.glide:glide:4.6.+'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.6.+'
+    //login facebook
+    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+    implementation 'com.facebook.android:facebook-android-sdk:5.15.3'
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.android.support:multidex:1.0.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.3.2'
+
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.7'
+
+    //add databinding
+    implementation "com.android.databinding:compiler:3.0.1"
+
 
 }

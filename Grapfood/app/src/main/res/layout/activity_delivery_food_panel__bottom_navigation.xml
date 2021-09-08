@@ -10,22 +10,15 @@
         android:layout_height="match_parent"
         android:layout_marginTop="80dp"
         android:id="@+id/fragment_container"
-        android:layout_above="@id/bottom_navigation_devivery"/>
+        />
+    <!--android:layout_above="@id/bottom_navigation_devivery"-->
+    <!--Toolbar-->
     <RelativeLayout
+        android:id="@+id/toolbarRl"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:padding="10dp"
         android:background="@drawable/shape_rect02">
-
-        <TextView
-            android:id="@+id/nameTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:textStyle="bold"
-            android:text="Ngô Hoàng Thiên"
-            android:textSize="20dp"
-            android:textColor="@color/white"/>
         <ImageButton
             android:id="@+id/editProfileBtn"
             android:layout_width="30dp"
@@ -40,17 +33,89 @@
             android:src="@mipmap/ic_exit"
             android:layout_alignParentEnd="true"
             android:background="@null"/>
-    </RelativeLayout>
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/bottom_navigation_devivery"
-        android:backgroundTint="@color/white"
-        app:itemIconTint="@xml/menu_item_color"
-        app:itemTextColor="@xml/menu_item_color"
-        android:background="?android:attr/windowBackground"
-        app:menu="@menu/delivery_bottom_navigation"
-        android:layout_alignParentBottom="true">
 
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
+        <com.blogspot.atifsoftwares.circularimageview.CircularImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:id="@+id/profileIv"
+            android:layout_marginEnd="10dp"
+            app:c_border="true"
+            app:c_border_color="@color/white"
+            android:src="@drawable/ic_user_hh"/>
+        <TextView
+            android:id="@+id/nameTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Ngô Hoàng Thiên"
+            android:layout_toEndOf="@+id/profileIv"
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/EmailTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="chutchit@gm.com"
+            android:layout_toEndOf="@+id/profileIv"
+            android:layout_below="@+id/nameTv"
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            />
+        <TextView
+            android:id="@+id/PhoneTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="03823213"
+            android:layout_toEndOf="@+id/profileIv"
+            android:layout_below="@+id/EmailTv"
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            />
+        <!--Tabs Products, Order -->
+        <LinearLayout
+            android:layout_below="@+id/profileIv"
+            android:id="@+id/ll_dieukhien"
+            android:layout_width="wrap_content"
+            android:background="@drawable/shape_rect03"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:id="@+id/tabProductsTv"
+                android:layout_width="160dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/shape_rect04"
+                android:gravity="center"
+                android:text="Cửa hàng"
+                android:textColor="@color/black"
+                android:textSize="20dp"/>
+
+            <TextView
+                android:id="@+id/tabOrderTv"
+                android:layout_width="160dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Đơn đặt hàng"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+        </LinearLayout>
+    </RelativeLayout>
+<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/bottom_navigation_devivery"-->
+<!--        android:backgroundTint="@color/white"-->
+<!--        app:itemIconTint="@xml/menu_item_color"-->
+<!--        app:itemTextColor="@xml/menu_item_color"-->
+<!--        android:background="?android:attr/windowBackground"-->
+<!--        app:menu="@menu/delivery_bottom_navigation"-->
+<!--        android:layout_alignParentBottom="true">-->
+
+<!--    </com.google.android.material.bottomnavigation.BottomNavigationView>-->
 </RelativeLayout>

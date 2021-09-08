@@ -10,10 +10,9 @@ import com.example.grapfood.R;
 
 public class ReusableCodeForAll {
     public static void ShowAlert(Context context,String title,String message){
-//        Context context1 = new ContextThemeWrapper(context, R.style.AppTheme2);
-//        AlertDialog.Builder builder = new AlertDialog.Builder(context1,R.style.MaterialAlertDialog_rounded);
+        Context context1 = new ContextThemeWrapper(context, R.style.AppTheme2);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context1,R.style.MaterialAlertDialog_rounded);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(context,R.style.MaterialAlertDialog_rounded);
         builder.setCancelable(false);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -23,6 +22,5 @@ public class ReusableCodeForAll {
         }).setTitle(title).setMessage(message).show();
     }
 
-//    public static void ShowAlert(ChefRegistration chefRegistration, String error, String message) {
-//    }
+
 }

@@ -8,7 +8,7 @@
     tools:context=".activity.activity.Login">
 
     <ScrollView
-        android:layout_width="269dp"
+        android:layout_width="350dp"
         android:layout_height="479dp"
         android:layout_marginStart="60dp"
         android:layout_marginEnd="60dp"
@@ -49,13 +49,13 @@
                     android:id="@+id/backBN"
                     android:layout_width="30sp"
                     android:layout_height="30sp"
-                    android:src="@drawable/ic_back_white"
+                    android:src="@drawable/ic_back"
                     android:background="@null"></ImageButton>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="50dp"
+                    android:layout_marginLeft="70dp"
                     android:text="Đăng nhập"
                     android:textStyle="bold"
                     android:textSize="20sp"
@@ -71,7 +71,8 @@
                 android:background="@drawable/shape_circle01"
                 android:padding="5dp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_key_white"/>
+                android:src="@drawable/ic_key"/>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -120,6 +121,8 @@
                 android:layout_height="40dp"
                 android:id="@+id/button4"
                 android:layout_marginTop="20dp"
+                android:drawableLeft="@drawable/ic_login"
+                android:drawableRight="@drawable/ic_login"
                 android:background="@drawable/button_shape"
                 android:text="Đăng nhập"
                 android:textSize="18sp"
@@ -138,25 +141,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <TableRow
                     android:id="@+id/hr"
-                    android:layout_width="103dp"
+                    android:layout_width="140dp"
                     android:layout_height="1dp"
                     android:layout_marginTop="20dp"
                     android:background="#090909"/>
                 <TextView
-                    android:layout_width="44dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/OR"
+                    android:drawableLeft="@drawable/ic_sort"
                     android:text="OR"
                     android:layout_marginTop="10dp"
                     android:textAlignment="center"
                     android:textColor="#090909"/>
                 <TableRow
                     android:id="@+id/dr"
-                    android:layout_width="103dp"
+                    android:layout_width="140dp"
                     android:layout_height="1dp"
                     android:layout_marginTop="20dp"
                     android:background="#090909"/>
@@ -180,7 +185,7 @@
                 android:background="@drawable/btnblueish"
                 android:text="Phone"
                 android:layout_marginTop="13dp"
-                android:drawableLeft="@drawable/phonewhite"
+                android:drawableLeft="@drawable/ic_phone"
                 android:padding="10dp"
                 android:textColor="#FFFF"/>
         </LinearLayout>

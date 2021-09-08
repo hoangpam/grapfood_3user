@@ -15,14 +15,27 @@
         <!--SearchView-->
         <EditText
             android:id="@+id/searchProductEt"
-            android:layout_width="match_parent"
+            android:layout_width="250dp"
             android:layout_height="50dp"
             android:layout_margin="5dp"
-            android:background="@drawable/bg_states"
+            android:background="@drawable/search_bg"
             android:drawableStart="@drawable/ic_search_black_24dp"
             android:hint="Tìm kiếm đồ ăn thức uống ở đây"
+            android:inputType="textPersonName|textCapWords"
             android:imeOptions="actionSearch"
+            android:textSize="12dp"
             android:singleLine="true"/>
+        <!--Voice text-->
+        <ImageButton
+            android:id="@+id/voiceProductBtn"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_toLeftOf="@+id/filterProductBtn"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_microphone"/>
         <!--Filter-->
         <ImageButton
             android:id="@+id/filterProductBtn"

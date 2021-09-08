@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import com.example.grapfood.R;
 import com.example.grapfood.activity.bottomnavigation.CustomerFoofPanel_BottomNavigation;
-import com.example.grapfood.activity.object.Chef;
+import com.example.grapfood.activity.model.ModelShop;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,13 +30,16 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+
+import es.dmoral.toasty.Toasty;
 
 public class Login extends AppCompatActivity {
 
@@ -70,7 +73,7 @@ public class Login extends AppCompatActivity {
 //            progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.GREEN));
             progressDialog.getWindow().setIcon(R.drawable.common_google_signin_btn_icon_dark);
 
-            progressDialog.setTitle("Tình hình");
+            progressDialog.setTitle("\uD83D\uDC37 \n Tình hình mạng yếu");
             progressDialog.setCanceledOnTouchOutside(false);
 
 
@@ -97,7 +100,7 @@ public class Login extends AppCompatActivity {
                     if(isValid()){
 
                         final ProgressDialog mDialog = new ProgressDialog(Login.this);
-                        mDialog.setTitle("Tình hình");
+                        mDialog.setTitle("\uD83D\uDC37 Tình hình mạng yếu");
                         mDialog.setCanceledOnTouchOutside(false);
                         mDialog.setCancelable(false);
                         mDialog.setMessage("Đang đăng nhập Vui lòng đợi.......");
@@ -112,7 +115,33 @@ public class Login extends AppCompatActivity {
 
                                     if(Fauth.getCurrentUser().isEmailVerified()){
                                         mDialog.dismiss();
-                                        Toast.makeText(Login.this, "Xin chúc mừng! Bạn đã đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                                        HashMap<String, Object> hashMap = new HashMap<>();
+                                        hashMap.put("Online","true");
+
+
+                                        //update value to db
+                                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+                                        ref.child(Fauth.getUid()).updateChildren(hashMap)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Toasty.success(Login.this, "Bạn(KH) đang online!", Toast.LENGTH_SHORT, true).show();
+
+//                                                        Toast.makeText(Cheflogin.this, "Shop đang online", Toast.LENGTH_SHORT).show();
+                                                        mDialog.dismiss();
+
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        mDialog.dismiss();
+                                                        Toast.makeText(Login.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                        Toasty.success(Login.this, "\uD83D\uDC37 \nXin chúc mừng! Bạn đã đăng nhập thành công!", Toast.LENGTH_SHORT, true).show();
+
+//                                        Toast.makeText(Login.this, "Xin chúc mừng! Bạn đã đăng nhập thành công", Toast.LENGTH_SHORT).show();
                                         Intent Z = new Intent(Login.this, CustomerFoofPanel_BottomNavigation.class);
                                         startActivity(Z);
                                         finish();
@@ -152,7 +181,9 @@ public class Login extends AppCompatActivity {
                 }
             });
         }catch (Exception e){
-            Toast.makeText(this,e.getMessage(),Toast.LENGTH_LONG).show();
+            Toasty.error(this, ""+e.getMessage(), Toast.LENGTH_SHORT, true).show();
+
+//            Toast.makeText(this,e.getMessage(),Toast.LENGTH_LONG).show();
         }
 
     }
@@ -202,7 +233,9 @@ public class Login extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 if(!Patterns.EMAIL_ADDRESS.matcher(Email).matches())
                 {
-                    Toast.makeText(Login.this, "Cách thức nhập Email của bạn bị sai", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(Login.this, "Cách thức nhập Email của bạn bị sai", Toast.LENGTH_SHORT).show();
+                    Toasty.error(Login.this, "Cách thức nhập Email của bạn bị sai", Toast.LENGTH_SHORT, true).show();
+
                     return;
                 }
                 progressDialog.setMessage("Đang gửi mã đổi mật khẩu sang Email của bạn\nVui lòng kiểm tra hòm thư Email đã gửi chưa\nNếu chưa thì bạn hãy chờ vài phút để hệ thống đang trong tiến trình gửi cho bạn..");
@@ -218,7 +251,9 @@ public class Login extends AppCompatActivity {
                                     progressDialog.dismiss();
                                     dialog.dismiss();
                                     //Password reset instructions sent to your email
-                                    Toast.makeText(Login.this, "Đã gửi link đặt lại mật khẩu đến Email của bạn", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(Login.this, "Đã gửi link đặt lại mật khẩu đến Email của bạn", Toast.LENGTH_SHORT).show();
+                                    Toasty.success(Login.this, "Đã gửi link đặt lại mật khẩu đến Email của bạn!", Toast.LENGTH_SHORT, true).show();
+
                                 }
                             }
                         })
@@ -230,8 +265,7 @@ public class Login extends AppCompatActivity {
                                 progressDialog.dismiss();
                                 dialog.dismiss();
                                 ReusableCodeForAll.ShowAlert(Login.this,"Lỗi kìa","Chưa có tài khoản mà đòi quên với chả không");
-                                Toast.makeText(Login.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-
+                                Toasty.error(Login.this, ""+e.getMessage(), Toast.LENGTH_SHORT, true).show();
                             }
                         });
 
@@ -248,8 +282,6 @@ public class Login extends AppCompatActivity {
     }
     //quên mật khẩu theo hình thức số điện thoại
     private void showForgotPassDialog() {
-//        Context context = new ContextThemeWrapper(Login.this, R.style.AppTheme2);
-//        final MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context,R.style.MaterialAlertDialog_rounded);
 
         final MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(Login.this);
         builder.setTitle("Quên mật khẩu");
@@ -281,7 +313,7 @@ public class Login extends AppCompatActivity {
                                     table_User.addValueEventListener(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
-                                            Chef user = dataSnapshot.child(edPhone.getText().toString()).getValue(Chef.class);
+                                            ModelShop user = dataSnapshot.child(edPhone.getText().toString()).getValue(ModelShop.class);
 
                                         }
 
@@ -302,28 +334,7 @@ public class Login extends AppCompatActivity {
 
                             }
                         });
-//                dialog.dismiss();
-//                FirebaseUser user = Fauth.getCurrentUser();
-//                if(user != null){
-//                    table_User.addValueEventListener(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(DataSnapshot dataSnapshot) {
-//                            Chef user = dataSnapshot.child(edPhone.getText().toString()).getValue(Chef.class);
-//                            if (user.getSecureCode().equals(edSecureCode.getText().toString())){
-//                                Toast.makeText(Cheflogin.this, "Mật khẩu của bạn "+ user.getPassword(), Toast.LENGTH_SHORT).show();
-//                            }else {
-//                                Toast.makeText(Cheflogin.this, "Mã bảo mật sai !", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(DatabaseError databaseError) {
-//
-//                        }
-//                    });
-//                }else {
-//                    ReusableCodeForAll.ShowAlert(Cheflogin.this,"Lỗi kìa","Chưa có tài khoản mà đòi quên với chả không");
-//                }
+
             }
         });
         builder.setNegativeButton("Huỷ", new DialogInterface.OnClickListener() {

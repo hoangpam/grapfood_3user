@@ -17,7 +17,7 @@
             android:id="@+id/backBtn"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/ic_back_white"
+            android:src="@drawable/ic_back"
             android:background="@null"/>
         <TextView
             android:id="@+id/tenphansuatt"
@@ -101,12 +101,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:hint="e.g kg.gg etc"
+                android:hint="Số lượng:10"
                 android:background="@drawable/bg_border"
-                android:drawableStart="@drawable/ic_cart"
+                android:drawableStart="@drawable/ic_baseline_shopping_cart_24"
                 android:drawablePadding="10dp"
                 android:layout_below="@+id/categoryTv"
-                android:inputType="textCapWords"
+                android:inputType="number"
                 android:padding="10dp"
                 />
             <EditText
@@ -116,7 +116,7 @@
                 android:layout_margin="5dp"
                 android:hint="Giá"
                 android:background="@drawable/bg_border"
-                android:drawableStart="@drawable/ic_cart"
+                android:drawableStart="@drawable/ic_baseline_shopping_cart_24"
                 android:drawablePadding="10dp"
                 android:layout_below="@+id/quantilyEt"
                 android:inputType="number"
@@ -144,7 +144,7 @@
                 android:layout_margin="5dp"
                 android:hint="Giảm Giá"
                 android:background="@drawable/bg_border"
-                android:drawableStart="@drawable/ic_cart"
+                android:drawableStart="@drawable/ic_baseline_shopping_cart_24"
                 android:drawablePadding="10dp"
                 android:layout_below="@+id/discountSwitch"
                 android:inputType="number"

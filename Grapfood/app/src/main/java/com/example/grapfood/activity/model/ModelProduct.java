@@ -1,6 +1,10 @@
 package com.example.grapfood.activity.model;
 
-public class ModelProduct {
+import com.google.firebase.database.Exclude;
+
+import java.io.Serializable;
+
+public class ModelProduct implements Serializable {
     private String  productId,productTitle,productDesciptions,productCategory,productQuanlity,productIcon,originalPrice,
             discountPrice,discountNote,discountAvailable,timestamp,uid;
 
@@ -8,6 +12,12 @@ public class ModelProduct {
 
     String mText;
     public ModelProduct(String productId, String productTitle, String productDesciptions, String productCategory, String productQuanlity, String productIcon, String originalPrice, String discountPrice, String discountNote, String discountAvailable, String timestamp, String uid) {
+        if(productCategory.trim().equals("")){
+            productCategory = "Không tìm thấy thể loại sẩn phẩm";
+        }
+        if(productTitle.trim().equals("")){
+            productTitle = "Không tìm thấy tên sẩn phẩm";
+        }
         this.productId = productId;
         this.productTitle = productTitle;
         this.productDesciptions = productDesciptions;
@@ -121,5 +131,17 @@ public class ModelProduct {
         this.uid = uid;
     }
 
+    @Override
+    public String toString() {
+        return getProductTitle();
+    }
 
+    @Exclude
+    public String getKey() {
+        return uid;
+    }
+    @Exclude
+    public void setKey(String key) {
+        this.uid = key;
+    }
 }

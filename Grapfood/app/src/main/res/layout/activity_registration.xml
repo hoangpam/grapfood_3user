@@ -8,7 +8,7 @@
     tools:context=".activity.activity.Registration">
 
     <ScrollView
-        android:layout_width="280dp"
+        android:layout_width="300dp"
         android:layout_height="430dp"
         android:layout_marginStart="60dp"
         android:layout_marginEnd="60dp"
@@ -37,7 +37,7 @@
                     android:id="@+id/backBN"
                     android:layout_width="30sp"
                     android:layout_height="30sp"
-                    android:src="@drawable/ic_back_white"
+                    android:src="@drawable/ic_back"
                     android:background="@null"></ImageButton>
 
                 <TextView
@@ -278,6 +278,8 @@
                 android:layout_height="40dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/button_shape"
+                android:drawableLeft="@drawable/ic_login"
+                android:drawableRight="@drawable/ic_login"
                 android:text="Đăng ký"
                 android:textAllCaps="true"
                 android:textColor="#FFFFFF"
@@ -299,11 +301,12 @@
 
                 <TextView
                     android:id="@+id/OR"
-                    android:layout_width="44dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="7dp"
                     android:layout_weight="1"
+                    android:drawableLeft="@drawable/ic_sort"
                     android:text="OR"
                     android:textAlignment="center"
                     android:textColor="#040404"
@@ -341,7 +344,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_weight="1"
                     android:background="@drawable/btnred"
-                    android:drawableLeft="@drawable/whitemail"
+                    android:drawableLeft="@drawable/ic_email"
                     android:padding="10dp"
                     android:text="Email"
                     android:textColor="#FFFFFF" />
@@ -354,7 +357,7 @@
                     android:layout_marginRight="20dp"
                     android:layout_weight="1"
                     android:background="@drawable/btnblueish"
-                    android:drawableLeft="@drawable/phonewhite"
+                    android:drawableLeft="@drawable/ic_phone"
                     android:drawablePadding="5dp"
                     android:padding="8dp"
                     android:text="Phone"

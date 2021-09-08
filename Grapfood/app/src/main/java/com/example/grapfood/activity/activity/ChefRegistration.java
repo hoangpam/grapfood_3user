@@ -45,16 +45,19 @@ import android.view.View;
 
 import android.widget.Button;
 
+import android.widget.EditText;
 import android.widget.ImageButton;
 
 import android.widget.Toast;
 
 
 import com.blogspot.atifsoftwares.circularimageview.CircularImageView;
+
 import com.example.grapfood.BuildConfig;
 import com.example.grapfood.R;
 
 
+import com.example.grapfood.activity.chefFoodPanel.ProfileEditChef;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.ApiException;
@@ -74,6 +77,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -91,6 +95,7 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
+import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -109,6 +114,7 @@ import java.util.UUID;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import es.dmoral.toasty.Toasty;
 
 import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
 
@@ -190,12 +196,12 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
     StorageReference storageReference;
     StorageReference ref;
     FirebaseAuth FAuth;
-    DatabaseReference databaseReference;
-    FirebaseDatabase firebaseDatabase;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference databaseReference = database.getReference("Users");
     String fname, lname, emailid, password, confpassword,
             mobile, house, Area, statee, cpAddress,
             cityy, nameshop, ImageURL, Delivery;
-    String role = "Chef";
+    EditText FirstnameEt,EmailEt,MobilenoEt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -204,12 +210,15 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
 
         //chọn các vùng đã khởi tạo trong layout
         Fname = (TextInputLayout) findViewById(R.id.Firstname);
+        FirstnameEt =  findViewById(R.id.FirstnameEt);
         Lname = (TextInputLayout) findViewById(R.id.Lastname);
         NameShop = (TextInputLayout) findViewById(R.id.NameShop);
         Email = (TextInputLayout) findViewById(R.id.Email);
+        EmailEt =  findViewById(R.id.EmailEt);
         Pass = (TextInputLayout) findViewById(R.id.Pwd);
         cpass = (TextInputLayout) findViewById(R.id.Cpass);
         mobileno = (TextInputLayout) findViewById(R.id.Mobileno);
+        MobilenoEt =  findViewById(R.id.MobilenoEt);
         houseno = (TextInputLayout) findViewById(R.id.houseNo);
         state1 = (TextInputLayout) findViewById(R.id.States);
         city1 = (TextInputLayout) findViewById(R.id.Citys);
@@ -217,6 +226,7 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
         area = (TextInputLayout) findViewById(R.id.Area);
         delivery = (TextInputLayout) findViewById(R.id.deliveryfree);
         gpsBTN = (ImageButton) findViewById(R.id.gpsBtn);
+
 
         profileIv = (CircularImageView) findViewById(R.id.profileIv);
 
@@ -244,14 +254,17 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
         //dành cho truy cập firebase
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
+
+
+
+
         //mouse click event
         //sự kiện click chuột
         btnBN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //trả về phía trước đó
-                startActivity(new Intent(ChefRegistration.this, MainMenu.class));
-                finish();
+                onBackPressed();
             }
         });
 
@@ -271,57 +284,59 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
         initLocation();
         restoreValuesFromBundle(savedInstanceState);
 
-        databaseReference = firebaseDatabase.getInstance().getReference("Chef");
+
         FAuth = FirebaseAuth.getInstance();
 
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fname = Fname.getEditText().getText().toString().trim();
-                lname = Lname.getEditText().getText().toString().trim();
-                nameshop = NameShop.getEditText().getText().toString().trim();
-                emailid = Email.getEditText().getText().toString().trim();
-                mobile = mobileno.getEditText().getText().toString().trim();
-                password = Pass.getEditText().getText().toString().trim();
-                confpassword = cpass.getEditText().getText().toString().trim();
-                Area = area.getEditText().getText().toString().trim();
-                house = houseno.getEditText().getText().toString().trim();
-                statee = state1.getEditText().getText().toString().trim();
-                cityy = city1.getEditText().getText().toString().trim();
-                cpAddress = compleaddress.getEditText().getText().toString().trim();
-                ImageURL = String.valueOf(image_uri).trim();
-                Delivery = delivery.getEditText().getText().toString().trim();
-                String timestamp = "" + System.currentTimeMillis();
+                try{
+                    fname = Fname.getEditText().getText().toString().trim();
+                    lname = Lname.getEditText().getText().toString().trim();
+                    nameshop = NameShop.getEditText().getText().toString().trim();
+                    emailid = Email.getEditText().getText().toString().trim();
+                    mobile = mobileno.getEditText().getText().toString().trim();
+                    password = Pass.getEditText().getText().toString().trim();
+                    confpassword = cpass.getEditText().getText().toString().trim();
+                    Area = area.getEditText().getText().toString().trim();
+                    house = houseno.getEditText().getText().toString().trim();
+                    statee = state1.getEditText().getText().toString().trim();
+                    cityy = city1.getEditText().getText().toString().trim();
+                    cpAddress = compleaddress.getEditText().getText().toString().trim();
+                    ImageURL = String.valueOf(image_uri).trim();
+                    Delivery = delivery.getEditText().getText().toString().trim();
+                    String timestamp = "" + System.currentTimeMillis();
+                    DatabaseReference DanhMuc = databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("DanhMuc");
 
-                //cập nhật ảnh lên firebase storage nếu hình ảnh là null
-                if (isValid() && image_uri == null ) {
-//                    Context context = new ContextThemeWrapper(ChefRegistration.this, R.style.AppTheme2);
-//                    final ProgressDialog mDialog = new ProgressDialog(context,R.style.MaterialAlertDialog_rounded);
+                    //cập nhật ảnh lên firebase storage nếu hình ảnh là null
+                    if (isValid() && image_uri == null ) {
+                        try {
+                            if(!init(mCurrentLocation.getLatitude(),mCurrentLocation.getLongitude())){
+                                return;
+                            }
+                        }catch (Exception e){
+                            Toasty.warning(ChefRegistration.this, "Vui lòng nhấn vào nút GPS góc phải bên trên ...", Toast.LENGTH_SHORT, true).show();
+                        }
 
+                        final ProgressDialog mDialog = new ProgressDialog(ChefRegistration.this);
+                        mDialog.setCancelable(false);
+                        mDialog.setCanceledOnTouchOutside(false);
+                        mDialog.setTitle("\uD83E\uDD84 Tình hình mạng yếu");
+                        mDialog.setMessage("Đang đăng ký và tải hình đại diện lên, vui lòng đợi tí......");
+                        mDialog.setIndeterminate(false);
+                        mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                        mDialog.setProgress(0);
+                        mDialog.show();
 
-                    final ProgressDialog mDialog = new ProgressDialog(ChefRegistration.this);
-                    mDialog.setCancelable(false);
-                    mDialog.setCanceledOnTouchOutside(false);
-                    mDialog.setMessage("Đang đăng ký và tải hình đại diện lên, vui lòng đợi tí......");
-                    mDialog.setIndeterminate(false);
-                    mDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                    mDialog.setProgress(0);
-                    mDialog.show();
+                        FAuth.createUserWithEmailAndPassword(emailid, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
 
-                    FAuth.createUserWithEmailAndPassword(emailid, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-
-                            if (task.isSuccessful()) {
-                                String useridd = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                databaseReference = FirebaseDatabase.getInstance().getReference("User").child(useridd);
-                                final HashMap<String, String> hashMap = new HashMap<>();
-                                hashMap.put("Role", role);
-                                databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-
+                                if (task.isSuccessful()) {
+                                    try {
+                                        latitude = mCurrentLocation.getLatitude();
+                                        longitude = mCurrentLocation.getLongitude();
                                         HashMap<String, String> hashMap1 = new HashMap<>();
                                         hashMap1.put("UID", "" + FAuth.getUid());
                                         hashMap1.put("MobileNo", mobile);
@@ -338,13 +353,14 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
                                         hashMap1.put("ConfirmPassword", confpassword);
                                         hashMap1.put("House", house);//Số đường
                                         hashMap1.put("ImageURL", "");
-                                        hashMap1.put("Latitude", "" + mCurrentLocation.getLatitude());
-                                        hashMap1.put("Longitude", "" + mCurrentLocation.getLongitude());
-                                        hashMap1.put("Timestamp", "" + timestamp+" "+DateFormat.getTimeInstance().format(new Date()));
+                                        hashMap1.put("Latitude", "" + latitude);
+                                        hashMap1.put("Longitude", "" + longitude);
+                                        hashMap1.put("Timestamp", "" + timestamp);//+DateFormat.getTimeInstance().format(new Date())
                                         hashMap1.put("Online", "true");
                                         hashMap1.put("ShopOpen", "true");
+                                        hashMap1.put("AccountType", "Chef");
 
-                                        firebaseDatabase.getInstance().getReference("Chef")
+                                        databaseReference
                                                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                                 .setValue(hashMap1).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
@@ -357,7 +373,7 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
 
                                                         if (task.isSuccessful()) {
                                                             AlertDialog.Builder builder = new AlertDialog.Builder(ChefRegistration.this);
-                                                            builder.setMessage("Bạn đã đăng ký! Đảm bảo xác minh Email của bạn trong hòm thư");
+                                                            builder.setMessage("\uD83E\uDD84 Bạn đã đăng ký! Đảm bảo xác minh Email của bạn trong hòm thư");
                                                             builder.setCancelable(false);
                                                             builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                                                 @Override
@@ -373,6 +389,7 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
                                                             Alert.show();
                                                         } else {
                                                             mDialog.dismiss();
+                                                            Toasty.error(ChefRegistration.this, "" + task.getException().getMessage(), Toast.LENGTH_LONG, true).show();
                                                             ReusableCodeForAll.ShowAlert(ChefRegistration.this, "Đang bị lỗi nè", task.getException().getMessage());
                                                         }
                                                     }
@@ -380,55 +397,66 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
 
                                             }
                                         });
+                                        DanhMuc.child("-MiiJTfsEPcgklkpm4RV").child("mName").setValue("Bún/Phở");
+                                        DanhMuc.child("-MiiJiqPT4X3kuXq00qa").child("mName").setValue("Ăn Vặt");
+                                        DanhMuc.child("-MiiJrcM8xTVUua1rnII").child("mName").setValue("Đồ Uống");
+                                        DanhMuc.child("-MiiK-b2YhzfxzfpUDyb").child("mName").setValue("Sức Khỏe");
+                                        DanhMuc.child("-MiiK8fXXkqhjsMloVw0").child("mName").setValue("Cơm");
+                                        DanhMuc.child("-MiiKJdrYPfuHnsYDfLU").child("mName").setValue("Đặc Sản");
+                                        DanhMuc.child("-MiiKl8Xr0GD4N4zeSEd").child("mName").setValue("Thức ăn nhanh");
 
+                                    }catch (Exception e){
+                                        Erro();
+                                        Toasty.warning(ChefRegistration.this, "Vui lòng nhấn vào nút GPS góc phải bên trên ..."+"\n"+e.getMessage(), Toast.LENGTH_LONG, true).show();
+                                        mDialog.dismiss();
                                     }
-                                });
-                            } else {
+                                } else{
 
-                                mDialog.dismiss();
-                                ReusableCodeForAll.ShowAlert(ChefRegistration.this, "Đang bị lỗi nè", task.getException().getMessage());
+                                    mDialog.dismiss();
+                                    Toasty.error(ChefRegistration.this, "" + task.getException().getMessage(), Toast.LENGTH_LONG, true).show();
+                                    ReusableCodeForAll.ShowAlert(ChefRegistration.this, "Đang bị lỗi nè", task.getException().getMessage());
+                                }
                             }
+                        });
+                    }
+                    //cập nhật ảnh lên firebase storage nếu hình ảnh không bị null
+                    else if (isValid() && image_uri != null ) {
+
+                        if(!init(mCurrentLocation.getLatitude(),mCurrentLocation.getLongitude())){
+                            return;
                         }
-                    });
-                }
-                //cập nhật ảnh lên firebase storage nếu hình ảnh không bị null
-                else if (isValid() && image_uri != null ) {
-//                    Context context = new ContextThemeWrapper(ChefRegistration.this, R.style.AppTheme2);
 
-                    String filePathAndName = "profile_image/" + "" + FAuth.getUid();
+                        String filePathAndName = "profile_image/" + "" + FAuth.getUid();
 
-//                    final ProgressDialog progressDialog = new ProgressDialog(context,R.style.MaterialAlertDialog_rounded);
+                        final ProgressDialog progressDialog = new ProgressDialog(ChefRegistration.this);
+                        progressDialog.setCancelable(false);
+                        progressDialog.setCanceledOnTouchOutside(false);
+                        progressDialog.setIndeterminate(false);
+                        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                        progressDialog.setProgress(0);
+                        progressDialog.setTitle("\uD83E\uDD84 Tình hình mạng yếu");
+                        progressDialog.setMessage("Đang đăng ký và tải hình ảnh đại diện lên, vui lòng đợi tí....");
+                        progressDialog.show();
 
-                    final ProgressDialog progressDialog = new ProgressDialog(ChefRegistration.this);
-                    progressDialog.setTitle("Đang đăng ký và tải hình ảnh đại diện lên, vui lòng đợi tí....");
-                    progressDialog.show();
+                        //update image
+                        ref = FirebaseStorage.getInstance().getReference(filePathAndName);
+                        ref.putFile(image_uri)
+                                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        //get url of uploated image
+                                        Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                                        while (!uriTask.isSuccessful()) ;
+                                        Uri downloadImageUri = uriTask.getResult();
 
-                    //update image
-                    ref = FirebaseStorage.getInstance().getReference(filePathAndName);
-                    ref.putFile(image_uri)
-                            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                @Override
-                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                    //get url of uploated image
-                                    Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                                    while (!uriTask.isSuccessful()) ;
-                                    Uri downloadImageUri = uriTask.getResult();
+                                        if (uriTask.isSuccessful()) {
 
-                                    if (uriTask.isSuccessful()) {
+                                            FAuth.createUserWithEmailAndPassword(emailid, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<AuthResult> task) {
 
-                                        FAuth.createUserWithEmailAndPassword(emailid, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<AuthResult> task) {
-
-                                                if (task.isSuccessful()) {
-                                                    String useridd = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                                    databaseReference = FirebaseDatabase.getInstance().getReference("User").child(useridd);
-                                                    final HashMap<String, String> hashMap = new HashMap<>();
-                                                    hashMap.put("Role", role);
-                                                    databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                        @Override
-                                                        public void onComplete(@NonNull Task<Void> task) {
-
+                                                    if (task.isSuccessful()) {
+                                                        try{
                                                             HashMap<String, String> hashMap1 = new HashMap<>();
                                                             hashMap1.put("UID", "" + FAuth.getUid());
                                                             hashMap1.put("MobileNo", mobile);
@@ -447,11 +475,12 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
                                                             hashMap1.put("ImageURL", "" + downloadImageUri);//url of uploadted image
                                                             hashMap1.put("Latitude", "" + mCurrentLocation.getLatitude());
                                                             hashMap1.put("Longitude", "" + mCurrentLocation.getLongitude());
-                                                            hashMap1.put("Timestamp", "" + timestamp+" "+DateFormat.getTimeInstance().format(new Date()));
+                                                            hashMap1.put("Timestamp", "" + timestamp);//+" "+DateFormat.getTimeInstance().format(new Date())
                                                             hashMap1.put("Online", "true");
                                                             hashMap1.put("ShopOpen", "true");
+                                                            hashMap1.put("AccountType","Chef");
 
-                                                            firebaseDatabase.getInstance().getReference("Chef")
+                                                            databaseReference
                                                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                                                     .setValue(hashMap1).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                 @Override
@@ -468,7 +497,7 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
 //                                                                                AlertDialog.Builder builder = new AlertDialog.Builder(context,R.style.MaterialAlertDialog_rounded);
 
                                                                                 AlertDialog.Builder builder = new AlertDialog.Builder(ChefRegistration.this);
-                                                                                builder.setMessage("Bạn đã đăng ký! Đảm bảo xác minh email của bạn");
+                                                                                builder.setMessage("\uD83E\uDD84 Bạn đã đăng ký! Đảm bảo xác minh email của bạn");
                                                                                 builder.setCancelable(false);
                                                                                 builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                                                                     @Override
@@ -484,6 +513,7 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
                                                                                 Alert.show();
                                                                             } else {
                                                                                 progressDialog.dismiss();
+                                                                                Toasty.error(ChefRegistration.this, ""+task.getException().getMessage(), Toast.LENGTH_LONG, true).show();
                                                                                 ReusableCodeForAll.ShowAlert(ChefRegistration.this, "Đang bị lỗi nè", task.getException().getMessage());
                                                                             }
                                                                         }
@@ -491,38 +521,53 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
 
                                                                 }
                                                             });
-
+                                                            DanhMuc.child("-MiiJTfsEPcgklkpm4RV").child("mName").setValue("Bún/Phở");
+                                                            DanhMuc.child("-MiiJiqPT4X3kuXq00qa").child("mName").setValue("Ăn Vặt");
+                                                            DanhMuc.child("-MiiJrcM8xTVUua1rnII").child("mName").setValue("Đồ Uống");
+                                                            DanhMuc.child("-MiiK-b2YhzfxzfpUDyb").child("mName").setValue("Sức Khỏe");
+                                                            DanhMuc.child("-MiiK8fXXkqhjsMloVw0").child("mName").setValue("Cơm");
+                                                            DanhMuc.child("-MiiKJdrYPfuHnsYDfLU").child("mName").setValue("Đặc Sản");
+                                                            DanhMuc.child("-MiiKl8Xr0GD4N4zeSEd").child("mName").setValue("Thức ăn nhanh");
+                                                        }catch (Exception e){
+                                                            Erro();
+                                                            Toasty.warning(ChefRegistration.this, "Vui lòng nhấn vào nút GPS góc phải bên trên ..."+"\n"+e.getMessage(), Toast.LENGTH_LONG, true).show();
+                                                            progressDialog.dismiss();
                                                         }
-                                                    });
-                                                } else {
 
-                                                    progressDialog.dismiss();
-                                                    ReusableCodeForAll.ShowAlert(ChefRegistration.this, "Đang bị lỗi nè", task.getException().getMessage());
+                                                    } else {
+
+                                                        progressDialog.dismiss();
+                                                        Toasty.error(ChefRegistration.this, ""+task.getException().getMessage(), Toast.LENGTH_LONG, true).show();
+                                                        ReusableCodeForAll.ShowAlert(ChefRegistration.this, "Đang bị lỗi nè", task.getException().getMessage());
+                                                    }
                                                 }
-                                            }
-                                        });
+                                            });
+                                        }
                                     }
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    progressDialog.dismiss();
-                                    Toast.makeText(ChefRegistration.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            })
-                            .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                                @Override
-                                public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                                    double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                                    progressDialog.setMessage("Đang tải " + (int) progress + "%");
-                                    progressDialog.setCanceledOnTouchOutside(false);
-                                }
-                            });
-                } else {
-                    Toast.makeText(ChefRegistration.this, "Quá trình đăng ký đã thất bại!\nCó thể email đã được đăng ký!\nHoặc bạn đã điền sai thông tin\nVui lòng kiểm tra lại kết nối mạng và thông tin bên trên .", Toast.LENGTH_SHORT).show();
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        progressDialog.dismiss();
+                                        Toasty.error(ChefRegistration.this, ""+e.getMessage(), Toast.LENGTH_SHORT, true).show();
+//                                    Toast.makeText(ChefRegistration.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+                                        double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                                        progressDialog.setMessage("Đang tải " + (int) progress + "%");
+                                        progressDialog.setCanceledOnTouchOutside(false);
+                                    }
+                                });
+                    } else {
+                        Toasty.warning(ChefRegistration.this, "Quá trình đăng ký đã thất bại!\nCó thể email đã được đăng ký!\nHoặc bạn đã điền sai thông tin\nVui lòng kiểm tra lại kết nối mạng và thông tin bên trên .", Toast.LENGTH_SHORT, true).show();
+                    }
+                }catch (Exception e){
+                    Erro();
+                    Toasty.warning(ChefRegistration.this, "Vui lòng nhấn vào nút GPS góc phải bên trên ..."+"\n"+e.getMessage(), Toast.LENGTH_LONG, true).show();
                 }
-
             }
         });
         Emaill.setOnClickListener(new View.OnClickListener() {
@@ -575,6 +620,7 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
          * and toggling the buttons
          */
     private void updateLocationUI() {
+
             Log.d(TAG, "updateUI");
 
             if (mCurrentLocation != null) {
@@ -584,30 +630,32 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
                 List<Address> addresses;
                 geocoder = new Geocoder(this, Locale.getDefault());
                 try {
-                    addresses = geocoder.getFromLocation(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(), 1);
-                    if (addresses != null && addresses.size() > 0) {
-                        String address = addresses.get(0).getAddressLine(0);
 
-                        String city = addresses.get(0).getAdminArea();
-                        String knownName = addresses.get(0).getFeatureName();
-                        String state = addresses.get(0).getSubAdminArea();
-                        Log.d(TAG, "getAddress:  thành phố" +" "+ city);
-                        Log.d(TAG, "getAddress:  toàn địa chỉ" +" "+ address);
+                        addresses = geocoder.getFromLocation(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(), 1);
+                        if (addresses != null && addresses.size() > 0) {
+                            String address = addresses.get(0).getAddressLine(0);
 
-                        Log.d(TAG, "getAddress:  quận"+ " "+ state);
+                            String city = addresses.get(0).getAdminArea();
+                            String knownName = addresses.get(0).getFeatureName();
+                            String state = addresses.get(0).getSubAdminArea();
+                            Log.d(TAG, "getAddress:  thành phố" + " " + city);
+                            Log.d(TAG, "getAddress:  toàn địa chỉ" + " " + address);
 
-                        Log.d(TAG, "getAddress:  số nhà"+ " "+ knownName);
+                            Log.d(TAG, "getAddress:  quận" + " " + state);
 
-                        //set addresses
-                        //đặt dịa chỉ
-                        state1.getEditText().setText(state);
-                        city1.getEditText().setText(city);
-                        houseno.getEditText().setText(knownName);
+                            Log.d(TAG, "getAddress:  số nhà" + " " + knownName);
 
-                        compleaddress.getEditText().setText(address);
-                    }
+                            //set addresses
+                            //đặt dịa chỉ
+                            state1.getEditText().setText(state);
+                            city1.getEditText().setText(city);
+                            houseno.getEditText().setText(knownName);
+
+                            compleaddress.getEditText().setText(address);
+                        }
                 } catch (Exception e) {
-                    Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toasty.error(this, "Hiện tại không truy cập được vị trí của bạn"+"\n" + e.getMessage(), Toast.LENGTH_SHORT, true).show();
+
                 }
             }
 
@@ -628,7 +676,9 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
                         //All location settings are satisfied.
                         Log.i(TAG, "Tất cả các cài đặt vị trí đều hài lòng.");
                         //Started location updates!
-                        Toast.makeText(getApplicationContext(), "Đã bắt đầu cập nhật vị trí hiện tại của bạn!\nVui lòng tự điền tên đường\n Kiểm tra lại xem đã đúng đại chỉ chưa", Toast.LENGTH_LONG).show();
+                        Toasty.warning(getApplicationContext(), "Đã bắt đầu cập nhật vị trí hiện tại của bạn!\nVui lòng tự điền tên đường\n Kiểm tra lại xem đã đúng đại chỉ chưa", Toast.LENGTH_LONG, true).show();
+
+//                        Toast.makeText(getApplicationContext(), "Đã bắt đầu cập nhật vị trí hiện tại của bạn!\nVui lòng tự điền tên đường\n Kiểm tra lại xem đã đúng đại chỉ chưa", Toast.LENGTH_LONG).show();
 
                         //noinspection MissingPermission
                         mFusedLocationClient.requestLocationUpdates(mLocationRequest,
@@ -660,8 +710,9 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
                                 String errorMessage = "Location settings are inadequate, and cannot be " +
                                         "fixed here. Fix in Settings.";
                                 Log.e(TAG, errorMessage);
+                                Toasty.error(ChefRegistration.this, ""+errorMessage+"\n"+e.getMessage(), Toast.LENGTH_SHORT, true).show();
 
-                                Toast.makeText(ChefRegistration.this, errorMessage, Toast.LENGTH_LONG).show();
+//                                Toast.makeText(ChefRegistration.this, errorMessage, Toast.LENGTH_LONG).show();
                         }
 
                         updateLocationUI();
@@ -777,6 +828,10 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
                             updateUI(loc);
                         }
                     }
+                    else{
+                        Toasty.warning(ChefRegistration.this, "Vui lòng nhấn nút GPS của bên phải chữ ĐĂNG KÝ .... ", Toast.LENGTH_LONG, true).show();
+                        Erro();
+                    }
                 } else if (isNetwork) {
                     // from Network Provider
                     Log.d(TAG, "NETWORK_PROVIDER đã được bật");
@@ -790,11 +845,16 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
                         if (loc != null) {
                             updateUI(loc);
                         }
+                    }else {
+                        Toasty.warning(ChefRegistration.this, "Vui lòng nhấn nút GPS của bên phải chữ ĐĂNG KÝ .... ", Toast.LENGTH_LONG, true).show();
+                        Erro();
                     }
                 } else {
+                    Toasty.warning(ChefRegistration.this, "Vui lòng nhấn nút GPS của bên phải chữ ĐĂNG KÝ .... ", Toast.LENGTH_LONG, true).show();
                     loc.setLatitude(0);
                     loc.setLongitude(0);
                     updateUI(loc);
+
                 }
             } else {
                 Log.d(TAG, "Không thể nhận được vị trí");
@@ -842,62 +902,60 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
         return (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1);
     }
 
-    private void updateUI(@NotNull Location location) {
-        Log.d(TAG, "updateUI");
-//        tvLatitude.setText(Double.toString(loc.getLatitude()));
-//        tvLongitude.setText(Double.toString(loc.getLongitude()));
-//        tvTime.setText(DateFormat.getTimeInstance().format(loc.getTime()));
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
-//        findAddress();
-        Log.d("latitude", "latitude--" + latitude);
-        Log.d("longitude", "longitude--" + longitude);
-        Geocoder geocoder;
-        List<Address> addresses;
-        geocoder = new Geocoder(this, Locale.getDefault());
-        try {
-            addresses = geocoder.getFromLocation(latitude, longitude, 1);
-//
-//
-////            String address = addresses.get(0).getAddressLine(0);
-////            String city = addresses.get(0).getLocality();
-////            String state = addresses.get(0).getAdminArea();
-////            String countryName = addresses.get(0).getCountryName();
-//
-//            String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-//            String city = addresses.get(0).getLocality();
-//            String state = addresses.get(0).getAdminArea();
-//            String country = addresses.get(0).getCountryName();
-//            String postalCode = addresses.get(0).getPostalCode();
-//            String knownName = addresses.get(0).getFeatureName(); // Only if available else return NULL
-            if (addresses != null && addresses.size() > 0) {
-                String address = addresses.get(0).getAddressLine(0);
-                String city = addresses.get(0).getLocality();
-                String state = addresses.get(0).getAdminArea();
-                String country = addresses.get(0).getCountryName();
-                String postalCode = addresses.get(0).getPostalCode();
-                String knownName = addresses.get(0).getFeatureName();
-                Log.d(TAG, "getAddress:  address" + address);
-                Log.d(TAG, "getAddress:  city" + city);
-                Log.d(TAG, "getAddress:  state" + state);
-                Log.d(TAG, "getAddress:  postalCode" + postalCode);
-                Log.d(TAG, "getAddress:  knownName" + knownName);
+    private void Erro() {
+        AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+        alerta.setTitle("Ơ kìa lỗi");
+        alerta.setMessage("Vui lòng nhấn nút màu đỏ GPS bên phải chữ Đăng Ký");
+        alerta.setPositiveButton("OK", null);
+        alerta.show();
+    }
 
-                //set addresses
-                //đặt dịa chỉ
-                //            state1.getEditText().setText(state);
-                //            city1.getEditText().setText(city);
-                //            area.getEditText().setText(knownName);
-                //            houseno.getEditText().setText(postalCode);
-                //            delivery.getEditText().setText(country);
-                //            compleaddress.getEditText().setText(address);
-                compleaddress.getEditText().setText(address + " " + city + " " + state + " " + country);
-            }
-//
-//
-        } catch (Exception e) {
-            Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+    private void updateUI(@NotNull Location location) {
+        if(location == null)
+        {
+            Erro();
         }
+        else {
+            Log.d(TAG, "updateUI");
+
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+
+            Log.d("latitude", "latitude--" + latitude);
+            Log.d("longitude", "longitude--" + longitude);
+            Geocoder geocoder;
+            List<Address> addresses;
+            geocoder = new Geocoder(this, Locale.getDefault());
+            try {
+                if (latitude == 0 && longitude == 0) {
+                    Toasty.warning(ChefRegistration.this, "Vui lòng nhấn nút GPS của bên phải chữ ĐĂNG KÝ .... ", Toast.LENGTH_LONG, true).show();
+                } else {
+                    addresses = geocoder.getFromLocation(latitude, longitude, 1);
+
+                    if (addresses != null && addresses.size() > 0) {
+                        String address = addresses.get(0).getAddressLine(0);
+                        String city = addresses.get(0).getLocality();
+                        String state = addresses.get(0).getAdminArea();
+                        String country = addresses.get(0).getCountryName();
+                        String postalCode = addresses.get(0).getPostalCode();
+                        String knownName = addresses.get(0).getFeatureName();
+                        Log.d(TAG, "getAddress:  address" + address);
+                        Log.d(TAG, "getAddress:  city" + city);
+                        Log.d(TAG, "getAddress:  state" + state);
+                        Log.d(TAG, "getAddress:  postalCode" + postalCode);
+                        Log.d(TAG, "getAddress:  knownName" + knownName);
+
+                        //set addresses
+                        //đặt dịa chỉ
+                        compleaddress.getEditText().setText(address + " " + city + " " + state);
+                    }
+                }
+            } catch (Exception e) {
+                Toasty.error(this, ""+ e.getMessage(), Toast.LENGTH_SHORT, true).show();
+            }
+
+        }
+
     }
 
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
@@ -1064,12 +1122,7 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
         } else {
             isValidarea = true;
         }
-//        if(TextUtils.isEmpty(Pincode)){
-//            pincode.setErrorEnabled(true);
-//            pincode.setError("Nhập vào Pincode");
-//        }else{
-//            isValidpincode = true;
-//        }
+
         if (TextUtils.isEmpty(house)) {
             houseno.setErrorEnabled(true);
             houseno.setError("Địa chỉ không được để trống");
@@ -1103,21 +1156,17 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
     public static double unboxed(Double v) {
         return v == null ? 0 : v.doubleValue();
     }
-    private boolean init()
+    private boolean init(double getLatitude,double getLongitude)
     {
-//        if(mCurrentLocation.getLatitude() == latitude  || mCurrentLocation.getLongitude() == longitude)
-//        {
-//            Toast.makeText(this, "Vui lòng nhấn vào nút GPS góc phải bên trên ...", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-        boolean isValid=false,isValidLocation = false;
-        double nullString = Double.parseDouble(null);
-        if(unboxed(mCurrentLocation.getLongitude())  == nullString || unboxed(mCurrentLocation.getLongitude())  == nullString)
+        boolean isValid=false,isValidLocation = true;
+        double nullString = Double.parseDouble("null");
+        if(mCurrentLocation.getLatitude() == nullString || mCurrentLocation.getLongitude()  == nullString)
         {
-            Toast.makeText(this, "Vui lòng nhấn vào nút GPS góc phải bên trên ...", Toast.LENGTH_SHORT).show();
+            Toasty.warning(this, "Vui lòng nhấn vào nút GPS góc phải bên trên ...", Toast.LENGTH_SHORT, true).show();
+
         }
         else{
-            isValidLocation = true;
+            isValidLocation = false;
         }
         isValid = isValidLocation ? true : false;
         return isValid;
@@ -1133,12 +1182,15 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
             wifiConnected = ni.getType() == ConnectivityManager.TYPE_WIFI;
             mobileConnected = ni.getType() == ConnectivityManager.TYPE_MOBILE;
             if (wifiConnected) {
-                Toast.makeText(this, "Bạn đã kết nối thành công đến wifi", Toast.LENGTH_SHORT).show();
+//                Toasty.success(this, "Bạn đã kết nối thành công đến từ wifi!", Toast.LENGTH_SHORT, true).show();
+
             } else if (mobileConnected) {
-                Toast.makeText(this, "Bạn đã kết nối thành công đến điện thoại", Toast.LENGTH_SHORT).show();
+//                Toasty.success(this, "Bạn đã kết nối thành công đến từ mạng dữ liệu di động của điện thoại!", Toast.LENGTH_SHORT, true).show();
+
             }
         } else {
-            Toast.makeText(this, "Hiện tại bạn không có kết nối", Toast.LENGTH_SHORT).show();
+            Toasty.error(this, "Hiện tại bạn không có kết nối mạng.\nVui lòng mở wifi và dữ liệu di động.<!>", Toast.LENGTH_SHORT, true).show();
+
             showSettingsWifis();
         }
     }
@@ -1197,12 +1249,7 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
     public void onLocationChanged(@NonNull Location location) {
         //location detected
         //vị trí được phát hiện
-//        latitude = location.getLatitude();
-//        longitude = location.getLongitude();
-//
-//        Log.e("latitude", "latitude--" + latitude);
-//        Log.e("longitude", "longitude--" + longitude);
-//        findAddress();
+
         Log.d(TAG, "onLocationChanged");
         updateUI(location);
 
@@ -1227,8 +1274,8 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
         if (locationManager != null) {
             locationManager.removeUpdates(this);
         }
-        Toast.makeText(this,"Vui lòng mở vị trí....",Toast.LENGTH_SHORT).show();
-//        showSettingsAlert();
+        Toasty.warning(this, "Vui lòng mở vị trí....", Toast.LENGTH_SHORT, true).show();
+
     }
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -1264,24 +1311,6 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
                     canGetLocation = true;
                     getLocation();
                 }
-//                if(grantResults.length > 0)
-//                {
-//                    boolean locationAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-//                    if(locationAccepted){
-//                        //permission allowed
-//                        //sự cho phép được phép cấp quyền
-////                            detectLocation();
-//                            startLocationUpdates();
-//
-//                    }
-//                    else {
-//                        //permission denied
-//                        //sự cho phép không được phép cấp quyền
-//                        //location permission is necessary
-//                        Toast.makeText(this,"Sự cho phép vị trí là cần thiết.....",Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-
             }break;
             case CAMERA_REQUEST_CODE:{
                 if(grantResults.length > 0)
@@ -1298,7 +1327,8 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
                         //permission denied
                         //sự cho phép không được phép cấp quyền
                         //location permission is necessary
-                        Toast.makeText(this,"Sự cho phép máy ảnh là cần thiết.....",Toast.LENGTH_SHORT).show();
+                        Toasty.success(this, "Sự cho phép máy ảnh là cần thiết.....!", Toast.LENGTH_SHORT, true).show();
+
                     }
                 }
             }break;
@@ -1315,7 +1345,9 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
                         //permission denied
                         //sự cho phép không được phép cấp quyền
                         //location permission is necessary
-                        Toast.makeText(this,"Sự cho phép bộ nhớ là cần thiết.....",Toast.LENGTH_SHORT).show();
+                        Toasty.success(this, "Sự cho phép bộ nhớ là cần thiết.....!", Toast.LENGTH_SHORT, true).show();
+
+//                        Toast.makeText(this,"Sự cho phép bộ nhớ là cần thiết.....",Toast.LENGTH_SHORT).show();
                     }
                 }
             }break;
@@ -1349,7 +1381,9 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
                 //get picked image
                 image_uri = data.getData();
                 ((CircularImageView) findViewById(R.id.profileIv)).setImageURI(image_uri);
-                Toast.makeText(this, "Đã chọn hình thành công!", Toast.LENGTH_SHORT).show();
+                Toasty.success(this, "Đã chọn hình thành công!!", Toast.LENGTH_SHORT, true).show();
+
+//                Toast.makeText(this, "Đã chọn hình thành công!", Toast.LENGTH_SHORT).show();
                 //set to imageview
                 profileIv.setImageURI(image_uri);
 
@@ -1358,7 +1392,8 @@ public class ChefRegistration extends AppCompatActivity implements LocationListe
 
                 profileIv.setImageURI(image_uri);
                 ((CircularImageView) findViewById(R.id.profileIv)).setImageURI(image_uri);
-                Toast.makeText(this, "Đã chụp hình thành công!", Toast.LENGTH_SHORT).show();
+                Toasty.success(this, "Đã chụp hình thành công!!", Toast.LENGTH_SHORT, true).show();
+//                Toast.makeText(this, "Đã chụp hình thành công!", Toast.LENGTH_SHORT).show();
             }
         }
 

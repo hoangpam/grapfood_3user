@@ -4,104 +4,6 @@
     <string name="title_dashboard">Bảng điều khiển</string>
     <string name="title_notifications">Thông báo</string>
 
-    <string-array name="State">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
-        <item>10</item>
-        <item>11</item>
-        <item>12</item>
-        <item>Tân Bình</item>
-        <item>Bình Tân</item>
-        <item>Phú Nhuận</item>
-        <item>Gò Vấp</item>
-        <item>Thủ Đức</item>
-        <item>Tân Phú</item>
-        <item>Bình Thạnh</item>
-        <item>Hoàn Kiếm</item>
-        <item>Đống Đa</item>
-        <item>Ba Đình</item>
-        <item>Hoàng Mai</item>
-        <item>Thanh Xuân</item>
-        <item>Long Biên</item>
-        <item>Nam Từ Liêm</item>
-        <item>Bắc Từ Liêm</item>
-        <item>Tây Hồ</item>
-        <item>Cầu Giấy</item>
-        <item>Hà Đông</item>
-        <item>Châu Thành</item>
-        <item>Hoà Thành</item>
-        <item>Bến Cầu</item>
-        <item>Trảng Bàn</item>
-        <item>Tân Châu</item>
-        <item>Dương Minh Châu</item>
-    </string-array>
-    <string-array name="Citys">
-        <item>Hồ Chí Minh</item>
-        <item>Hà Nội</item>
-        <item>Tây Ninh</item>
-    </string-array>
-    <string-array name="shipper">
-        <item>Shipper 1</item>
-        <item>Shipper 2</item>
-        <item>Shipper 3</item>
-        <item>Shipper 4</item>
-        <item>Shipper 5</item>
-        <item>Shipper 6</item>
-        <item>Shipper 7</item>
-        <item>Shipper 8</item>
-        <item>Shipper 9</item>
-        <item>Shipper 10</item>
-    </string-array>
-
-    <string-array name="DishName">
-        <item>Trà sữa</item>
-        <item>Gà rán</item>
-        <item>Bún bò huế</item>
-        <item>Nước rau má</item>
-        <item>Cơm tấm</item>
-        <item>Sữa chua</item>
-        <item>Bún đậu mắm tôm</item>
-        <item>Bánh mì</item>
-        <item>Cháo sườn</item>
-        <item>Lẩu ếch</item>
-        <item>Tàu hủ</item>
-        <item>Chè</item>
-        <item>Bánh trán trộn</item>
-        <item>Cafe</item>
-        <item>Mì quảng</item>
-        <item>Bún thịt nướng</item>
-        <item>Cơm gà xối mỡ</item>
-        <item>Phở</item>
-        <item>Kem bơ</item>
-        <item>Sầu riêng</item>
-        <item>Bánh ướt</item>
-        <item>Gà hầm thuốc bắc</item>
-        <item>Bánh bông lan</item>
-        <item>Hamburger</item>
-        <item>Bánh cuốn</item>
-        <item>Hana Maru Ramen</item>
-        <item>The Sashimi Box</item>
-        <item>Hot dog</item>
-        <item>Bò bít tết</item>
-        <item>Sushi</item>
-        <item>Kim bắp</item>
-        <item>Chichiko</item>
-        <item>Ốc ăn vặt</item>
-        <item>Meiwei</item>
-        <item>Lẩu hải sản</item>
-        <item>Tôm hùm</item>
-        <item>Tôm hoàng đế</item>
-        <item>Lẩu dê</item>
-        <item>Trứng bách thảo</item>
-        <item>Xúc xích bóng đêm</item>
-    </string-array>
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>
@@ -119,4 +21,37 @@
     <integer name="animation_duration_medium">3000</integer>
     <!--        google map-->
     <string name="map_api_key">AIzaSyBauAEFD9_PC4-5x9YnZK3I6BAb2aopTrU</string>
+    <string name="facebook_app_id">225615526044748</string>
+    <string name="fb_login_protocol_scheme">fb225615526044748</string>
+    <string name="ban">Đang hoàn thiện chức năng </string>
+    <!--  languge  -->
+    <string name="main_content">This is a multi-language application</string>
+    <string name="main_news">Google is adding Kotlin as an official programming language for Android development</string>
+    <string name="main_button_change_language">Change Language</string>
+
+    <!--change language-->
+    <string name="change_language_title">Language</string>
+
+    <!--untranslatable-->
+    <string name="language_english" translatable="false">English</string>
+    <string name="language_japanese" translatable="false">日本の</string>
+    <string name="language_vietnamese" translatable="false">Tiếng Việt</string>
+
+    <string-array name="language_names">
+        <item>@string/language_english</item>
+        <item>@string/language_japanese</item>
+        <item>@string/language_vietnamese</item>
+    </string-array>
+
+    <string name="language_english_code" translatable="false">en</string>
+    <string name="language_japanese_code" translatable="false">ja</string>
+    <string name="language_vietnamese_code" translatable="false">vi</string>
+    <string name="speech_to_text_info">Hãy nói vài điều bạn muốn tìm 🐷</string>
+
+    <string-array name="language_codes">
+        <item>@string/language_english_code</item>
+        <item>@string/language_japanese_code</item>
+        <item>@string/language_vietnamese_code</item>
+    </string-array>
 </resources>
+

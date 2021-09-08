@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.activity.ShopDetalsActivity">
+
+    <!--Shop Details-->
+    <RelativeLayout
+        android:id="@+id/shopRL"
+        android:layout_width="match_parent"
+        android:layout_height="250dp">
+        <ImageView
+            android:id="@+id/shopIv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@color/colorGray02"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="#79000000"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:padding="10dp">
+            <TextView
+                android:id="@+id/shopNameTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:text="Tên Cửa Hàng"
+                android:textColor="@color/white"/>
+            <TextView
+                android:id="@+id/phoneTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/shopNameTv"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:text="0123456789"
+                android:textColor="@color/white"/>
+            <TextView
+                android:id="@+id/emailTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/phoneTv"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:text="thien.gm.com"
+                android:textColor="@color/white"
+                android:textSize="15dp"/>
+            <TextView
+                android:id="@+id/openClosedTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:padding="5dp"
+                android:text="Mở"
+                android:textColor="@color/white"
+                android:layout_marginStart="3dp"/>
+            <TextView
+                android:id="@+id/deliveryFeeTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:padding="5dp"
+                android:text="Giao hàng miễn phí"
+                android:layout_below="@+id/openClosedTv"
+                android:textColor="@color/white"
+                android:layout_marginStart="3dp"/>
+
+            <!--RatingBar: show avg rating-->
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/deliveryFeeTv"
+                android:layout_alignParentEnd="true"
+                android:numStars="5"
+                android:progressBackgroundTint="@color/colorGray00"
+                android:progressTint="@color/yellow"
+                android:rating="5"/>
+
+
+            <TextView
+                android:id="@+id/addressTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/emailTv"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:layout_marginTop="10dp"
+                android:textSize="15dp"
+                android:text="Địa chỉ:150 lê trọng tấn"
+                android:textColor="@color/white"/>
+            <LinearLayout
+
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/callBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_phone"
+                    android:background="@null"/>
+
+<!--                <ImageButton-->
+<!--                    android:id="@+id/emailBtn"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"/>-->
+
+                <ImageButton
+                    android:id="@+id/mapBtn"
+                    android:layout_marginStart="5dp"
+                    android:layout_width="wrap_content"
+                    android:src="@drawable/ic_map"
+                    android:layout_height="wrap_content"
+                    android:background="@null"/>
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <!--Toolbar-->
+    <RelativeLayout
+        android:id="@+id/toolbarRl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_rect01"
+        android:padding="10dp">
+
+        <ImageButton
+            android:id="@+id/cartBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentEnd="true"
+            android:background="@null"
+            android:src="@drawable/ic_cart"
+            />
+
+        <ImageButton
+            android:id="@+id/backBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@null"
+            android:src="@drawable/ic_back"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="Chi tiết cửa hàng"
+            android:textColor="@color/white"
+            android:textSize="20dp"/>
+
+        <!--cart item count badge-->
+
+        <TextView
+            android:id="@+id/cartCountTv"
+            android:textColor="@color/white"
+            android:text="10"
+            android:textSize="8dp"
+            android:gravity="center"
+            android:background="@drawable/shape_circle03"
+            android:layout_alignParentEnd="true"
+            android:layout_width="20dp"
+            android:layout_height="20dp"/>
+
+<!--        show shop reviews-->
+        <ImageButton
+            android:id="@+id/reviewBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_toStartOf="@+id/cartBtn"
+            android:layout_centerVertical="true"
+            android:src="@drawable/jackpot"
+            android:background="@android:color/transparent"/>
+    </RelativeLayout>
+
+    <!--Products-->
+    <RelativeLayout
+        android:id="@+id/productRL"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/shopRL">
+        <!--SearchView-->
+        <EditText
+            android:id="@+id/searchProductEt"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/bg_states"
+            android:drawableStart="@drawable/ic_search_black_24dp"
+            android:hint="Tìm kiếm đồ ăn thức uống ở đây"
+            android:inputType="textPersonName|textCapWords"
+            android:imeOptions="actionSearch"
+            android:singleLine="true"/>
+        <!--Filter-->
+        <ImageButton
+            android:id="@+id/filterProductBtn"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_filter_gray"/>
+        <TextView
+            android:id="@+id/filterProductTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/searchProductEt"
+            android:textColor="@color/black"
+            android:text="Hiển thị tất cả"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="5dp"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_below="@+id/filterProductTv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/Recycle_menu"
+            tools:listitem="@layout/row_product_chef"
+            >
+        </androidx.recyclerview.widget.RecyclerView>
+    </RelativeLayout>
+</RelativeLayout>

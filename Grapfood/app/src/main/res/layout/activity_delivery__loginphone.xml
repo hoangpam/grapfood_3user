@@ -8,7 +8,7 @@
     tools:context=".activity.activity.Delivery_Loginphone">
 
     <ScrollView
-        android:layout_width="269dp"
+        android:layout_width="350dp"
         android:layout_height="479dp"
         android:layout_marginStart="60dp"
         android:layout_marginEnd="60dp"
@@ -35,6 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="60sp"
@@ -45,18 +46,18 @@
                     android:id="@+id/backBN"
                     android:layout_width="30sp"
                     android:layout_height="30sp"
-                    android:src="@drawable/ic_back_white"
-                    android:background="@null"></ImageButton>
+                    android:background="@null"
+                    android:src="@drawable/ic_back"></ImageButton>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="50dp"
-                    android:text="Đăng nhập"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
                     android:layout_gravity="center"
-                    android:textColor="@color/white">
+                    android:layout_marginLeft="70dp"
+                    android:text="Đăng nhập"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold">
 
                 </TextView>
 
@@ -102,6 +103,9 @@
                 android:id="@+id/Sendotp"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/button_shape"
+                android:drawableLeft="@drawable/ic_phone"
+                android:drawableRight="@drawable/ic_phone"
+
                 android:text="Gửi OTP"
                 android:textColor="@color/white"
                 android:textSize="18sp"/>
@@ -129,10 +133,11 @@
                     android:layout_marginTop="20dp"
                     android:background="@color/Black"/>
                 <TextView
-                    android:layout_width="44dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/OR"
                     android:layout_gravity="center"
+                    android:drawableLeft="@drawable/ic_sort"
                     android:text="OR"
                     android:textColor="@color/Black"
                     android:layout_marginTop="6dp"
@@ -165,7 +170,7 @@
                 android:text="Email"
                 android:layout_marginTop="15dp"
                 android:textColor="@color/white"
-                android:drawableLeft="@drawable/whitemail"
+                android:drawableLeft="@drawable/ic_email"
                 android:padding="10dp"
                 android:layout_gravity="center"/>
 

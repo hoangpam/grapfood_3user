@@ -1,8 +1,12 @@
 package com.example.grapfood.activity.FilterProductChef;
 
+import android.graphics.Color;
+import android.text.Spannable;
+import android.text.style.ForegroundColorSpan;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 
+import com.example.grapfood.activity.FilterProductUser.FilterProductUser;
 import com.example.grapfood.activity.adapter_defFood.AdapterProductChef;
 import com.example.grapfood.activity.model.ModelProduct;
 
@@ -10,15 +14,18 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class FilterProduct extends Filter {
-    private List<ModelProduct> modelProductList;
-    private List<ModelProduct> modelProductFull;
-    private AdapterProductChef adapter;
-    private ArrayList<ModelProduct> filterList;
+import static com.example.grapfood.activity.object.Utils.searchString;
 
-    public FilterProduct(AdapterProductChef adapter,ArrayList<ModelProduct> filterList){
+public class FilterProduct extends Filter {
+
+    private AdapterProductChef adapter;
+    private ArrayList<ModelProduct> filterList,productsList;
+
+
+    public FilterProduct(AdapterProductChef adapter,ArrayList<ModelProduct> productsList){
         this.adapter = adapter;
-        this.filterList = filterList;
+        this.productsList = productsList;
+        this.filterList = productsList;
     }
 
     @Override
@@ -42,17 +49,7 @@ public class FilterProduct extends Filter {
 
                 }
             }
-//            String filterPattern = constraint.toString().toUpperCase().trim();
-//
-//            for (ModelProduct item: modelProductFull){
-//
-//                if(item.getProductTitle().toUpperCase().contains(filterPattern) || item.getProductTitle().toUpperCase().contains(filterPattern)){
-//                        filteredList.add(item);
-//                    }
-//
-//            }
-//            FilterResults results1 = new FilterResults();
-//            results1.values=filteredList;
+
             results.count = filterModels.size();
             results.values= filterModels;
         }
@@ -60,7 +57,8 @@ public class FilterProduct extends Filter {
             //search filed empty,not searching, return original/all/complete list
             results.count = filterList.size();
             results.values= filterList;
-//            filteredList.addAll(filterList);
+//            results.count = productsList.size();
+//            results.values = productsList;
         }
 
 

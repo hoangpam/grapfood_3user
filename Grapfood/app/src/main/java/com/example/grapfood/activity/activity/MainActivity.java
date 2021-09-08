@@ -45,6 +45,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 
+import es.dmoral.toasty.Toasty;
+
+import static com.example.grapfood.R.string.ban;
+
 public class MainActivity extends AppCompatActivity {
     ImageView imageView;
     TextView textView;
@@ -116,9 +120,9 @@ public class MainActivity extends AppCompatActivity {
                                 progressDialog.setCanceledOnTouchOutside(false);
                                 progressDialog.show();
 
-                                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("User").child(FirebaseAuth.getInstance().getUid() + "/Role");
+                                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getUid() + "/AccountType");
                                 databaseReference.keepSynced(true);
-                                databaseReference.child("User").child(FirebaseAuth.getInstance().getUid() + "/Role")
+                                databaseReference.child("User").child(FirebaseAuth.getInstance().getUid() + "/AccountType")
                                         .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -143,15 +147,15 @@ public class MainActivity extends AppCompatActivity {
                                                             if (role.equals("Chef")) {
                                                                 startActivity(new Intent(MainActivity.this, ChefFoodPanel_BottomNavigation.class));
                                                                 finish();
-                                                            }
+                                                            }else
                                                             if (role.equals("Customer")) {
                                                                 startActivity(new Intent(MainActivity.this, CustomerFoofPanel_BottomNavigation.class));
                                                                 finish();
-                                                            }
+                                                            }else
                                                             if (role.equals("DeliveryPerson")) {
                                                                 startActivity(new Intent(MainActivity.this, DeliveryFoodPanel_BottomNavigation.class));
                                                                 finish();
-                                                            }
+                                                            }else
                                                             if(role.equals("")){
                                                                 startActivity(new Intent(MainActivity.this,MainMenu.class));
                                                                 finish();
@@ -162,7 +166,6 @@ public class MainActivity extends AppCompatActivity {
 
                                                         @Override
                                                         public void onCancelled(@NonNull DatabaseError error) {
-                                                            Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
 
                                                         }
                                                     });
@@ -173,6 +176,9 @@ public class MainActivity extends AppCompatActivity {
                                         } else {
 //                                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
                                             Log.e("firebase", "Error getting data", task.getException());
+                                            Toasty.custom(MainActivity.this, ban, getResources().getDrawable(R.drawable.ic_facebook),
+                                                    android.R.color.black, android.R.color.holo_green_light, Toasty.LENGTH_SHORT, true, true).show();
+                                            ReusableCodeForAll.ShowAlert(MainActivity.this,"Lỗi kìa",""+task.getException());
                                         }
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
@@ -203,12 +209,13 @@ public class MainActivity extends AppCompatActivity {
 
                             } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                                builder.setTitle("Tình hình");
                                 builder.setMessage("Kiểm tra xem bạn đã xác minh Gmail và OTP của mình chưa, nếu không, vui lòng xác minh");
                                 builder.setCancelable(false);
                                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        progressDialog.dismiss();
+
                                         dialog.dismiss();
                                         Intent intent = new Intent(MainActivity.this, MainMenu.class);
                                         startActivity(intent);
@@ -242,13 +249,16 @@ public class MainActivity extends AppCompatActivity {
             wifiConnected = ni.getType() == ConnectivityManager.TYPE_WIFI;
             mobileConnected = ni.getType() == ConnectivityManager.TYPE_MOBILE;
             if (wifiConnected) {
-                Toast.makeText(this, "Bạn đã kết nối thành công đến wifi", Toast.LENGTH_SHORT).show();
+                Toasty.success(this, "Bạn đã kết nối thành công đến từ wifi!", Toast.LENGTH_SHORT, true).show();
+
             } else if (mobileConnected) {
-                Toast.makeText(this, "Bạn đã kết nối thành công đến điện thoại", Toast.LENGTH_SHORT).show();
+                Toasty.success(this, "Bạn đã kết nối thành công đến từ mạng dữ liệu di động của điện thoại!", Toast.LENGTH_SHORT, true).show();
+
+
             }
         } else {
-            Toast.makeText(this, "Hiện tại bạn không có kết nối", Toast.LENGTH_SHORT).show();
-//            showSettingsWifis();
+            Toasty.error(this, "Hiện tại bạn không có kết nối mạng.\nVui lòng mở wifi và dữ liệu di động.<!>", Toast.LENGTH_SHORT, true).show();
+            showSettingsWifis();
         }
     }
     //mở cài đặt đến phần wifi

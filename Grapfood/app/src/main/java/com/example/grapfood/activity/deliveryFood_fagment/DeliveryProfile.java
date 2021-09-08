@@ -30,14 +30,15 @@ public class DeliveryProfile extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_deliveryprofile, null);
-        getActivity().setTitle("Hồ sơ");
-        rlDangXuat = v.findViewById(R.id.it_logout);
-        rlDangXuat.setOnClickListener(this);
 
-        btnsetting =v.findViewById(R.id.imb_setting);
-        btnsetting.setOnClickListener(this);
-        ten =v.findViewById(R.id.tv_tenHienThi);
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        getActivity().setTitle("Hồ sơ");
+//        rlDangXuat = v.findViewById(R.id.it_logout);
+//        rlDangXuat.setOnClickListener(this);
+//
+//        btnsetting =v.findViewById(R.id.imb_setting);
+//        btnsetting.setOnClickListener(this);
+//        ten =v.findViewById(R.id.tv_tenHienThi);
+//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         return v;
     }
@@ -46,15 +47,15 @@ public class DeliveryProfile extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
 
-            case R.id.it_logout:
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getActivity(), MainMenu.class));
-                break;
-            case R.id.imb_setting:
-                startActivity(new Intent(getActivity(), SettingActivity.class));
-                break;
-            case R.id.imv_avatar:
-                break;
+//            case R.id.it_logout:
+//                FirebaseAuth.getInstance().signOut();
+//                startActivity(new Intent(getActivity(), MainMenu.class));
+//                break;
+//            case R.id.imb_setting:
+//                startActivity(new Intent(getActivity(), SettingActivity.class));
+//                break;
+//            case R.id.imv_avatar:
+//                break;
         }
     }
 }

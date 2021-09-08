@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chaos.view.PinView;
 import com.example.grapfood.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,13 +27,15 @@ import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.concurrent.TimeUnit;
 
+import es.dmoral.toasty.Toasty;
+
 public class Delivery_VerifyPhone extends AppCompatActivity {
 
     String verificationId;
     FirebaseAuth FAuth;
     Button verify , Resend ;
     TextView txt;
-    EditText entercode;
+    PinView entercode;
     String phoneno;
 
     @Override
@@ -42,7 +45,7 @@ public class Delivery_VerifyPhone extends AppCompatActivity {
 
         phoneno = getIntent().getStringExtra("phonenumber").trim();
 
-        entercode = (EditText) findViewById(R.id.Dcode);
+        entercode = (PinView) findViewById(R.id.Dcode);
         txt = (TextView) findViewById(R.id.textt);
         Resend = (Button)findViewById(R.id.Resendcode);
         verify = (Button) findViewById(R.id.Verifycode);
@@ -65,8 +68,9 @@ public class Delivery_VerifyPhone extends AppCompatActivity {
                     entercode.requestFocus();
                     return;
                 }
+                Toasty.success(Delivery_VerifyPhone.this, "Đang gửi code qua máy bạn đợi tí...!", Toast.LENGTH_SHORT, true).show();
 
-                Toast.makeText(Delivery_VerifyPhone.this, "Đang gửi code qua máy bạn đợi tí...", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(Delivery_VerifyPhone.this, "Đang gửi code qua máy bạn đợi tí...", Toast.LENGTH_SHORT).show();
                 verifyCode(code);
 
 
@@ -97,8 +101,9 @@ public class Delivery_VerifyPhone extends AppCompatActivity {
         Resend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toasty.success(Delivery_VerifyPhone.this, "Đang gửi code qua máy bạn đợi tí...!", Toast.LENGTH_SHORT, true).show();
 
-                Toast.makeText(Delivery_VerifyPhone.this, "Đang gửi code qua máy bạn đợi tí...", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(Delivery_VerifyPhone.this, "Đang gửi code qua máy bạn đợi tí...", Toast.LENGTH_SHORT).show();
 
                 Resend.setVisibility(View.INVISIBLE);
                 Resendotp(phoneno);
@@ -160,7 +165,9 @@ public class Delivery_VerifyPhone extends AppCompatActivity {
 
         @Override
         public void onVerificationFailed(@NonNull FirebaseException e) {
-            Toast.makeText(Delivery_VerifyPhone.this , e.getMessage(),Toast.LENGTH_LONG).show();
+            Toasty.error(Delivery_VerifyPhone.this, ""+ e.getMessage(), Toast.LENGTH_SHORT, true).show();
+
+//            Toast.makeText(Delivery_VerifyPhone.this , e.getMessage(),Toast.LENGTH_LONG).show();
 
         }
 

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.activity.WriteReviewActivity">
+
+    <!--Toolbar-->
+    <RelativeLayout
+        android:id="@+id/toolbarRl"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:padding="10dp"
+        android:background="@drawable/shape_rect02"
+        >
+        <ImageButton
+            android:id="@+id/backBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_back"
+            android:background="@null"/>
+        <TextView
+            android:id="@+id/tenphansuatt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Viết đánh giá"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <!--shop image-->
+    <com.blogspot.atifsoftwares.circularimageview.CircularImageView
+        android:id="@+id/profileIv"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/toolbarRl"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_shop"
+        app:c_border="true"
+        app:c_border_width="2dp"
+        android:layout_gravity="center_horizontal"
+        app:c_border_color="@color/colorPrimary"/>
+
+    <TextView
+        android:id="@+id/shopNameTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profileIv"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:text="quán anh sìn"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20dp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/labelTv"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/shopNameTv"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/black"
+        android:text="Bạn thấy shop như thế nào? \nPhản hồi của bạn rất quan trọng để cải thiện chất lượng dịch vụ của chúng tôi"/>
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/labelTv"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:numStars="5"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:id="@+id/reviewEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_states"
+        android:layout_below="@+id/ratingBar"
+        android:hint="Hãy viết gì đó"
+        android:gravity="top"
+        android:minHeight="100dp"
+        android:padding="10dp"
+        android:layout_margin="20dp"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/submitBtn"
+        android:src="@drawable/ic_done"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"/>
+</RelativeLayout>

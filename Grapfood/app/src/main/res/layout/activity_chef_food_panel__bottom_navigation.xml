@@ -11,7 +11,8 @@
         android:layout_height="match_parent"
         android:id="@+id/frame_container"
         android:layout_marginTop="80dp"
-        android:layout_above="@id/chef_bottom_navigation"/>
+       />
+    <!-- android:layout_above="@id/chef_bottom_navigation"-->
     <!--Toolbar-->
     <RelativeLayout
         android:id="@+id/toolbarRl"
@@ -59,7 +60,7 @@
             android:textStyle="bold"
             android:text="Ngô Hoàng Thiên"
             android:layout_toEndOf="@+id/profileIv"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:textColor="@color/white"
             android:gravity="center"/>
         <TextView
@@ -70,7 +71,7 @@
             android:text="Quán úi chà"
             android:layout_toEndOf="@+id/profileIv"
             android:layout_below="@+id/nameTv"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:textColor="@color/white"
             />
         <TextView
@@ -81,7 +82,7 @@
             android:text="chutchit@gm.com"
             android:layout_toEndOf="@+id/profileIv"
             android:layout_below="@+id/ShopNameTv"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:textColor="@color/white"
             />
         <!--Tabs Products, Order -->
@@ -116,15 +117,15 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/chef_bottom_navigation"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom"
-        android:background="?android:attr/windowBackground"
-        android:backgroundTint="@color/white"
-        app:itemTextColor="@android:color/black"
-        app:itemIconTint="@android:color/black"
-        app:menu="@menu/chef_bottom_navigation"/>
+<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/chef_bottom_navigation"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_gravity="bottom"-->
+<!--        android:background="?android:attr/windowBackground"-->
+<!--        android:backgroundTint="@color/white"-->
+<!--        app:itemTextColor="@android:color/black"-->
+<!--        app:itemIconTint="@android:color/black"-->
+<!--        app:menu="@menu/chef_bottom_navigation"/>-->
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

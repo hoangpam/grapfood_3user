@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/shape_rect0011">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/shape_rect0011">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:text="Giỏ hàng"
+            android:textAllCaps="true"
+            android:textAlignment="center"
+            android:textStyle="bold"/>
+
+        <!--shop name-->
+        <TextView
+            android:id="@+id/shopNameTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="Tên cửa hàng"
+            android:textAllCaps="true"
+            android:textAlignment="center"
+            android:textStyle="bold"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/colorGray00"/>
+
+        <!--shop cart item-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cartItemRv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            tools:listitem="@layout/row_cartitem"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+        <RelativeLayout
+            android:id="@+id/pricesLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/sTotalLabelTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Tổng phụ:"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/sTotalTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="1000 VND"
+                android:layout_alignParentEnd="true"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/dFeeLabelTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:layout_below="@+id/sTotalLabelTv"
+                android:text="Giao hàng:"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/dFeeTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:layout_below="@+id/sTotalLabelTv"
+                android:text="1000 VND"
+                android:layout_alignParentEnd="true"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/totalLabelTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:layout_below="@+id/dFeeLabelTv"
+                android:text="Tổng tiền thu:"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/totalTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:layout_below="@+id/dFeeLabelTv"
+                android:text="1000 VND"
+                android:layout_alignParentEnd="true"
+                android:textColor="@color/black"/>
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/checkoutBtn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/shape_rect02"
+            android:padding="15dp"
+            android:text="Đặt hàng"
+            android:textColor="@color/white"
+            android:textAllCaps="true"
+            android:textStyle="bold"/>
+    </LinearLayout>
+</ScrollView>

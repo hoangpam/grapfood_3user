@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout android:id="@+id/orderRL"
+    android:layout_marginTop="70dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="90dp"
+        android:fontFamily="@font/open_sans_bold"
+        android:text="Đơn đặt hàng của bạn"
+        android:textColor="#333333"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/productRL" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ordersRv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:reverseLayout="true"
+        app:stackFromEnd="true"
+        tools:listitem="@layout/row_order_user" />
+</RelativeLayout>

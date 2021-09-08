@@ -7,7 +7,7 @@
     android:background="@drawable/img8"
     tools:context=".activity.activity.Chefloginphone">
     <ScrollView
-        android:layout_width="269dp"
+        android:layout_width="350dp"
         android:layout_height="479dp"
         android:layout_marginStart="60dp"
         android:layout_marginEnd="60dp"
@@ -38,23 +38,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="60sp"
                 android:background="@drawable/shape_rect01"
-                android:padding="10sp">
+                android:padding="10sp"
+                android:layout_gravity="center_horizontal">
 
                 <ImageButton
                     android:id="@+id/backBN"
                     android:layout_width="30sp"
                     android:layout_height="30sp"
-                    android:src="@drawable/ic_back_white"
+                    android:src="@drawable/ic_back"
                     android:background="@null"></ImageButton>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="50dp"
+                    android:layout_marginLeft="70dp"
                     android:text="Đăng nhập"
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:layout_gravity="center"
+                    android:gravity="center"
                     android:textColor="@color/white">
 
                 </TextView>
@@ -99,6 +101,8 @@
                 android:layout_height="40dp"
                 android:id="@+id/otp"
                 android:layout_marginTop="30dp"
+                android:drawableLeft="@drawable/ic_phone"
+                android:drawableRight="@drawable/ic_phone"
                 android:background="@drawable/button_shape"
                 android:text="Gửi OTP"
                 android:textColor="@color/white"
@@ -127,10 +131,11 @@
                     android:layout_marginTop="20dp"
                     android:background="@color/Black"/>
                 <TextView
-                    android:layout_width="44dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/OR"
                     android:layout_gravity="center"
+                    android:drawableLeft="@drawable/ic_sort"
                     android:text="OR"
                     android:textColor="@color/Black"
                     android:layout_marginTop="6dp"
@@ -163,7 +168,7 @@
                 android:text="Email"
                 android:layout_marginTop="15dp"
                 android:textColor="@color/white"
-                android:drawableLeft="@drawable/whitemail"
+                android:drawableLeft="@drawable/ic_email"
                 android:padding="10dp"
                 android:layout_gravity="center"/>
 

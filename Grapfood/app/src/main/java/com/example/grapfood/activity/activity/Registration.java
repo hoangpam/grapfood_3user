@@ -74,6 +74,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.google.rpc.ErrorInfoOrBuilder;
 import com.hbb20.CountryCodePicker;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
@@ -94,6 +95,7 @@ import java.util.Locale;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import es.dmoral.toasty.Toasty;
 
 public class Registration extends AppCompatActivity implements LocationListener {
 
@@ -176,12 +178,14 @@ public class Registration extends AppCompatActivity implements LocationListener 
     Button signup, Emaill, Phone;
     CountryCodePicker Cpp;
     FirebaseAuth FAuth;
-    DatabaseReference databaseReference;
-    FirebaseDatabase firebaseDatabase;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference databaseReference = database.getReference("Users");
+
+
     String fname,lname,emailid,
             password,confpassword,mobile,
             Localaddress,Area,statee,cityy,ImageURL,cpAddress;
-    String role="Customer";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -195,6 +199,7 @@ public class Registration extends AppCompatActivity implements LocationListener 
         cpass = (TextInputLayout)findViewById(R.id.confirmpass);
         mobileno = (TextInputLayout)findViewById(R.id.Mobilenumber);
         localaddress = (TextInputLayout)findViewById(R.id.Localaddress);
+//        Toasty.warning(Registration.this, "Vui lòng nhấn nút màu đỏ gần phía bên phải chữ đăng ký", Toast.LENGTH_LONG, true).show();
 
         compleaddress = (TextInputLayout) findViewById(R.id.completeAddress);
 
@@ -238,8 +243,7 @@ public class Registration extends AppCompatActivity implements LocationListener 
             @Override
             public void onClick(View v) {
                 //trả về phía trước đó
-                startActivity(new Intent(Registration.this,MainMenu.class));
-                finish();
+                onBackPressed();
             }
         });
 
@@ -257,155 +261,146 @@ public class Registration extends AppCompatActivity implements LocationListener 
         initLocation();
         restoreValuesFromBundle(savedInstanceState);
 
-        databaseReference = firebaseDatabase.getInstance().getReference("Customer");
+
         FAuth = FirebaseAuth.getInstance();
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                try {
+                    fname = Fname.getEditText().getText().toString().trim();
+                    lname = Lname.getEditText().getText().toString().trim();
+                    emailid = Email.getEditText().getText().toString().trim();
+                    mobile = mobileno.getEditText().getText().toString().trim();
+                    password = Pass.getEditText().getText().toString().trim();
+                    confpassword = cpass.getEditText().getText().toString().trim();
+                    Area = area.getEditText().getText().toString().trim();
+                    Localaddress = localaddress.getEditText().getText().toString().trim();
+                    ImageURL = String.valueOf(image_uri).trim();
+                    cpAddress = compleaddress.getEditText().getText().toString().trim();
+                    statee = States1.getEditText().getText().toString().trim();
+                    cityy = Citys1.getEditText().getText().toString().trim();
+                    String timestamp = "" + System.currentTimeMillis();
 
-                fname = Fname.getEditText().getText().toString().trim();
-                lname = Lname.getEditText().getText().toString().trim();
-                emailid = Email.getEditText().getText().toString().trim();
-                mobile = mobileno.getEditText().getText().toString().trim();
-                password = Pass.getEditText().getText().toString().trim();
-                confpassword = cpass.getEditText().getText().toString().trim();
-                Area = area.getEditText().getText().toString().trim();
-                Localaddress = localaddress.getEditText().getText().toString().trim();
-                ImageURL = String.valueOf(image_uri).trim();
-                cpAddress = compleaddress.getEditText().getText().toString().trim();
-                statee = States1.getEditText().getText().toString().trim();
-                cityy = Citys1.getEditText().getText().toString().trim();
-                String timestamp = "" + System.currentTimeMillis();
+                    if (isValid() && image_uri == null ){
 
-                if (isValid() && image_uri == null ){
-//                    Context context = new ContextThemeWrapper(Registration.this, R.style.AppTheme2);
-//                    final ProgressDialog mDialog = new ProgressDialog(context,R.style.MaterialAlertDialog_rounded);
+                            final ProgressDialog mDialog = new ProgressDialog(Registration.this);
+                            mDialog.setCancelable(false);
+                            mDialog.setCanceledOnTouchOutside(false);
+                            mDialog.setTitle("\uD83D\uDC37 \n Tình hình mạng yếu");
+                            mDialog.setMessage("Đang đăng ký và tải hình đại diện lên, vui lòng đợi......");
+                            mDialog.show();
 
-                    final ProgressDialog mDialog = new ProgressDialog(Registration.this);
-                    mDialog.setCancelable(false);
-                    mDialog.setCanceledOnTouchOutside(false);
-                    mDialog.setMessage("Đang đăng ký và tải hình đại diện lên, vui lòng đợi......");
-                    mDialog.show();
-
-                    FAuth.createUserWithEmailAndPassword(emailid,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-
-                            if (task.isSuccessful()){
-                                String useridd = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                databaseReference = FirebaseDatabase.getInstance().getReference("User").child(useridd);
-                                final HashMap<String , String> hashMap = new HashMap<>();
-                                hashMap.put("Role",role);
-                                databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-
-                                        HashMap<String , String> hashMap1 = new HashMap<>();
-                                        hashMap1.put("UID", "" + FAuth.getUid());
-                                        hashMap1.put("MobileNo",mobile);
-                                        hashMap1.put("FirstName",fname);
-                                        hashMap1.put("LastName",lname);
-                                        hashMap1.put("EmailId",emailid);
-                                        hashMap1.put("City",cityy);
-                                        hashMap1.put("Area",Area);
-                                        hashMap1.put("Password",password);
-                                        hashMap1.put("State",statee);
-                                        hashMap1.put("CompleteAddress", cpAddress);
-                                        hashMap1.put("ConfirmPassword",confpassword);
-                                        hashMap1.put("House",Localaddress);
-                                        hashMap1.put("Timestamp", "" + timestamp+" "+DateFormat.getTimeInstance().format(new Date()));
-                                        hashMap1.put("ImageURL", "");
-                                        hashMap1.put("Latitude", "" + mCurrentLocation.getLatitude());
-                                        hashMap1.put("Longitude", "" + mCurrentLocation.getLongitude());
-
-                                        firebaseDatabase.getInstance().getReference("Customer")
-                                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                                .setValue(hashMap1).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                mDialog.dismiss();
-
-                                                FAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<Void> task) {
-
-                                                        if(task.isSuccessful()){
-                                                            AlertDialog.Builder builder = new AlertDialog.Builder(Registration.this);
-                                                            builder.setMessage("Bạn đã đăng ký! Đảm bảo xác minh Email của bạn");
-                                                            builder.setCancelable(false);
-                                                            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                                                @Override
-                                                                public void onClick(DialogInterface dialog, int which) {
-
-                                                                    dialog.dismiss();
-
-                                                                    String phonenumber = Cpp.getSelectedCountryCodeWithPlus() + mobile;
-                                                                    Intent b = new Intent(Registration.this,VerifyPhone.class);
-                                                                    b.putExtra("phonenumber",phonenumber);
-                                                                    startActivity(b);
-
-                                                                }
-                                                            });
-                                                            AlertDialog Alert = builder.create();
-                                                            Alert.show();
-                                                        }else{
-                                                            mDialog.dismiss();
-                                                            ReusableCodeForAll.ShowAlert(Registration.this,"Đang bị lỗi nè",task.getException().getMessage());
-                                                        }
-                                                    }
-                                                });
-
-                                            }
-                                        });
-
-                                    }
-                                });
-                            }else {
-                                mDialog.dismiss();
-                                ReusableCodeForAll.ShowAlert(Registration.this, "Error", task.getException().getMessage());
-                            }
-                        }
-                    });
-                }
-                else if (isValid() && image_uri != null ) {
-
-
-//                    Context context = new ContextThemeWrapper(Registration.this, R.style.AppTheme2);
-
-                    String filePathAndName = "profile_image/" + "" + FAuth.getUid();
-
-//                    final ProgressDialog progressDialog = new ProgressDialog(context,R.style.MaterialAlertDialog_rounded);
-
-                    final ProgressDialog progressDialog = new ProgressDialog(Registration.this);
-                    progressDialog.setTitle("Đang đăng ký và tải hình ảnh đại diện lên, vui lòng đợi tí....");
-                    progressDialog.show();
-
-                    //update image
-                    ref = FirebaseStorage.getInstance().getReference(filePathAndName);
-                    ref.putFile(image_uri)
-                            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            FAuth.createUserWithEmailAndPassword(emailid,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
-                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                    //get url of uploated image
-                                    Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                                    while (!uriTask.isSuccessful()) ;
-                                    Uri downloadImageUri = uriTask.getResult();
+                                public void onComplete(@NonNull Task<AuthResult> task) {
 
-                                    if (uriTask.isSuccessful()) {
-                                        FAuth.createUserWithEmailAndPassword(emailid,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()){
+                                        try{
+                                            HashMap<String , String> hashMap1 = new HashMap<>();
+                                            hashMap1.put("UID", "" + FAuth.getUid());
+                                            hashMap1.put("MobileNo",mobile);
+                                            hashMap1.put("FirstName",fname);
+                                            hashMap1.put("LastName",lname);
+                                            hashMap1.put("EmailId",emailid);
+                                            hashMap1.put("City",cityy);
+                                            hashMap1.put("Area",Area);
+                                            hashMap1.put("Password",password);
+                                            hashMap1.put("State",statee);
+                                            hashMap1.put("CompleteAddress", cpAddress);
+                                            hashMap1.put("ConfirmPassword",confpassword);
+                                            hashMap1.put("House",Localaddress);
+                                            hashMap1.put("Timestamp", "" + timestamp);//+" "+DateFormat.getTimeInstance().format(new Date())
+                                            hashMap1.put("ImageURL", "");
+                                            hashMap1.put("Latitude", "" + mCurrentLocation.getLatitude());
+                                            hashMap1.put("Longitude", "" + mCurrentLocation.getLongitude());
+                                            hashMap1.put("AccountType","Customer");
 
-                                                if (task.isSuccessful()){
-                                                    String useridd = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                                    databaseReference = FirebaseDatabase.getInstance().getReference("User").child(useridd);
-                                                    final HashMap<String , String> hashMap = new HashMap<>();
-                                                    hashMap.put("Role",role);
-                                                    databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            databaseReference
+                                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                                    .setValue(hashMap1).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    mDialog.dismiss();
+
+                                                    FAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                                                         @Override
                                                         public void onComplete(@NonNull Task<Void> task) {
 
+                                                            if(task.isSuccessful()){
+                                                                AlertDialog.Builder builder = new AlertDialog.Builder(Registration.this);
+                                                                builder.setMessage("\uD83D\uDC37 Bạn đã đăng ký! Đảm bảo xác minh Email của bạn");
+                                                                builder.setCancelable(false);
+                                                                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                                                    @Override
+                                                                    public void onClick(DialogInterface dialog, int which) {
+
+                                                                        dialog.dismiss();
+                                                                        String phonenumber = Cpp.getSelectedCountryCodeWithPlus() + mobile;
+                                                                        Intent b = new Intent(Registration.this,VerifyPhone.class);
+                                                                        b.putExtra("phonenumber",phonenumber);
+                                                                        startActivity(b);
+
+                                                                    }
+                                                                });
+                                                                AlertDialog Alert = builder.create();
+                                                                Alert.show();
+                                                            }else{
+                                                                mDialog.dismiss();
+                                                                Toasty.error(Registration.this, ""+task.getException().getMessage(), Toast.LENGTH_LONG, true).show();
+                                                                ReusableCodeForAll.ShowAlert(Registration.this,"Đang bị lỗi nè",task.getException().getMessage());
+                                                            }
+                                                        }
+                                                    });
+
+                                                }
+                                            });
+                                        }catch (Exception e){
+                                            Erro();
+                                            Toasty.warning(Registration.this, "Vui lòng nhấn vào nút GPS góc phải bên trên ..."+"\n"+e.getMessage(), Toast.LENGTH_LONG, true).show();
+                                            mDialog.dismiss();
+                                        }
+
+                                    }else {
+                                        mDialog.dismiss();
+                                        Toasty.error(Registration.this, ""+task.getException().getMessage(), Toast.LENGTH_LONG, true).show();
+                                        ReusableCodeForAll.ShowAlert(Registration.this, "Error", task.getException().getMessage());
+                                    }
+                                }
+                            });
+
+                    }
+                    else if (isValid() && image_uri != null ) {
+
+
+//                    Context context = new ContextThemeWrapper(Registration.this, R.style.AppTheme2);
+
+                        String filePathAndName = "profile_image/" + "" + FAuth.getUid();
+
+//                    final ProgressDialog progressDialog = new ProgressDialog(context,R.style.MaterialAlertDialog_rounded);
+
+                        final ProgressDialog progressDialog = new ProgressDialog(Registration.this);
+                        progressDialog.setTitle("\uD83D\uDC37 Đang đăng ký và tải hình ảnh đại diện lên, vui lòng đợi tí....");
+                        progressDialog.show();
+
+                        //update image
+                        ref = FirebaseStorage.getInstance().getReference(filePathAndName);
+                        ref.putFile(image_uri)
+                                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        //get url of uploated image
+                                        Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                                        while (!uriTask.isSuccessful()) ;
+                                        Uri downloadImageUri = uriTask.getResult();
+
+                                        if (uriTask.isSuccessful()) {
+                                            FAuth.createUserWithEmailAndPassword(emailid,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<AuthResult> task) {
+
+                                                    if (task.isSuccessful()){
+                                                        try {
                                                             HashMap<String , String> hashMap1 = new HashMap<>();
                                                             hashMap1.put("UID", "" + FAuth.getUid());
                                                             hashMap1.put("MobileNo",mobile);
@@ -418,12 +413,13 @@ public class Registration extends AppCompatActivity implements LocationListener 
                                                             hashMap1.put("State",statee);
                                                             hashMap1.put("ConfirmPassword",confpassword);
                                                             hashMap1.put("LocalAddress",Localaddress);
-                                                            hashMap1.put("Timestamp", "" + timestamp+" "+DateFormat.getTimeInstance().format(new Date()));
+                                                            hashMap1.put("Timestamp", "" + timestamp);//+" "+DateFormat.getTimeInstance().format(new Date()))
                                                             hashMap1.put("ImageURL", ""+ downloadImageUri);
                                                             hashMap1.put("Latitude", "" + mCurrentLocation.getLatitude());
                                                             hashMap1.put("Longitude", "" + mCurrentLocation.getLongitude());
+                                                            hashMap1.put("AccountType","Customer");
 
-                                                            firebaseDatabase.getInstance().getReference("Customer")
+                                                            databaseReference
                                                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                                                     .setValue(hashMap1).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                 @Override
@@ -439,7 +435,7 @@ public class Registration extends AppCompatActivity implements LocationListener 
 //                                                                                AlertDialog.Builder builder = new AlertDialog.Builder(context,R.style.MaterialAlertDialog_rounded);
 
                                                                                 AlertDialog.Builder builder = new AlertDialog.Builder(Registration.this);
-                                                                                builder.setMessage("Bạn đã đăng ký! Đảm bảo xác minh Email của bạn");
+                                                                                builder.setMessage("\uD83D\uDC37 \n Bạn đã đăng ký! Đảm bảo xác minh Email của bạn");
                                                                                 builder.setCancelable(false);
                                                                                 builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                                                                     @Override
@@ -456,8 +452,10 @@ public class Registration extends AppCompatActivity implements LocationListener 
                                                                                 });
                                                                                 AlertDialog Alert = builder.create();
                                                                                 Alert.show();
-                                                                            }else{
+                                                                            }
+                                                                            else{
                                                                                 progressDialog.dismiss();
+                                                                                Toasty.error(Registration.this, ""+task.getException().getMessage(), Toast.LENGTH_LONG, true).show();
                                                                                 ReusableCodeForAll.ShowAlert(Registration.this,"Error",task.getException().getMessage());
                                                                             }
                                                                         }
@@ -465,38 +463,49 @@ public class Registration extends AppCompatActivity implements LocationListener 
 
                                                                 }
                                                             });
-
+                                                        }catch (Exception e){
+                                                            Erro();
+                                                            Toasty.warning(Registration.this, "Vui lòng nhấn vào nút GPS góc phải bên trên ..."+"\n"+e.getMessage(), Toast.LENGTH_LONG, true).show();
+                                                            progressDialog.dismiss();
                                                         }
-                                                    });
-                                                }else {
-                                                    progressDialog.dismiss();
-                                                    ReusableCodeForAll.ShowAlert(Registration.this, "Đang bị lỗi nè", task.getException().getMessage());
-                                                }
-                                            }
-                                        });
-                                    }
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    progressDialog.dismiss();
-                                    Toast.makeText(Registration.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            })
-                            .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                                @Override
-                                public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                                    double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                                    progressDialog.setMessage("Đang tải " + (int) progress + "%");
-                                    progressDialog.setCanceledOnTouchOutside(false);
-                                }
-                            });
 
+                                                    }else {
+                                                        progressDialog.dismiss();
+                                                        Toasty.error(Registration.this, ""+task.getException().getMessage(), Toast.LENGTH_LONG, true).show();
+                                                        ReusableCodeForAll.ShowAlert(Registration.this, "Đang bị lỗi nè", task.getException().getMessage());
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        progressDialog.dismiss();
+                                        Toasty.error(Registration.this, "" + e.getMessage(), Toast.LENGTH_SHORT, true).show();
+
+//                                    Toast.makeText(Registration.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+                                        double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                                        progressDialog.setMessage("Đang tải " + (int) progress + "%");
+                                        progressDialog.setCanceledOnTouchOutside(false);
+                                    }
+                                });
+
+                    }
+                    else {
+                        Toasty.error(Registration.this, "Quá trình đăng ký đã thất bại!\nCó thể email đã được đăng ký!\nHoặc bạn đã điền sai thông tin\nVui lòng kiểm tra lại kết nối mạng và thông tin bên trên .", Toast.LENGTH_SHORT, true).show();
+                    }
+                }catch (Exception e){
+                    Erro();
+                    Toasty.warning(Registration.this, "Vui lòng nhấn vào nút GPS góc phải bên trên ..."+"\n"+e.getMessage(), Toast.LENGTH_SHORT, true).show();
                 }
-                else {
-                    Toast.makeText(Registration.this, "Quá trình đăng ký đã thất bại!\nCó thể email đã được đăng ký!\nHoặc bạn đã điền sai thông tin\nVui lòng kiểm tra lại kết nối mạng và thông tin bên trên .", Toast.LENGTH_SHORT).show();
-                }
+
             }
         });
 
@@ -517,6 +526,7 @@ public class Registration extends AppCompatActivity implements LocationListener 
         isOnline();
 
     }
+
     private void initLocation() {
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mSettingsClient = LocationServices.getSettingsClient(this);
@@ -580,7 +590,8 @@ public class Registration extends AppCompatActivity implements LocationListener 
                     compleaddress.getEditText().setText(address);
                 }
             } catch (Exception e) {
-                Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toasty.error(this, "Hiện tại không truy cập được vị trí của bạn" +e.getMessage(), Toast.LENGTH_SHORT, true).show();
+
             }
         }
 
@@ -601,7 +612,9 @@ public class Registration extends AppCompatActivity implements LocationListener 
                         //All location settings are satisfied.
                         Log.i(TAG, "Tất cả các cài đặt vị trí đều hài lòng.");
                         //Started location updates!
-                        Toast.makeText(getApplicationContext(), "Đã bắt đầu cập nhật vị trí hiện tại của bạn!\nVui lòng tự điền tên đường\nKiểm tra lại xem đã đúng đại chỉ chưa", Toast.LENGTH_LONG).show();
+                        Toasty.warning(Registration.this, "Đã bắt đầu cập nhật vị trí hiện tại của bạn!\nVui lòng tự điền tên đường\nKiểm tra lại xem đã đúng đại chỉ chưa", Toast.LENGTH_SHORT, true).show();
+
+//                        Toast.makeText(getApplicationContext(), "Đã bắt đầu cập nhật vị trí hiện tại của bạn!\nVui lòng tự điền tên đường\nKiểm tra lại xem đã đúng đại chỉ chưa", Toast.LENGTH_LONG).show();
 
                         //noinspection MissingPermission
                         mFusedLocationClient.requestLocationUpdates(mLocationRequest,
@@ -633,8 +646,9 @@ public class Registration extends AppCompatActivity implements LocationListener 
                                 String errorMessage = "Location settings are inadequate, and cannot be " +
                                         "fixed here. Fix in Settings.";
                                 Log.e(TAG, errorMessage);
+                                Toasty.error(Registration.this, ""+errorMessage+"\n"+e.getMessage(), Toast.LENGTH_SHORT, true).show();
 
-                                Toast.makeText(Registration.this, errorMessage, Toast.LENGTH_LONG).show();
+//                                Toast.makeText(Registration.this, errorMessage, Toast.LENGTH_LONG).show();
                         }
 
                         updateLocationUI();
@@ -777,17 +791,7 @@ public class Registration extends AppCompatActivity implements LocationListener 
         }
     }
 
-//    private void getLastLocation() {
-//        try {
-//            Criteria criteria = new Criteria();
-//            String provider = locationManager.getBestProvider(criteria, false);
-//            Location location = locationManager.getLastKnownLocation(provider);
-//            Log.d(TAG, provider);
-//            Log.d(TAG, location == null ? "KHÔNG có vị trí cuối cùng" : location.toString());
-//        } catch (SecurityException e) {
-//            e.printStackTrace();
-//        }
-//    }
+
 
     @NotNull
     private ArrayList findUnAskedPermissions(@NotNull ArrayList<String> wanted) {
@@ -815,62 +819,57 @@ public class Registration extends AppCompatActivity implements LocationListener 
         return (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1);
     }
 
-    private void updateUI(@NotNull Location location) {
-        Log.d(TAG, "updateUI");
-//        tvLatitude.setText(Double.toString(loc.getLatitude()));
-//        tvLongitude.setText(Double.toString(loc.getLongitude()));
-//        tvTime.setText(DateFormat.getTimeInstance().format(loc.getTime()));
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
-//        findAddress();
-        Log.d("latitude", "latitude--" + latitude);
-        Log.d("longitude", "longitude--" + longitude);
-        Geocoder geocoder;
-        List<Address> addresses;
-        geocoder = new Geocoder(this, Locale.getDefault());
-        try {
-            addresses = geocoder.getFromLocation(latitude, longitude, 1);
-//
-//
-////            String address = addresses.get(0).getAddressLine(0);
-////            String city = addresses.get(0).getLocality();
-////            String state = addresses.get(0).getAdminArea();
-////            String countryName = addresses.get(0).getCountryName();
-//
-//            String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-//            String city = addresses.get(0).getLocality();
-//            String state = addresses.get(0).getAdminArea();
-//            String country = addresses.get(0).getCountryName();
-//            String postalCode = addresses.get(0).getPostalCode();
-//            String knownName = addresses.get(0).getFeatureName(); // Only if available else return NULL
-            if (addresses != null && addresses.size() > 0) {
-                String address = addresses.get(0).getAddressLine(0);
-                String city = addresses.get(0).getLocality();
-                String state = addresses.get(0).getAdminArea();
-                String country = addresses.get(0).getCountryName();
-                String postalCode = addresses.get(0).getPostalCode();
-                String knownName = addresses.get(0).getFeatureName();
-                Log.d(TAG, "getAddress:  address" + address);
-                Log.d(TAG, "getAddress:  city" + city);
-                Log.d(TAG, "getAddress:  state" + state);
-                Log.d(TAG, "getAddress:  postalCode" + postalCode);
-                Log.d(TAG, "getAddress:  knownName" + knownName);
+    private void Erro() {
+        AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+        alerta.setTitle("Ơ kìa lỗi");
+        alerta.setMessage("Vui lòng nhấn nút màu đỏ GPS bên phải chữ Đăng Ký");
+        alerta.setPositiveButton("OK", null);
+        alerta.show();
+    }
 
-                //set addresses
-                //đặt dịa chỉ
-                //            state1.getEditText().setText(state);
-                //            city1.getEditText().setText(city);
-                //            area.getEditText().setText(knownName);
-                //            houseno.getEditText().setText(postalCode);
-                //            delivery.getEditText().setText(country);
-                //            compleaddress.getEditText().setText(address);
-                compleaddress.getEditText().setText(address + " " + city + " " + state + " " + country);
+    private void updateUI(@NotNull Location location) {
+        if(location == null)
+        {
+            Erro();
+        }else {
+            Log.d(TAG, "updateUI");
+
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+//        findAddress();
+            Log.d("latitude", "latitude--" + latitude);
+            Log.d("longitude", "longitude--" + longitude);
+            Geocoder geocoder;
+            List<Address> addresses;
+            geocoder = new Geocoder(this, Locale.getDefault());
+            try {
+                if(latitude == 0 && longitude == 0){
+                    Toasty.warning(Registration.this, "Vui lòng nhấn nút GPS của bên phải chữ ĐĂNG KÝ .... ", Toast.LENGTH_LONG, true).show();
+                }else {
+                    addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                    if (addresses != null && addresses.size() > 0) {
+                        String address = addresses.get(0).getAddressLine(0);
+                        String city = addresses.get(0).getLocality();
+                        String state = addresses.get(0).getAdminArea();
+                        String country = addresses.get(0).getCountryName();
+                        String postalCode = addresses.get(0).getPostalCode();
+                        String knownName = addresses.get(0).getFeatureName();
+                        Log.d(TAG, "getAddress:  address" + address);
+                        Log.d(TAG, "getAddress:  city" + city);
+                        Log.d(TAG, "getAddress:  state" + state);
+                        Log.d(TAG, "getAddress:  postalCode" + postalCode);
+                        Log.d(TAG, "getAddress:  knownName" + knownName);
+
+                        compleaddress.getEditText().setText(address + " " + city + " " + state );
+                    }
+                }
+
+
+            } catch (Exception e) {
+                Toasty.error(Registration.this, ""+e.getMessage(), Toast.LENGTH_SHORT, true).show();
             }
-//
-//
-        } catch (Exception e) {
-            Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
+
     }
 
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
@@ -1056,31 +1055,7 @@ public class Registration extends AppCompatActivity implements LocationListener 
 
     }
 
-    private boolean init()
-    {
-//        if(mCurrentLocation.getLatitude() == latitude  || mCurrentLocation.getLongitude() == longitude)
-//        {
-//            Toast.makeText(this, "Vui lòng nhấn vào nút GPS góc phải bên trên ...", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-        boolean isValid=false,isValidLocation = false;
-        double nullString = Double.parseDouble(null);
-        if(mCurrentLocation.getLongitude() == nullString || mCurrentLocation.getLongitude() == nullString)
-        {
-//            Context context = new ContextThemeWrapper(Registration.this, R.style.AppTheme2);
-//            final ProgressDialog progressDialog = new ProgressDialog(context,R.style.MaterialAlertDialog_rounded);
 
-            final ProgressDialog progressDialog = new ProgressDialog(Registration.this);
-            progressDialog.setTitle("Vui lòng nhấn vào nút GPS góc phải bên trên ...");
-            progressDialog.show();
-            Toast.makeText(this, "Vui lòng nhấn vào nút GPS góc phải bên trên ...", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            isValidLocation = true;
-        }
-        isValid = isValidLocation ? true : false;
-        return isValid;
-    }
     // hàm kiểm tra quyền địa chỉ
     //tình trạng kết nối wifi để dùng app
     private void isOnline() {
@@ -1091,14 +1066,18 @@ public class Registration extends AppCompatActivity implements LocationListener 
             mobileConnected = ni.getType() == ConnectivityManager.TYPE_MOBILE;
             if(wifiConnected)
             {
-                Toast.makeText(this, "Bạn đã kết nối thành công đến wifi", Toast.LENGTH_SHORT).show();
+                Toasty.success(this, "Bạn đã kết nối thành công đến từ wifi!", Toast.LENGTH_SHORT, true).show();
+
+//                Toast.makeText(this, "Bạn đã kết nối thành công đến wifi", Toast.LENGTH_SHORT).show();
             }
             else if(mobileConnected)
             {
-                Toast.makeText(this, "Bạn đã kết nối thành công đến điện thoại", Toast.LENGTH_SHORT).show();
+                Toasty.success(this, "Bạn đã kết nối thành công đến từ mạng dữ liệu di động của điện thoại!", Toast.LENGTH_SHORT, true).show();
+
             }
         }else {
-            Toast.makeText(this, "Hiện tại bạn không có kết nối", Toast.LENGTH_SHORT).show();
+            Toasty.error(this, "Hiện tại bạn không có kết nối mạng.\nVui lòng mở wifi và dữ liệu di động.<!>\"", Toast.LENGTH_SHORT, true).show();
+
             showSettingsWifis();
         }
     }
@@ -1179,8 +1158,8 @@ public class Registration extends AppCompatActivity implements LocationListener 
         if (locationManager != null) {
             locationManager.removeUpdates(this);
         }
-        Toast.makeText(this,"Vui lòng mở vị trí....",Toast.LENGTH_SHORT).show();
-//        showSettingsAlert();
+        Toasty.warning(this, "Vui lòng mở vị trí....", Toast.LENGTH_SHORT, true).show();
+
     }
 
     @Override
@@ -1238,7 +1217,8 @@ public class Registration extends AppCompatActivity implements LocationListener 
                         //permission denied
                         //sự cho phép không được phép cấp quyền
                         //location permission is necessary
-                        Toast.makeText(this,"Sự cho phép máy ảnh là cần thiết.....",Toast.LENGTH_SHORT).show();
+                        Toasty.success(this, "Sự cho phép máy ảnh là cần thiết.....!", Toast.LENGTH_SHORT, true).show();
+
                     }
                 }
             }break;
@@ -1255,7 +1235,8 @@ public class Registration extends AppCompatActivity implements LocationListener 
                         //permission denied
                         //sự cho phép không được phép cấp quyền
                         //location permission is necessary
-                        Toast.makeText(this,"Sự cho phép bộ nhớ là cần thiết.....",Toast.LENGTH_SHORT).show();
+                        Toasty.success(this, "Sự cho phép bộ nhớ là cần thiết.....!", Toast.LENGTH_SHORT, true).show();
+
                     }
                 }
             }break;
@@ -1289,7 +1270,9 @@ public class Registration extends AppCompatActivity implements LocationListener 
                 //get picked image
                 image_uri = data.getData();
                 ((CircularImageView) findViewById(R.id.profileIv)).setImageURI(image_uri);
-                Toast.makeText(this, "Đã chọn hình thành công!", Toast.LENGTH_SHORT).show();
+                Toasty.success(this, "Đã chọn hình thành công!", Toast.LENGTH_SHORT, true).show();
+
+//                Toast.makeText(this, "Đã chọn hình thành công!", Toast.LENGTH_SHORT).show();
                 //set to imageview
                 profileIv.setImageURI(image_uri);
 
@@ -1298,7 +1281,9 @@ public class Registration extends AppCompatActivity implements LocationListener 
 
                 profileIv.setImageURI(image_uri);
                 ((CircularImageView) findViewById(R.id.profileIv)).setImageURI(image_uri);
-                Toast.makeText(this, "Đã chụp hình thành công!", Toast.LENGTH_SHORT).show();
+                Toasty.success(this, "Đã chụp hình thành công!", Toast.LENGTH_SHORT, true).show();
+
+//                Toast.makeText(this, "Đã chụp hình thành công!", Toast.LENGTH_SHORT).show();
             }
         }
 

@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.chaos.view.PinView;
 import com.example.grapfood.R;
 import com.example.grapfood.activity.bottomnavigation.CustomerFoofPanel_BottomNavigation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,14 +28,15 @@ import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.concurrent.TimeUnit;
 
+import es.dmoral.toasty.Toasty;
+
 public class sendotp extends AppCompatActivity {
     String verificationId;
     FirebaseAuth FAuth;
     Button verify , Resend ;
     TextView txt;
-    EditText entercode;
+    PinView entercode;
     String phoneno;
-    FirebaseUser user = FAuth.getCurrentUser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +44,7 @@ public class sendotp extends AppCompatActivity {
 
         phoneno = getIntent().getStringExtra("phonenumber").trim();
 
-        entercode = (EditText) findViewById(R.id.code);
+        entercode = (PinView) findViewById(R.id.code);
         txt = (TextView) findViewById(R.id.text);
         Resend = (Button)findViewById(R.id.Resendotp);
         verify = (Button) findViewById(R.id.Verify);
@@ -181,7 +183,7 @@ public class sendotp extends AppCompatActivity {
     }
 
     private void signInWithPhone(PhoneAuthCredential credential) {
-        if(user != null){
+
             FAuth.signInWithCredential(credential)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
@@ -192,18 +194,15 @@ public class sendotp extends AppCompatActivity {
                                 finish();
 
                             }else{
+                                Toasty.warning(sendotp.this, "Vui lòng đăng ký tài khoản để đăng nhập bằng số điện thoại", Toast.LENGTH_SHORT, true).show();
+                                Intent b = new Intent(sendotp.this, MainMenu.class);
+                                startActivity(b);
                                 ReusableCodeForAll.ShowAlert(sendotp.this,"Error",task.getException().getMessage());
+                                finish();
                             }
 
                         }
                     });
-        }
-        else {
-            Toast.makeText(this, "Vui lòng đăng ký tài khoản để đăng nhập bằng số điện thoại", Toast.LENGTH_SHORT).show();
-            Intent b = new Intent(sendotp.this, MainMenu.class);
-            startActivity(b);
-            finish();
-        }
 
 
     }

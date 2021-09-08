@@ -15,7 +15,7 @@
             android:id="@+id/backBtn"
             android:layout_width="30sp"
             android:layout_height="30sp"
-            android:src="@drawable/ic_back_white"
+            android:src="@drawable/ic_back"
             android:background="@null"
             />
         <ImageButton
@@ -53,10 +53,11 @@
         android:layout_height="120dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/shape_rect02"
         android:adjustViewBounds="true"
         android:padding="5dp"
-        android:src="@drawable/ic_shop"/>
+        android:src="@drawable/ic_shop"
+        />
 
     <LinearLayout
         android:background="@color/white"
@@ -67,93 +68,215 @@
         android:orientation="vertical"
         android:padding="10dp">
 
-        <ImageView
-            android:id="@+id/imageView7"
+<!--        <ImageView-->
+<!--            android:id="@+id/imageView7"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="right"-->
+<!--            android:layout_marginEnd="16dp"-->
+<!--            app:srcCompat="@drawable/ic_like" />-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Mã giảm giá:"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:background="@color/nen"
+                android:backgroundTint="@color/itemchon"/>
+
+            <TextView
+                android:id="@+id/discountNoteTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_rect05"
+                android:layout_marginLeft="10dp"
+                android:padding="5dp"
+                android:paddingEnd="5dp"
+                android:text="105 OFF"
+                android:textColor="@color/green"
+                android:textSize="10dp" />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5sp"
+            android:background="@color/infoColor"
+            >
+
+        </View>
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginEnd="16dp"
-            app:srcCompat="@drawable/ic_like" />
+            android:layout_marginTop="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tên sản phẩm:"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:background="@color/nen"
+                android:backgroundTint="@color/itemchon"/>
+            <TextView
+                android:id="@+id/titleTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:text="Tên sản phẩm"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5sp"
+            android:background="@color/infoColor"
+            >
 
-        <TextView
-            android:id="@+id/discountNoteTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_rect05"
-            android:padding="5dp"
-            android:paddingEnd="5dp"
-            android:text="105 OFF"
-            android:textColor="@color/green"
-            android:textSize="10dp" />
-
-        <TextView
-            android:id="@+id/titleTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Tên sản phẩm"
-            android:textColor="@color/black"
-            android:textSize="18dp"
-            android:textStyle="bold" />
-
-
-        <RatingBar
-            android:id="@+id/ratingBar"
-            android:layout_width="239dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="8dp"
-            style="@style/AndroidImageSlider_Corner_Oval_Orange"
-            app:layout_constraintStart_toStartOf="@+id/name"
-            app:layout_constraintTop_toBottomOf="@+id/name" />
-
-        <TextView
-            android:id="@+id/descriptionTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Mô tả sản phẩm"
-            android:textColor="@color/black"
-
-            />
-
-        <TextView
-            android:id="@+id/categoryTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Thể loại sản phẩm"
-            android:textColor="@color/black"
-
-            />
-
-        <TextView
-            android:id="@+id/quantilyTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Số lượng sản phẩm"
-            android:textColor="@color/black" />
-
-        <RelativeLayout
+        </View>
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mô tả:"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:background="@color/nen"
+                android:backgroundTint="@color/itemchon"/>
 
             <TextView
-                android:id="@+id/discountPriceTv"
+                android:id="@+id/descriptionTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:text="1000VND"
-                android:textColor="@color/gray" />
+                android:layout_marginTop="5dp"
+                android:text="Mô tả sản phẩm"
+                android:textColor="@color/black"
 
+                />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5sp"
+            android:background="@color/infoColor"
+            >
+
+        </View>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
             <TextView
-                android:id="@+id/originalPriceTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Thế loại:"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:background="@color/nen"
+                android:backgroundTint="@color/itemchon"/>
+            <TextView
+                android:id="@+id/categoryTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/discountPriceTv"
-                android:text="2000VND"
-                android:textColor="@color/gray" />
-        </RelativeLayout>
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:text="Trà Sữa"
+                android:textColor="@color/black"
+
+                />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5sp"
+            android:background="@color/infoColor"
+            >
+
+        </View>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Số lượng:"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:background="@color/nen"
+                android:backgroundTint="@color/itemchon"/>
+            <TextView
+                android:id="@+id/quantilyTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:text="20"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5sp"
+            android:background="@color/infoColor"
+            >
+
+        </View>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Giá Tiền"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:background="@color/nen"
+                android:backgroundTint="@color/itemchon"/>
+            <RelativeLayout
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/discountPriceTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:text="1000VND"
+                    android:textColor="@color/gray" />
+
+                <TextView
+                    android:id="@+id/originalPriceTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/discountPriceTv"
+                    android:text="2000VND"
+                    android:textColor="@color/gray" />
+            </RelativeLayout>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5sp"
+            android:background="@color/infoColor"
+            >
+
+        </View>
     </LinearLayout>
 </RelativeLayout>

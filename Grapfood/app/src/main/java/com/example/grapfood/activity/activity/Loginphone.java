@@ -53,6 +53,12 @@ public class Loginphone extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                final String numberphone = num.getText().toString();
+                if(!isValid(numberphone))
+                {
+                    return;
+                }
+
                 number=num.getText().toString().trim();
                 String Phonenum = cpp.getSelectedCountryCodeWithPlus()+number;
                 Intent b = new Intent(Loginphone.this,sendotp.class);
@@ -77,5 +83,20 @@ public class Loginphone extends AppCompatActivity {
                 finish();
             }
         });
+    }
+    public boolean isValid(String phone) {
+        boolean valid = true;
+        if (phone.isEmpty()) {
+            num.setError("Không để trống!");
+            num.requestFocus();
+            valid = false;
+        } else if (phone.length() != 10) {
+            num.setError("Số điện thoại phải từ 10 số trở lên!");
+            num.requestFocus();
+            valid = false;
+        } else {
+            num.setError(null);
+        }
+        return valid;
     }
 }

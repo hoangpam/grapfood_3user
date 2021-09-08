@@ -30,16 +30,36 @@
             android:fontFamily="monospace"
             android:textStyle="italic"/>
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginTop="15dp"
-            android:hint="OTP"
-            android:ems="10"
-            android:id="@+id/code1"/>
+        <com.chaos.view.PinView
+            android:id="@+id/code1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/PinWidget.PinView"
+            android:hint="123456"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_marginTop="35sp"
+            android:inputType="number"
+            android:cursorVisible="true"
+            app:itemCount="6"
+            app:itemWidth="30sp"
+            app:itemHeight="30sp"
+            app:lineWidth="2dp"
+            app:viewType="rectangle"
+            app:cursorColor="@color/black"
+            app:hideLineWhenFilled="true"
+            app:itemRadius="5sp"/>
+<!--        <EditText-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="70dp"-->
+<!--            android:layout_marginTop="15dp"-->
+<!--            android:hint="OTP"-->
+<!--            android:ems="10"-->
+<!--            android:id="@+id/code1"/>-->
         <Button
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginTop="40dp"
             android:id="@+id/Verify1"
             android:background="@drawable/btnblueish"
@@ -48,7 +68,7 @@
             android:textColor="@color/white"/>
         <Button
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginTop="15dp"
             android:id="@+id/Resendotp1"
             android:textColor="@color/white"
